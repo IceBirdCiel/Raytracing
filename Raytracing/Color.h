@@ -11,7 +11,6 @@ private:
 	float tab[3];
 };
 
-//C'EST PAS OPTI
 
 #endif // __COLOR_CPP
 
