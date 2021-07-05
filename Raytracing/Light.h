@@ -1,3 +1,7 @@
+#include "Color.h"
+#include "Ray.h"
+#include "Point.h"
+#include "Vector.h"
 #define __LIGHT_CPP__
 #ifdef __LIGHT_CPP__
 

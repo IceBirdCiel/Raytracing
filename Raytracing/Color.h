@@ -7,8 +7,12 @@ public:
 	Color(float r, float g, float b);
 	Color multiply(Color c);
 
+	float operator[](int index) const;
+
 private:
-	float tab[3];
+	float m_r;
+	float m_g;
+	float m_b;
 };
 
 
