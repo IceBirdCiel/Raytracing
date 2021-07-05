@@ -139,14 +139,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Raytracer.h" />
+    <ClInclude Include="Vector.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Light.h" />
-    <ClInclude Include="Raytracer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Raytracer.cpp" />
+    <ClCompile Include="Vector.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Light.cpp" />
-    <ClCompile Include="Raytracer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
