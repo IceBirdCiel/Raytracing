@@ -1,7 +1,6 @@
 #include "Point.h"
 
-Point::Point(float x, float y, float z): m_x(x), m_y(y), m_z(z)
-{}
+Point::Point(float x, float y, float z): m_x(x), m_y(y), m_z(z){}
 
 float Point::dot(Point q)
 {

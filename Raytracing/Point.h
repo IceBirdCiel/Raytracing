@@ -1,5 +1,5 @@
 #define __POINT_CPP__
-#ifdef __POINT_CPP__
+#ifdef  __POINT_CPP__
 #include <iostream>
 
 class Point
