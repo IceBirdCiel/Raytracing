@@ -17,110 +17,137 @@ float& Matrix::operator()(int i, int j)
 
 Matrix Matrix::inverse()
 {
-    float temp;
-    std::array<std::array<float, 8>, 4> augmentedMat;
-    for (int i = 0; i < 4; ++i) {
-        for (int j = 0; j < 4; ++j) {
-            augmentedMat[i][j] = (*this)(i, j);
-        }
-    }
-    std::cout << "copied mat " << std::endl;
-    for (int i = 0; i < 4; i++) {
-        std::cout << "[";
-        for (int j = 0; j < 8; j++) {
-            std::cout << " " << augmentedMat[i][j] << " ";
-        }
-        std::cout << "]" << std::endl;
-    }
-    
-
-    // Create the augmented matrix
-    // Add the identity matrix
-    // of order at the end of original matrix.
-    for (int i = 0; i < 4; i++) {
-
-        for (int j = 0; j < 8; j++) {
-
-            // Add '1' at the diagonal places of
-            // the matrix to create a identity matirx
-            if (j == (i + 4))
-                augmentedMat[i][j] = 1;
-        }
-    }
-
-    // Interchange the row of matrix,
-    // interchanging of row will start from the last row
-    for (int i = 4 - 1; i > 0; i--) {
-
-        // Swapping each and every element of the two rows
-        // if (matrix[i - 1][0] < matrix[i][0])
-        // for (int j = 0; j < 2 * order; j++) {
-        //
-        //        // Swapping of the row, if above
-        //        // condition satisfied.
-        // temp = matrix[i][j];
-        // matrix[i][j] = matrix[i - 1][j];
-        // matrix[i - 1][j] = temp;
-        //    }
-
-        // Directly swapping the rows using pointers saves
-        // time
-
-        if (augmentedMat[i - 1][0] < augmentedMat[i][0]) {
-            std::array<float, 8> temp = augmentedMat[i];
-            augmentedMat[i] = augmentedMat[i - 1];
-            augmentedMat[i - 1] = temp;
-        }
-    }
-
-    // Print matrix after interchange operations.
-    printf("\n=== Augmented Matrix ===\n");
-    for (int i = 0; i < 4; i++) {
-        std::cout << "[";
-        for (int j = 0; j < 8; j++) {
-            std::cout << " " << augmentedMat[i][j] << " ";
-        }
-        std::cout << "]" << std::endl;
-    }
-    // PrintMatrix(matrix, order, order * 2);
-
-    // Replace a row by sum of itself and a
-    // constant multiple of another row of the matrix
-    for (int i = 0; i < 4; i++) {
-
-        for (int j = 0; j < 4; j++) {
-
-            if (j != i) {
-
-                temp = augmentedMat[j][i] / augmentedMat[i][i];
-                for (int k = 0; k < 8; k++) {
-
-                    augmentedMat[j][k] -= augmentedMat[i][k] * temp;
-                }
-            }
-        }
-    }
-
-    // Multiply each row by a nonzero integer.
-    // Divide row element by the diagonal element
-    for (int i = 0; i < 4; i++) {
-
-        temp = augmentedMat[i][i];
-        for (int j = 0; j < 8; j++) {
-
-            augmentedMat[i][j] = augmentedMat[i][j] / temp;
-        }
-    }
     Matrix result;
+    std::array<float, 4 * 4> m;
+    std::array<float, 4 * 4> inv;
     for (int i = 0; i < 4; ++i) {
         for (int j = 0; j < 4; ++j) {
-            result(i, j) = augmentedMat[i][j];
+            m[i * 4 + j] = (*this)(i, j);
         }
     }
+    inv[0] = m[5] * m[10] * m[15] -
+        m[5] * m[11] * m[14] -
+        m[9] * m[6] * m[15] +
+        m[9] * m[7] * m[14] +
+        m[13] * m[6] * m[11] -
+        m[13] * m[7] * m[10];
 
-    // print the resultant Inverse matrix.
-    printf("\n=== Inverse Matrix ===\n");
-    // PrintInverse(matrix, order, 2 * order);
+    inv[4] = -m[4] * m[10] * m[15] +
+        m[4] * m[11] * m[14] +
+        m[8] * m[6] * m[15] -
+        m[8] * m[7] * m[14] -
+        m[12] * m[6] * m[11] +
+        m[12] * m[7] * m[10];
+
+    inv[8] = m[4] * m[9] * m[15] -
+        m[4] * m[11] * m[13] -
+        m[8] * m[5] * m[15] +
+        m[8] * m[7] * m[13] +
+        m[12] * m[5] * m[11] -
+        m[12] * m[7] * m[9];
+
+    inv[12] = -m[4] * m[9] * m[14] +
+        m[4] * m[10] * m[13] +
+        m[8] * m[5] * m[14] -
+        m[8] * m[6] * m[13] -
+        m[12] * m[5] * m[10] +
+        m[12] * m[6] * m[9];
+
+    inv[1] = -m[1] * m[10] * m[15] +
+        m[1] * m[11] * m[14] +
+        m[9] * m[2] * m[15] -
+        m[9] * m[3] * m[14] -
+        m[13] * m[2] * m[11] +
+        m[13] * m[3] * m[10];
+
+    inv[5] = m[0] * m[10] * m[15] -
+        m[0] * m[11] * m[14] -
+        m[8] * m[2] * m[15] +
+        m[8] * m[3] * m[14] +
+        m[12] * m[2] * m[11] -
+        m[12] * m[3] * m[10];
+
+    inv[9] = -m[0] * m[9] * m[15] +
+        m[0] * m[11] * m[13] +
+        m[8] * m[1] * m[15] -
+        m[8] * m[3] * m[13] -
+        m[12] * m[1] * m[11] +
+        m[12] * m[3] * m[9];
+
+    inv[13] = m[0] * m[9] * m[14] -
+        m[0] * m[10] * m[13] -
+        m[8] * m[1] * m[14] +
+        m[8] * m[2] * m[13] +
+        m[12] * m[1] * m[10] -
+        m[12] * m[2] * m[9];
+
+    inv[2] = m[1] * m[6] * m[15] -
+        m[1] * m[7] * m[14] -
+        m[5] * m[2] * m[15] +
+        m[5] * m[3] * m[14] +
+        m[13] * m[2] * m[7] -
+        m[13] * m[3] * m[6];
+
+    inv[6] = -m[0] * m[6] * m[15] +
+        m[0] * m[7] * m[14] +
+        m[4] * m[2] * m[15] -
+        m[4] * m[3] * m[14] -
+        m[12] * m[2] * m[7] +
+        m[12] * m[3] * m[6];
+
+    inv[10] = m[0] * m[5] * m[15] -
+        m[0] * m[7] * m[13] -
+        m[4] * m[1] * m[15] +
+        m[4] * m[3] * m[13] +
+        m[12] * m[1] * m[7] -
+        m[12] * m[3] * m[5];
+
+    inv[14] = -m[0] * m[5] * m[14] +
+        m[0] * m[6] * m[13] +
+        m[4] * m[1] * m[14] -
+        m[4] * m[2] * m[13] -
+        m[12] * m[1] * m[6] +
+        m[12] * m[2] * m[5];
+
+    inv[3] = -m[1] * m[6] * m[11] +
+        m[1] * m[7] * m[10] +
+        m[5] * m[2] * m[11] -
+        m[5] * m[3] * m[10] -
+        m[9] * m[2] * m[7] +
+        m[9] * m[3] * m[6];
+
+    inv[7] = m[0] * m[6] * m[11] -
+        m[0] * m[7] * m[10] -
+        m[4] * m[2] * m[11] +
+        m[4] * m[3] * m[10] +
+        m[8] * m[2] * m[7] -
+        m[8] * m[3] * m[6];
+
+    inv[11] = -m[0] * m[5] * m[11] +
+        m[0] * m[7] * m[9] +
+        m[4] * m[1] * m[11] -
+        m[4] * m[3] * m[9] -
+        m[8] * m[1] * m[7] +
+        m[8] * m[3] * m[5];
+
+    inv[15] = m[0] * m[5] * m[10] -
+        m[0] * m[6] * m[9] -
+        m[4] * m[1] * m[10] +
+        m[4] * m[2] * m[9] +
+        m[8] * m[1] * m[6] -
+        m[8] * m[2] * m[5];
+
+    float det = m[0] * inv[0] + m[1] * inv[4] + m[2] * inv[8] + m[3] * inv[12];
+    det = 1 / det;
+    for (int i = 0; i < 16; ++i) {
+        inv[i] = inv[i] * det;
+    }
+
+    for (int i = 0; i < 4; ++i) {
+        for (int j = 0; j < 4; ++j) {
+            result(i, j) = inv[i * 4 + j];
+        }
+    }
 
 	return result;
 }
