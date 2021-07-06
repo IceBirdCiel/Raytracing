@@ -84,7 +84,7 @@ Vector Entity::localToGlobal(const Vector& v)const {
 }
 
 Vector Entity::globalToLocal(const Vector& v)const {
-	Point res = trans * v;
+	Vector res = trans * v;
 	return res;
 }
 
