@@ -185,22 +185,22 @@ Matrix Matrix::operator*(const Matrix& m)
         for (int j = 0; j < 4; ++j) {
             float value = 0.0f;
             for (int k = 0; k < 4; ++k) {
-                value += (*this)(k, j) * m(i, k);
+                value += (*this)(i, k) * m(k, j);
             }
             result(i, j) = value;
         }
     }
-    return Matrix();
-}
-
-Matrix Matrix::operator*(const Vector& v)
-{
-    Matrix result(*this);
     return result;
 }
 
-Matrix Matrix::operator*(const Point& p)
+Vector Matrix::operator*(const Vector& v)
 {
-    Matrix result(*this);
+    Vector result(v[0], v[1], v[2]);
+    return result;
+}
+
+Point Matrix::operator*(const Point& p)
+{
+    Point result(p[0], p[1], p[2]);
     return result;
 }

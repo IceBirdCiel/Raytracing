@@ -17,8 +17,8 @@ public:
 	Matrix inverse();
 	std::string toString();
 	Matrix operator*(const Matrix& m);
-	Matrix operator*(const Vector& v);
-	Matrix operator*(const Point& p);
+	Vector operator*(const Vector& v);
+	Point operator*(const Point& p);
 	
 private:
 	std::array<std::array<float, 4>, 4> _tab;

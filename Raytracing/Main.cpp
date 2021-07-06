@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Vector.h"
+#include "matrix.h"
 
 int main(int argc, char** argv) {
 
@@ -14,4 +15,11 @@ int main(int argc, char** argv) {
 	std::cout << "v1-v2 = " << (v1 - v2) << std::endl;
 	std::cout << "v1*2 = " << (v1 * 2) << std::endl;
 	std::cout << "v1*0.5f = " << (v1 * 0.5f) << std::endl;
+
+	Matrix m1;
+	Matrix m2;
+	m1(0, 1) = m2(1, 0) = m1(0, 3) = m2(3, 0) = 2;
+	std::cout << "m1 : " << std::endl << m1.toString();
+	std::cout << "m2 : " << std::endl << m2.toString();
+	std::cout << "m1 * m2 : " << std::endl << (m1*m2).toString();
 }
