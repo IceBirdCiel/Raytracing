@@ -5,7 +5,7 @@
 #define __LIGHT_CPP__
 #ifdef __LIGHT_CPP__
 
-class Light: Entity
+class Light//: Entity
 {
 public:
 	Light();

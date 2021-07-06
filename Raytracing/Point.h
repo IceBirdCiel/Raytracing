@@ -1,5 +1,4 @@
-#define __POINT_CPP__
-#ifdef  __POINT_CPP__
+#pragma once
 #include <iostream>
 
 class Point
@@ -24,5 +23,3 @@ private:
 };
 
 std::ostream& operator<<(std::ostream& os, const Point& p);
-
-#endif // __POINT_CPP__
