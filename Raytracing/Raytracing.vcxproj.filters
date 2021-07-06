@@ -27,10 +27,17 @@
     <ClInclude Include="Color.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Point.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
+=======
+    <ClInclude Include="Ray.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
+>>>>>>> aca4a57bd376e18bbdff6a3a87706cdad38f1ea4
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>

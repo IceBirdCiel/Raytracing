@@ -4,6 +4,7 @@
 int main(int argc, char** argv) {
 
 	std::cout << "Hello World !" << std::endl;
+	//-------- TEST VECTOR --------
 	Vector v1(0, 1, 5);
 	std::cout << "v1 " << v1 << std::endl;
 	Vector v2(-2, 4, 3);
