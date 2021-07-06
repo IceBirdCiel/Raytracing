@@ -9,6 +9,7 @@
 class Light: public Entity
 {
 public:
+	Light(Vector pos, Vector rot, Vector s);
 	Light();
 	Ray getRayToLight(const Point& p)const;
 	Ray getRayFromLight(const Point& p)const;
@@ -18,6 +19,10 @@ public:
 	Color id;
 	Color is;
 
+private:
+	Vector position;
+	Vector rotation;
+	Vector size;
 };
 
 #endif
