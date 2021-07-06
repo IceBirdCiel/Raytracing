@@ -196,11 +196,38 @@ Matrix Matrix::operator*(const Matrix& m)
 Vector Matrix::operator*(const Vector& v)
 {
     Vector result(v[0], v[1], v[2]);
+    std::array<float, 4> vector;
+    for (int i = 0; i < 3; ++i)
+        vector[i] = v[i];
+    vector[3] = 0;
+
+    for (int i = 0; i < 4; ++i) {
+        float value = 0;
+        for (int j = 0; j < 4; ++j) {
+            value += (*this)(i, j) * vector[j];
+        }
+        if(i < 3)
+            result[i] = value;
+    }
+
     return result;
 }
 
 Point Matrix::operator*(const Point& p)
 {
     Point result(p[0], p[1], p[2]);
+    std::array<float, 4> vector;
+    for (int i = 0; i < 3; ++i)
+        vector[i] = p[i];
+    vector[3] = 0;
+
+    for (int i = 0; i < 4; ++i) {
+        float value = 0;
+        for (int j = 0; j < 4; ++j) {
+            value += (*this)(i, j) * vector[j];
+        }
+        if (i < 3)
+            result[i] = value;
+    }
     return result;
 }
