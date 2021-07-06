@@ -3,6 +3,7 @@
 #include "Vector.h"
 #include "Point.h"
 #include "Ray.h"
+#include "matrix.h"
 
 class Entity
 {
@@ -26,6 +27,8 @@ private:
 	Vector position;
 	Vector rotation;
 	Vector size;
+	Matrix trans;
+	Matrix transInv;
 
 };
 #endif //__ENTITY_CPP__
