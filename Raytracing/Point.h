@@ -8,6 +8,7 @@ public:
 	float dot(Point q);
 
 	float operator[](int index)const;
+	float& operator[](int index);
 
 	Point operator+(Point q)const;
 	Point operator-(Point q)const;

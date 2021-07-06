@@ -21,5 +21,7 @@ int main(int argc, char** argv) {
 	m1(0, 1) = m2(1, 0) = m1(0, 3) = m2(3, 0) = 2;
 	std::cout << "m1 : " << std::endl << m1.toString();
 	std::cout << "m2 : " << std::endl << m2.toString();
-	std::cout << "m1 * m2 : " << std::endl << (m1*m2).toString();
+	Matrix m3 = m1 * m2;
+	std::cout << "m3 = m1 * m2 : " << std::endl << m3.toString();
+	std::cout << "m3 * v1 : " << std::endl << (m3 * v1);
 }
