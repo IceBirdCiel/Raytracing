@@ -5,6 +5,10 @@ Entity::Entity(Vector pos, Vector rot, Vector s):
 	rotation(rot), 
 	size(s){}
 
+Entity::Entity() : position(0, 0, 0),
+rotation(0, 0, 0),
+size(1, 1, 1) {}
+
 void Entity::translate(float x, float y, float z) {
 	Matrix m;
 	m(0, 3) = x;
@@ -62,4 +66,36 @@ void Entity::scale(float factor) {
 	size = m * size;
 	trans = m * trans;
 	transInv = trans.inverse();
+}
+
+Point Entity::localToGlobal(const Point& p) const{
+	Point res = transInv * p;
+	return res;
+}
+
+Point Entity::globalToLocal(const Point& p)const {
+	Point res = trans * p;
+	return res;
+}
+
+Vector Entity::localToGlobal(const Vector& v)const {
+	Vector vec = transInv * v;
+	return vec;
+}
+
+Vector Entity::globalToLocal(const Vector& v)const {
+	Point res = trans * v;
+	return res;
+}
+
+Ray Entity::localToGlobal(const Ray& r)const {
+	Point origin = localToGlobal(r.origin);
+	Vector vector = localToGlobal(r.vector);
+	return Ray(origin, vector);
+}
+
+Ray Entity::globalToLocal(const Ray& r)const {
+	Point origin = globalToLocal(r.origin);
+	Vector vector = globalToLocal(r.vector);
+	return Ray(origin, vector);
 }

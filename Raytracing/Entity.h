@@ -9,6 +9,7 @@ class Entity
 {
 public:
 	Entity(Vector pos, Vector rot, Vector s);
+	Entity();
 
 	void translate(float x, float y, float z);
 	void rotateX(float deg);
@@ -16,12 +17,14 @@ public:
 	void rotateZ(float deg);
 	void scale(float factor);
 	
-	Point localToGlobal(Point p);
-	Point globalToLocal(Point p);
+	Point localToGlobal(const Point& p)const;
+	Point globalToLocal(const Point& p)const;
 
 	Vector localToGlobal(const Vector& v)const;
+	Vector globalToLocal(const Vector& v)const;
 	
 	Ray localToGlobal(const Ray& r)const;
+	Ray globalToLocal(const Ray& r)const;
 
 private:
 	Vector position;

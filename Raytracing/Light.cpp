@@ -1,9 +1,7 @@
 #include "Light.h"
-/*
-Light::Light() {
-	this.translate(0, 0, 0);
-}
+
+Light::Light(){}
 
 Ray Light::getRayToLight(const Point& p)const {
-
-}*/
+	
+}
