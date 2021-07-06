@@ -10,9 +10,22 @@ Matrix::Matrix()
 	};
 }
 
+Matrix::Matrix(const Matrix& source)
+{
+    for (int i = 0; i < 4; ++i) {
+        for (int j = 0; j < 4; ++j) {
+            (*this)(i, j) = source(i, j);
+        }
+    }
+}
+
 float& Matrix::operator()(int i, int j)
 {
 	return _tab[i][j];
+}
+
+float Matrix::operator()(int i, int j) const {
+    return _tab[i][j];
 }
 
 Matrix Matrix::inverse()
@@ -163,4 +176,31 @@ std::string Matrix::toString()
         result << "]\n";
     }
     return result.str();
+}
+
+Matrix Matrix::operator*(const Matrix& m)
+{
+    Matrix result(*this);
+    for (int i = 0; i < 4; ++i) {
+        for (int j = 0; j < 4; ++j) {
+            float value = 0.0f;
+            for (int k = 0; k < 4; ++k) {
+                value += (*this)(k, j) * m(i, k);
+            }
+            result(i, j) = value;
+        }
+    }
+    return Matrix();
+}
+
+Matrix Matrix::operator*(const Vector& v)
+{
+    Matrix result(*this);
+    return result;
+}
+
+Matrix Matrix::operator*(const Point& p)
+{
+    Matrix result(*this);
+    return result;
 }
