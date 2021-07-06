@@ -139,13 +139,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Point.h" />
-=======
-    <ClInclude Include="Point.h" />
-    <ClInclude Include="Ray.h" />
->>>>>>> aca4a57bd376e18bbdff6a3a87706cdad38f1ea4
     <ClInclude Include="Raytracer.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Color.h" />
