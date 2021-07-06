@@ -16,9 +16,9 @@ public:
 	float operator()(int i, int j) const;
 	Matrix inverse();
 	std::string toString();
-	Matrix operator*(const Matrix& m);
-	Vector operator*(const Vector& v);
-	Point operator*(const Point& p);
+	Matrix operator*(const Matrix& m) const;
+	Vector operator*(const Vector& v) const;
+	Point operator*(const Point& p) const;
 	
 private:
 	std::array<std::array<float, 4>, 4> _tab;

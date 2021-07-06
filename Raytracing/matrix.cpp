@@ -178,7 +178,7 @@ std::string Matrix::toString()
     return result.str();
 }
 
-Matrix Matrix::operator*(const Matrix& m)
+Matrix Matrix::operator*(const Matrix& m) const
 {
     Matrix result(*this);
     for (int i = 0; i < 4; ++i) {
@@ -193,7 +193,7 @@ Matrix Matrix::operator*(const Matrix& m)
     return result;
 }
 
-Vector Matrix::operator*(const Vector& v)
+Vector Matrix::operator*(const Vector& v) const
 {
     Vector result(v[0], v[1], v[2]);
     std::array<float, 4> vector;
@@ -213,7 +213,7 @@ Vector Matrix::operator*(const Vector& v)
     return result;
 }
 
-Point Matrix::operator*(const Point& p)
+Point Matrix::operator*(const Point& p) const
 {
     Point result(p[0], p[1], p[2]);
     std::array<float, 4> vector;
