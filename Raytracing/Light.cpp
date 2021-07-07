@@ -8,6 +8,8 @@ Light::Light(): position(0,0,0),
 	rotation(0,0,0),
 	size(1,1,1){}
 
+//Check if those formula are ok, 
+//else correct then with matrix trans and transInv
 Ray Light::getRayToLight(const Point& p)const {
 	Vector vec(this->position - Vector(p[0], p[1], p[2]));
 	return Ray(p,vec.normalized());

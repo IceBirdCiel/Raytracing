@@ -23,6 +23,8 @@ private:
 	Vector position;
 	Vector rotation;
 	Vector size;
+	Matrix trans;
+	Matrix transInv;
 };
 
 #endif
