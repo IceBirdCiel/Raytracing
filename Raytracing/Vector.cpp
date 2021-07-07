@@ -26,6 +26,14 @@ float Vector::operator[](int index) const
 	throw "Index out of range";
 }
 
+float& Vector::operator[](int index)
+{
+	if (index == 0) return m_x;
+	if (index == 1) return m_y;
+	if (index == 2) return m_z;
+	throw "Index out of range";
+}
+
 Vector Vector::operator+(Vector v) const
 {
 	return Vector(m_x + v[0], m_y + v[1], m_z + v[2]);

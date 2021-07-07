@@ -1,9 +1,30 @@
 #include "Light.h"
-/*
-Light::Light() {
-	this.translate(0, 0, 0);
-}
+
+Light::Light(Vector pos, Vector rot, Vector s):position(pos),
+	rotation(rot),
+	size(s){}
+
+Light::Light(): position(0,0,0),
+	rotation(0,0,0),
+	size(1,1,1){}
 
 Ray Light::getRayToLight(const Point& p)const {
+	Vector vec(this->position - Vector(p[0], p[1], p[2]));
+	return Ray(p,vec.normalized());
+}
 
-}*/
+Ray Light::getRayFromLight(const Point& p)const {
+	Vector vec(Vector(p[0], p[1], p[2]) - this->position);
+	return Ray(Point(position[0], position[1], position[2]), 
+		vec.normalized());
+}
+
+Vector Light::getVectorToLight(const Point& p)const {
+	Vector vec(this->position - Vector(p[0], p[1], p[2]));
+	return vec.normalized();
+}
+
+Vector Light::getVectorFromLight(const Point& p)const {
+	Vector vec(Vector(p[0], p[1], p[2]) - this->position);
+	return vec.normalized();
+}
