@@ -1,5 +1,15 @@
 #include "Scene.h"
 
+void Scene::setBackground(Color color)
+{
+	_background = color;
+}
+
+void Scene::setAmbiant(Color color)
+{
+	_ambiant = color;
+}
+
 Color Scene::getBackground() const
 {
 	return _background;
