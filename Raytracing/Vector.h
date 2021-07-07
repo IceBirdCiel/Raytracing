@@ -13,6 +13,7 @@ public:
 	float dot(Vector v) const;
 
 	float operator [](int index) const;
+	float& operator [](int index);
 	Vector operator +(Vector v) const;   // value = vector1+vector2
 	Vector operator -(Vector v) const;   // value = vector1-vector2
 	Vector operator -() const;           // value = -vector

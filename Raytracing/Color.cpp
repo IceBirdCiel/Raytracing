@@ -7,6 +7,8 @@ Color::Color(float r, float g, float b): m_r(r), m_g(g), m_b(b)
 	m_b = (m_b > 1) ? m_b = 1 : m_b = 0;
 }
 
+Color::Color(): m_r(0), m_g(0), m_b(0){}
+
 Color Color::multiply(Color c)
 {
 	float r = this->m_r * c.m_r;

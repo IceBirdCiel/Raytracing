@@ -5,6 +5,7 @@ class Color
 {
 public:
 	Color(float r, float g, float b);
+	Color();
 	Color multiply(Color c);
 
 	float operator[](int index) const;

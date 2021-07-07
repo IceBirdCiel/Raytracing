@@ -19,6 +19,15 @@ float Point::operator[](int index) const
 	throw "Index out of range";
 }
 
+float& Point::operator[](int index)
+{
+	if (index == 0) return m_x;
+	if (index == 1) return m_y;
+	if (index == 2) return m_z;
+	throw "Index out of range";
+}
+
+
 Point Point::operator+(Point q)const
 {
 	float x = this->m_x + q.m_x;

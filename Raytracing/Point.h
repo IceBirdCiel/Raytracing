@@ -1,5 +1,4 @@
-#define __POINT_CPP__
-#ifdef  __POINT_CPP__
+#pragma once
 #include <iostream>
 
 class Point
@@ -9,6 +8,7 @@ public:
 	float dot(Point q);
 
 	float operator[](int index)const;
+	float& operator[](int index);
 
 	Point operator+(Point q)const;
 	Point operator-(Point q)const;
@@ -24,5 +24,3 @@ private:
 };
 
 std::ostream& operator<<(std::ostream& os, const Point& p);
-
-#endif // __POINT_CPP__
