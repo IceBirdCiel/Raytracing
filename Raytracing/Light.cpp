@@ -4,10 +4,6 @@ Light::Light(Vector pos, Vector rot, Vector s):position(pos),
 	rotation(rot),
 	size(s){}
 
-Light::Light(): position(0,0,0),
-	rotation(0,0,0),
-	size(1,1,1){}
-
 //Check if those formula are ok, 
 //else correct then with matrix trans and transInv
 Ray Light::getRayToLight(const Point& p)const {
