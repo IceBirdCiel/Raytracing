@@ -140,8 +140,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="matrix.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="Plan.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="Ray.h" />
     <ClInclude Include="Raytracer.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Color.h" />
@@ -150,8 +154,12 @@
   <ItemGroup>
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Material.cpp" />
     <ClCompile Include="matrix.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Plan.cpp" />
     <ClCompile Include="Point.cpp" />
+    <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Raytracer.cpp" />
     <ClCompile Include="Vector.cpp" />
     <ClCompile Include="Color.cpp" />
