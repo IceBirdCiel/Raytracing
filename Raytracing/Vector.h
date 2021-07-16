@@ -10,6 +10,7 @@ public:
 
 	float norm() const;
 	Vector normalized() const;
+	Vector cross(Vector v) const;
 	float dot(Vector v) const;
 
 	float operator [](int index) const;

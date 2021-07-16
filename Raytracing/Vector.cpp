@@ -13,6 +13,14 @@ Vector Vector::normalized() const
 	return Vector(m_x/norm, m_y / norm, m_z / norm);
 }
 
+Vector Vector::cross(Vector v) const
+{
+	float x = m_y * v[2] - v[1] * m_z;
+	float y = m_z * v[0] - v[2] * m_x;
+	float z = m_x * v[1] - v[0] * m_y;
+	return Vector(x, y, z);
+}
+
 float Vector::dot(Vector v) const
 {
 	return m_x*v[0] + m_y * v[1] + m_z * v[2];
