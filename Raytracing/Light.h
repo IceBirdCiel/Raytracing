@@ -1,5 +1,4 @@
-#define __LIGHT_CPP__
-#ifdef __LIGHT_CPP__
+#pragma once
 #include "Entity.h"
 #include "Color.h"
 #include "Ray.h"
@@ -24,8 +23,6 @@ private:
 	Vector rotation;
 	Vector size;
 };
-
-#endif
 
 
 
