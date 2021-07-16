@@ -1,6 +1,9 @@
 #include <iostream>
 #include "Math/Vector.h"
 #include "Math/Matrix.h"
+#include <opencv2/opencv.hpp>
+
+using namespace cv;
 
 int main(int argc, char** argv) {
 
@@ -24,4 +27,12 @@ int main(int argc, char** argv) {
     Matrix m3 = m1 * m2;
     std::cout << "m3 = m1 * m2 : " << std::endl << m3.toString();
     std::cout << "m3 * v1 : " << std::endl << (m3 * v1);
+
+
+    /* NOT WORKING
+    std::string path = "resources/lena.jpg";
+    Mat img = imread(path);
+    imshow("Image",img);
+    waitKey(0);
+    */
 }
