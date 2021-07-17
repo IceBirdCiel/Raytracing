@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Math/Vector.h"
 #include "Math/Matrix.h"
+#include "Rendering/Image.h"
 
 int main(int argc, char** argv) {
 
@@ -22,6 +23,12 @@ int main(int argc, char** argv) {
     std::cout << "m1 : " << std::endl << m1.toString();
     std::cout << "m2 : " << std::endl << m2.toString();
     Matrix m3 = m1 * m2;
-    std::cout << "m3 = m1 * m2 : " << std::endl << m3.toString();
-    std::cout << "m3 * v1 : " << std::endl << (m3 * v1);
+    std::cout << "m3 = m1 * m2 : " << std::endl << m3.toString() << std::endl;;
+    std::cout << "m3 * v1 : " << std::endl << (m3 * v1) << std::endl;;
+
+    Image image("lena.png");
+    int x = 10;
+    int y = 25;
+    Color c = image(x,y);
+    std::cout << "pixel at (" << x << ", " << y << ") = (" << c[0] << " " << c[1] << " " << c[2] << ")";
 }

@@ -2,9 +2,9 @@
 
 Color::Color(float r, float g, float b): m_r(r), m_g(g), m_b(b)
 {
-    m_r = (m_r > 1) ? m_r = 1 : m_r = 0;
-    m_g = (m_g > 1) ? m_g = 1 : m_g = 0;
-    m_b = (m_b > 1) ? m_b = 1 : m_b = 0;
+    m_r = (m_r > 1) ? 1 : (m_r < 0) ? 0 : m_r;
+    m_g = (m_g > 1) ? 1 : (m_g < 0) ? 0 : m_g;
+    m_b = (m_b > 1) ? 1 : (m_b < 0) ? 0 : m_b;
 }
 
 Color::Color(): m_r(0), m_g(0), m_b(0){}
