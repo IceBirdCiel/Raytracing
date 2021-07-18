@@ -10,6 +10,10 @@ Sphere::Sphere(float rayon, Vector center, Material mat) {
 
 Sphere::Sphere():rayon(1), center(0,0,0), mat(){}
 
+Sphere::~Sphere() {
+	delete(this);
+}
+
 Material Sphere::getMaterial(const Point& p)const {
 	return this->mat;
 }

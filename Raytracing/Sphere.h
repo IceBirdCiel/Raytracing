@@ -10,6 +10,7 @@ class Sphere : public Object
 public:
 	Sphere(float rayon, Vector center, Material mat);
 	Sphere();
+	~Sphere();
 	Material getMaterial(const Point& p)const;
 	Ray getNormals(const Point& p, const Point& o)const;
 	bool intersect(const Ray& ray, Point& impact)const;
