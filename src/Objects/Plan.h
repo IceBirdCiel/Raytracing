@@ -1,5 +1,4 @@
-#define __PLAN_HPP__
-#ifdef __PLAN_HPP__
+#pragma once
 #include "../Math/Vector.h"
 #include "Object.h"
 #include "../Math/Matrix.h"
@@ -16,5 +15,3 @@ public:
 private:
     Material mat;
 };
-
-#endif //__PLAN_HPP__
