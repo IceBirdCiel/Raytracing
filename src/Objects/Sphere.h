@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../src/Materials/Material.h"
-#include "../src/Objects/Object.h"
-#include "../src/Math/Vector.h"
-#include "../src/Math/Ray.h"
+#include "../Materials/Material.h"
+#include "Object.h"
+#include "../Math/Vector.h"
+#include "../Math/Ray.h"
 
 class Sphere : public Object
 {
