@@ -10,6 +10,7 @@ class Entity
 public:
     Entity(Vector pos, Vector rot, Vector s);
     Entity();
+    virtual ~Entity() = default;
 
     void translate(float x, float y, float z);
     void rotateX(float deg);
