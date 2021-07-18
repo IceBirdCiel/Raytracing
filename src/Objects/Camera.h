@@ -1,27 +1,18 @@
 #pragma once
 #include "../Math/Vector.h"
 #include "../Math/Matrix.h"
+#include "Entity.h"
 
-class Camera {
+class Camera : public Entity {
 public:
-    void setPosition(Vector position);
-    void setTarget(Vector target);
-    virtual void update();
-    Matrix getView();
-    Matrix getProjection();
-    Vector getPosition();
-    float FOV{};
-    float speed{};
-    float yaw{};
-    float pitch{};
+    Camera(Vector pos, Vector rot, float focalLength, float aperture, float focalPoint);
+    void setSensorSize(float sizeX, float sizeY);
+    Ray getRay(float x, float y);
 private:
-    void setProjectionMatrix(float FOV, float near, float far);
-    void LookAt();
-    Vector _position;
-    Vector _target;
-    Vector _forward;
-    Vector _right;
-    Vector _up;
-    Matrix _view{};
-    Matrix _projection{};
+    float m_focalLength = 24;//the distance between the camera origin and the sensor in millimeters
+    float m_aperture = 5.6;//the ratio of the focal length over the diaphragm's diameter
+    float m_focalPlaneDist = 10;//the distance between the focal plane and the camera origin in meters
+
+    float m_sensorWidth = 32;//the sensor's width millimeters
+    float m_sensorHeight = 24;//the sensor's height in millimeters
 };
