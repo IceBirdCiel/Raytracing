@@ -1,19 +1,15 @@
 #ifndef __COLOR_CPP__
 #define __COLOR_CPP__
 
-class Color
+struct Color
 {
-public:
     Color(float r, float g, float b);
-    Color();
-    Color multiply(Color c);
+    Color() =default;
+    Color multiply(const Color& c) const;
 
-    float operator[](int index) const;
-
-private:
-    float m_r;
-    float m_g;
-    float m_b;
+    float r = 0;
+    float g = 0;
+    float b = 0;
 };
 
 

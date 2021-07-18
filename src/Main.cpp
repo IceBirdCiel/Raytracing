@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Math/Vector.h"
 #include "Math/Matrix.h"
+#include "Rendering/Image.h"
 
 int main(int argc, char** argv) {
 
@@ -22,6 +23,28 @@ int main(int argc, char** argv) {
     std::cout << "m1 : " << std::endl << m1.toString();
     std::cout << "m2 : " << std::endl << m2.toString();
     Matrix m3 = m1 * m2;
-    std::cout << "m3 = m1 * m2 : " << std::endl << m3.toString();
-    std::cout << "m3 * v1 : " << std::endl << (m3 * v1);
+    std::cout << "m3 = m1 * m2 : " << std::endl << m3.toString() << std::endl;;
+    std::cout << "m3 * v1 : " << std::endl << (m3 * v1) << std::endl;;
+
+    Image img(500,200,Color(1.0,0.6,0.8));
+
+    Color black(0,0,0);
+    Color white(1,1,1);
+    for(int y = 0; y < img.getHeight(); ++y){
+        for(int x = 0; x < img.getWidth(); ++x){
+            if((int)(y/10.0f)%2 == 0 && (int)(x/10.0f)%2 == 0){
+                img.setColor(x,y,black);
+            }else{
+                img.setColor(x,y,white);
+            }
+        }
+    }
+    img.getColor(0,0);
+    img.save("checkerboard");
+
+    int x = 0;
+    int y = 0;
+    Color c = img.getColor(x,y);
+    std::cout << "pixel at (" << x << ", " << y << ") = (" << c.r << " " << c.g << " " << c.b << ")";
+
 }
