@@ -4,8 +4,8 @@
 #include "../Materials/Material.h"
 #include "../Math/Ray.h"
 
-//template<typename T>
-class Object// : public Entity
+template<typename T>
+class Object : public Entity
 {
 public:
     Material getMaterial(const Point& p)const;

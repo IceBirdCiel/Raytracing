@@ -9,14 +9,25 @@
 
 class Image {
 public:
-    Image(std::string name);
+    explicit Image(const std::string& name);
+    Image(int width, int height);
+    Image(int width, int height, Color baseColor);
+    Image(const Image &img);
     ~Image();
-    const Color operator()(int i, int j) const;
+
+    void save(const std::string& name) const;
+
+    Color getColor(int x, int y) const;
+    void setColor(int x, int y, const Color& color);
+
+    int getWidth() const;
+    int getHeight() const;
 private:
-    int m_width;
-    int m_height;
-    int m_pixelDataSize;
+    int m_width{};
+    int m_height{};
+    int m_nbChannels{};
     uint8_t* m_rgb_image;
+    void fillImage(const Color& c);
 };
 
 
