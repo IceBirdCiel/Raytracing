@@ -1,5 +1,4 @@
-#define __ENTITY_CPP__
-#ifdef __ENTITY_CPP__
+#pragma once
 #include "../Math/Vector.h"
 #include "../Math/Point.h"
 #include "../Math/Ray.h"
@@ -34,4 +33,3 @@ private:
     Matrix transInv;
 
 };
-#endif //__ENTITY_CPP__

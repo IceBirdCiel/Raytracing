@@ -22,10 +22,10 @@ Ray Camera::getRay(float x, float y) {
 
     //adding the randomness of the aperture to get the depth of field effect
     //to disable this effect, set the apperture to a high value like 22 or more
-    double a = rand() * 2 * 3.141592654;
-    double r = (m_focalLength/m_aperture)/2 * sqrt(rand());
-    double rayOriginX = r*cos(a);
-    double rayOriginY = r*sin(a);
+    //double a = rand() * 2 * 3.141592654;
+    //double r = (m_focalLength/m_aperture)/2 * sqrt(rand());
+    double rayOriginX = 0;//r*cos(a);
+    double rayOriginY = 0;//r*sin(a);
 
     Vector rayOrigin(rayOriginX, rayOriginY, 0);
     Vector finalDirection = (focalPoint - rayOrigin).normalized();
