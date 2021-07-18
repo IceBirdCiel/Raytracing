@@ -1,5 +1,4 @@
-#define __MATERIAL_HPP__
-#ifdef __MATERIAL_HPP__
+#pragma once
 #include "Color.h"
 
 class Material
@@ -14,4 +13,4 @@ public:
     float shininess;
 };
 
-#endif //__MATERIAL_HPP__
+

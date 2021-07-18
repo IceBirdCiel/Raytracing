@@ -1,25 +1,17 @@
-#define __PLAN_HPP__
-#ifdef __PLAN_HPP__
+#pragma once
 #include "../Math/Vector.h"
-//#include "Object.h"
+#include "Object.h"
 #include "../Math/Matrix.h"
 
-class Plan // : public Object
+class Plan : public Object
 {
 public:
-    Plan(float width, float height);
-
-
+    Plan(Vector pos, Vector rot, Material mat);
+    Plan();
+    Material getMaterial(const Point& p)const;
+    Ray getNormals(const Point& p, const Point& o)const;
+    bool intersect(const Ray& ray, Point& impact)const;
 
 private:
-    float width;
-    float height;
-
-    Vector position;
-    Vector rotation;
-    Vector size;
-    Matrix trans;
-    Matrix transInv;
+    Material mat;
 };
-
-#endif //__PLAN_HPP__

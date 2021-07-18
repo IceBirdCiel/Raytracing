@@ -9,6 +9,7 @@ Entity::Entity() : position(0, 0, 0),
                    rotation(0, 0, 0),
                    size(1, 1, 1) {}
 
+
 void Entity::translate(float x, float y, float z) {
     Matrix m;
     m(0, 3) = x;

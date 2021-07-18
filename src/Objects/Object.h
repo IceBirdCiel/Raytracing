@@ -4,17 +4,21 @@
 #include "../Materials/Material.h"
 #include "../Math/Ray.h"
 
-//template<typename T>
-class Object// : public Entity
+class Object : public Entity
 {
 public:
-    Material getMaterial(const Point& p)const;
-    Ray getNormal(const Point& p)const;
-    bool intersect(const Ray& ray, Point& impact)const;
+    virtual Material getMaterial(const Point& p)const {
+        Color white(1,1,1);
+        return Material(white,white,white,1);
+    };
+    virtual Ray getNormal(const Point& p)const {
+        return Ray(Point(0,0,0), Vector(1,1,1));
+    };
+    virtual bool intersect(const Ray& ray, Point& impact)const {return false;};
 
 private:
     Material mat;
-    Vector normal;
 };
+
 
 #endif //__ENTITY_CPP__

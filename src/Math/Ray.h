@@ -9,5 +9,6 @@ public:
     Vector vector;
     Ray(float ox, float oy,float oz, float vx, float vy,float vz);
     Ray(Point o, Vector v);
+    Ray();
 };
 
