@@ -67,6 +67,10 @@ Vector Vector::operator*(float value) const
     return Vector(m_x * value, m_y * value, m_z * value);
 }
 
+Vector Vector::operator=(Point p)const {
+    return Vector(p[0], p[1], p[2]);
+}
+
 std::ostream& operator<<(std::ostream& os, const Vector& v)
 {
     return os << "(" << v[0] << ", " << v[1] << ", " << v[2] << ")";

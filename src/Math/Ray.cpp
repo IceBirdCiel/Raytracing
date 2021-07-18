@@ -7,3 +7,5 @@ Ray::Ray(float ox, float oy, float oz, float vx, float vy, float vz) : origin(Po
 Ray::Ray(Point o, Vector v): origin(o), vector(v)
 {
 }
+
+Ray::Ray() : origin(0, 0, 0), vector(0, 0, 0){}

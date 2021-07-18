@@ -5,6 +5,7 @@ class Point
 {
 public:
     Point(float x, float y, float z);
+    Point();
     float dot(Point q);
 
     float operator[](int index)const;
