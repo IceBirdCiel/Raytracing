@@ -1,14 +1,10 @@
 #include "Sphere.h"
 
-Sphere::Sphere(float rayon, Vector center, Material mat) {
-	this->rayon = rayon;
-	this->center[0] = center[0];
-	this->center[1] = center[1];
-	this->center[2] = center[2];
+Sphere::Sphere(Vector pos, Vector rot, float scale, Material mat): Object(pos,rot,scale,mat) {
 	this->mat = mat;
 }
 
-Sphere::Sphere():rayon(1), center(0,0,0), mat(){}
+Sphere::Sphere(): Object(Vector(0,0,0),Vector(0,0,0),1,Material()){}
 
 Material Sphere::getMaterial(const Point& p)const {
 	return this->mat;

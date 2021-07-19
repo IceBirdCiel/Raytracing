@@ -195,39 +195,28 @@ Matrix Matrix::operator*(const Matrix& m) const
 
 Vector Matrix::operator*(const Vector& v) const
 {
-    Vector result(v[0], v[1], v[2]);
-    std::array<float, 4> vector;
-    for (int i = 0; i < 3; ++i)
-        vector[i] = v[i];
-    vector[3] = 0;
-
-    for (int i = 0; i < 4; ++i) {
-        float value = 0;
-        for (int j = 0; j < 4; ++j) {
-            value += (*this)(i, j) * vector[j];
-        }
-        if(i < 3)
-            result[i] = value;
+    Vector resultVector;
+    for (int i = 0; i < 3; ++i){
+        resultVector[i] = (*this)(i,0) * v[0] + (*this)(i,1) * v[1] + (*this)(i,2) * v[2];
     }
-
-    return result;
+    return resultVector;
 }
 
 Point Matrix::operator*(const Point& p) const
 {
-    Point result(p[0], p[1], p[2]);
-    std::array<float, 4> vector;
-    for (int i = 0; i < 3; ++i)
-        vector[i] = p[i];
-    vector[3] = 0;
-
-    for (int i = 0; i < 4; ++i) {
-        float value = 0;
-        for (int j = 0; j < 4; ++j) {
-            value += (*this)(i, j) * vector[j];
-        }
-        if (i < 3)
-            result[i] = value;
+    Point resultPoint;
+    for (int i = 0; i < 3; ++i){
+        resultPoint[i] = (*this)(i,0) * p[0] + (*this)(i,1) * p[1] + (*this)(i,2) * p[2] + (*this)(i,3);
     }
-    return result;
+    return resultPoint;
+}
+
+std::ostream& operator<<(std::ostream& os, const Matrix& v) {
+    for (int i = 0; i < 4; ++i) {
+        for (int j = 0; j < 4; ++j) {
+            os << v(i,j) << " ";
+        }
+        os << std::endl;
+    }
+    return os;
 }

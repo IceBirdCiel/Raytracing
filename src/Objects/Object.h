@@ -6,6 +6,11 @@
 class Object : public Entity
 {
 public:
+
+    Object(){}
+    Object(Material mat):m_mat(mat){}
+    Object(Vector pos, Vector rot, float scale, Material mat):Entity(pos,rot,Vector(scale,scale,scale)), m_mat(mat){}
+
     virtual Material getMaterial(const Point& p)const {
         Color white(1,1,1);
         return Material(white,white,white,1);
@@ -16,5 +21,5 @@ public:
     virtual bool intersect(const Ray& ray, Point& impact)const {return false;};
 
 private:
-    Material mat;
+    Material m_mat{};
 };

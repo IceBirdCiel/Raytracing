@@ -1,16 +1,14 @@
 #include "Entity.h"
 
-Entity::Entity(Vector pos, Vector rot, Vector s):
-        position(pos),
-        size(s){
+Entity::Entity(Vector pos, Vector rot,Vector s) {
+    translate(pos[0],pos[1],pos[2]);
+    scale(s);
     rotateX(rot[0]);
     rotateY(rot[1]);
     rotateZ(rot[2]);
 }
 
-Entity::Entity() : position(0, 0, 0),
-                   rotation(0, 0, 0),
-                   size(1, 1, 1) {}
+Entity::Entity() {}
 
 
 void Entity::translate(float x, float y, float z) {
@@ -19,7 +17,6 @@ void Entity::translate(float x, float y, float z) {
     m(1, 3) = y;
     m(2, 3) = z;
 
-    position = m * position;
     trans = m * trans;
     transInv = trans.inverse();
 }
@@ -31,7 +28,6 @@ void Entity::rotateX(float deg) {
     m(2, 1) = sin(deg);
     m(2, 2) = cos(deg);
 
-    rotation = m * rotation;
     trans = m * trans;
     transInv = trans.inverse();
 }
@@ -43,7 +39,6 @@ void Entity::rotateY(float deg) {
     m(2, 0) = -sin(deg);
     m(2, 2) = cos(deg);
 
-    rotation = m * rotation;
     trans = m * trans;
     transInv = trans.inverse();
 }
@@ -55,40 +50,38 @@ void Entity::rotateZ(float deg) {
     m(1, 0) = sin(deg);
     m(1, 1) = cos(deg);
 
-    rotation = m * rotation;
 
     trans = m * trans;
     transInv = trans.inverse();
 }
 
-void Entity::scale(float factor) {
+void Entity::scale(Vector s) {
     Matrix m;
-    m(0, 0) = factor;
-    m(1, 1) = factor;
-    m(2, 2) = factor;
+    m(0, 0) = s[0];
+    m(1, 1) = s[1];
+    m(2, 2) = s[2];
 
-    size = m * size;
     trans = m * trans;
     transInv = trans.inverse();
 }
 
 Point Entity::localToGlobal(const Point& p) const{
-    Point res = transInv * p;
-    return res;
-}
-
-Point Entity::globalToLocal(const Point& p)const {
     Point res = trans * p;
     return res;
 }
 
+Point Entity::globalToLocal(const Point& p)const {
+    Point res = transInv * p;
+    return res;
+}
+
 Vector Entity::localToGlobal(const Vector& v)const {
-    Vector vec = transInv * v;
+    Vector vec = trans * v;
     return vec;
 }
 
 Vector Entity::globalToLocal(const Vector& v)const {
-    Vector res = trans * v;
+    Vector res = transInv * v;
     return res;
 }
 
@@ -102,4 +95,8 @@ Ray Entity::globalToLocal(const Ray& r)const {
     Point origin = globalToLocal(r.origin);
     Vector vector = globalToLocal(r.vector);
     return Ray(origin, vector);
+}
+
+void Entity::printTransform() const {
+    std::cout << trans <<std::endl;
 }

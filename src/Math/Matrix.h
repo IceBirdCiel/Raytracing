@@ -24,3 +24,5 @@ private:
     std::array<std::array<float, 4>, 4> _tab;
 };
 
+
+std::ostream& operator<<(std::ostream& os, const Matrix& v);

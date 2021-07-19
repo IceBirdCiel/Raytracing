@@ -8,7 +8,7 @@
 class Sphere : public Object
 {
 public:
-	Sphere(float rayon, Vector center, Material mat);
+    Sphere(Vector pos, Vector rot, float scale, Material mat);
 	Sphere();
 	Material getMaterial(const Point& p)const;
 	Ray getNormals(const Point& p, const Point& o)const;

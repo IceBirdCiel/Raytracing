@@ -7,7 +7,7 @@
 class Entity
 {
 public:
-    Entity(Vector pos, Vector rot, Vector s);
+    Entity(Vector pos, Vector rot, Vector scale);
     Entity();
     virtual ~Entity() = default;
 
@@ -15,7 +15,7 @@ public:
     void rotateX(float deg);
     void rotateY(float deg);
     void rotateZ(float deg);
-    void scale(float factor);
+    void scale(Vector s);
 
     Point localToGlobal(const Point& p)const;
     Point globalToLocal(const Point& p)const;
@@ -26,11 +26,11 @@ public:
     Ray localToGlobal(const Ray& r)const;
     Ray globalToLocal(const Ray& r)const;
 
+    void printTransform() const;
+
 private:
-    Vector position;
-    Vector rotation;
-    Vector size;
     Matrix trans;
     Matrix transInv;
+
 
 };
