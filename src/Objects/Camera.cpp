@@ -29,6 +29,7 @@ Ray Camera::getRay(float x, float y) {
 
     Vector rayOrigin(rayOriginX, rayOriginY, 0);
     Vector finalDirection = (focalPoint - rayOrigin).normalized();
+    std::cout << Ray(Point(rayOriginX, rayOriginY, 0), finalDirection) << std::endl;
 
     return localToGlobal(Ray(Point(rayOriginX,rayOriginY, 0), finalDirection));
 

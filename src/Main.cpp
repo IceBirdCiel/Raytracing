@@ -1,4 +1,4 @@
-#include <iostream>
+    #include <iostream>
 #include "Math/Vector.h"
 #include "Math/Matrix.h"
 #include "Rendering/Image.h"
@@ -28,7 +28,10 @@ int main(int argc, char** argv) {
     Color hit(1,0,0);
     for(int y = 0; y < 128; ++y){
         for(int x = 0; x < 128; ++x){
-            Ray ray = cam.getRay(x/128*2-1,y/128*2-1);
+            float rayX = x/128.0*2-1;
+            float rayY = y/128.0*2-1;
+            //std::cout << rayX << ", " << rayY << std::endl;
+            Ray ray = cam.getRay(rayX, rayY);
             Point impact;
             if(sphere.intersect(ray, impact)){
                 renderImage.setColor(x,y,hit);
