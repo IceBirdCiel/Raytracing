@@ -1,9 +1,6 @@
-#define __RAYTRACER_CPP__
-#ifdef __RAYTRACER_CPP__
+#pragma once
 
 class Raytracer
 {
 
 };
-
-#endif

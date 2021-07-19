@@ -1,5 +1,4 @@
-#define __OBJECT_CPP__
-#ifdef __OBJECT_CPP__
+#pragma once
 #include "./Entity.h"
 #include "../Materials/Material.h"
 #include "../Math/Ray.h"
@@ -19,6 +18,3 @@ public:
 private:
     Material mat;
 };
-
-
-#endif //__ENTITY_CPP__

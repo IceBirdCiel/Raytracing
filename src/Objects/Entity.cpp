@@ -2,8 +2,11 @@
 
 Entity::Entity(Vector pos, Vector rot, Vector s):
         position(pos),
-        rotation(rot),
-        size(s){}
+        size(s){
+    rotateX(rot[0]);
+    rotateY(rot[1]);
+    rotateZ(rot[2]);
+}
 
 Entity::Entity() : position(0, 0, 0),
                    rotation(0, 0, 0),

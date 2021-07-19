@@ -2,8 +2,7 @@
 // Created by Antoine on 17/07/2021.
 //
 
-#ifndef IMAGE_H
-#define IMAGE_H
+#pragma once
 #include <string>
 #include "../Materials/Color.h"
 
@@ -30,5 +29,3 @@ private:
     void fillImage(const Color& c);
 };
 
-
-#endif //IMAGE_H
