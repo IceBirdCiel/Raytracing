@@ -10,5 +10,6 @@ public:
     Ray(float ox, float oy,float oz, float vx, float vy,float vz);
     Ray(Point o, Vector v);
     Ray();
+    friend std::ostream& operator<<(std::ostream& os, const Ray& ray);
 };
 
