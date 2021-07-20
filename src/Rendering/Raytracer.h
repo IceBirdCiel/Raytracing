@@ -15,9 +15,10 @@ public:
 private:
 
     Color getColorForRay(Ray ray, const Scene& scene) const;
-
+    [[nodiscard]] float InterleavedGradientNoise(float x, float y) const;
 
     Camera _camera;
     Color _backgroundColor;
     int _sampleCount;
+
 };

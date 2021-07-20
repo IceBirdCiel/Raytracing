@@ -26,9 +26,10 @@ void Raytracer::render(const Scene& scene, Image& image) const{
             float g = 0;
             float b = 0;
 
+            float random = InterleavedGradientNoise(x,y);
             //multisampling
             for (int i = 0; i < _sampleCount; ++i) {
-                Ray ray = _camera.getRay(viewportX,viewportY);
+                Ray ray = _camera.getRay(viewportX,viewportY, random);
                 Color c = getColorForRay(ray,scene);
                 r += c.r;
                 g += c.g;
@@ -64,6 +65,7 @@ Color Raytracer::getColorForRay(Ray ray, const Scene& scene) const {
         }*/
 
         Ray normal = obj->getNormals(impact,ray.origin);
+
         Material material = obj->getMaterial(impact);
 
 
@@ -72,7 +74,7 @@ Color Raytracer::getColorForRay(Ray ray, const Scene& scene) const {
         float lightLinear = 1.0f;
         float lightQuadratic = 0.3f;
 
-        //SPOT LIGHT LIGHTING
+        //POINT LIGHT LIGHTING
         //NEEDS TO END UP INSIDE OF RAYTRACER CLASS OR AT LEAST IN A FUNCTION
 
         Vector impactPos(normal.origin[0],normal.origin[1],normal.origin[2]);
@@ -108,3 +110,9 @@ void Raytracer::setSampleCount(int samples) {
     _sampleCount = samples;
 }
 
+float Raytracer::InterleavedGradientNoise(float x, float y) const {
+    Vector pos(x,y,0);
+    Vector magic = Vector(0.06711056, 0.00583715, 52.9829189);
+    double integralPart = 0;
+    return modf(magic[0] * modf(pos.dot(Vector(magic[0],magic[1],magic[2])), &integralPart), &integralPart);
+}

@@ -43,7 +43,7 @@ bool Sphere::intersect(const Ray & ray, Point& impact)const {
 	else{
         float t1 = (-b - sqrt(delta))/(2*a);
         float t2 = (-b + sqrt(delta))/(2*a);
-        float res;
+        float res = 0;
         if(t1 < 0){
             res = t2;
         }

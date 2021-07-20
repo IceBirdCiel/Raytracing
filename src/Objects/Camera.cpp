@@ -4,7 +4,8 @@
 
 #include "Camera.h"
 #include <iostream>
-#include "../Math/Ray.h"
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 Camera::Camera(Vector pos, Vector rot, float focalLength, float aperture, float focalPoint): Entity(pos, rot, Vector(1,1,1)), m_focalLength(focalLength), m_focalPlaneDist(focalPoint), m_aperture(aperture) {
 
@@ -15,7 +16,13 @@ void Camera::setSensorSize(float sizeX, float sizeY) {
     m_sensorWidth = sizeX;
 }
 
-Ray Camera::getRay(float x, float y) const {
+
+void Camera::setupForRay(int samplecount, float random) {
+    _sampleCount = samplecount;
+    _random = random;
+}
+
+Ray Camera::getRay(float x, float y, int sampleIndex) const {
 
 
     ///x & y appartiennent à [-1,1]
@@ -26,18 +33,43 @@ Ray Camera::getRay(float x, float y) const {
     Vector direction = viewLocalPos.normalized();
     Vector focalPoint = direction*m_focalPlaneDist;
 
+
+    Vector randomStartPosition = VogelDiskSample(sampleIndex, _sampleCount, _random);
+    float radius = (m_focalLength/m_aperture/1000)/2;
     //adding the randomness of the aperture to get the depth of field effect
     //to disable this effect, set the apperture to a high value like 22 or more
-    double a = rand() * 2 * 3.141592654;
-    double r = (m_focalLength/m_aperture/1000)/2 * sqrt(rand());
-    double rayOriginX = r*cos(a);
-    double rayOriginY = r*sin(a);
+    /*
+    double a = randomDistribution(generator) * 2 * M_PI;
+    double r = 1 * sqrt(randomDistribution(generator));
+    float rayOriginX = r*cos(a);
+    float rayOriginY = r*sin(a);*/
 
-    Vector rayOrigin(rayOriginX, rayOriginY, 0);
-    Vector finalDirection = (focalPoint - rayOrigin).normalized();
+    //std::cout << "a = " << a << ", r = " << r << ", rayOriginX = " << rayOriginX << ", rayOriginY = " << rayOriginY << std::endl;
+    //float finalX = randomStartPosition[0] * radius;
+    //float finalY = randomStartPosition[1] * radius;
+    //Vector rayOrigin(finalX, finalY, 0);
+    //Vector finalDirection = (focalPoint - rayOrigin).normalized();
 
     //std::cout << Ray(Point(0,0, 0), direction) << std::endl;
 
-    return localToGlobal(Ray(Point(rayOriginX,rayOriginY, 0), finalDirection));
-    //return localToGlobal(Ray(Point(0,0, 0), direction));
+    //return localToGlobal(Ray(Point(finalX,finalY, 0), finalDirection));
+    return localToGlobal(Ray(Point(0,0, 0), direction));
+}
+
+Vector Camera::VogelDiskSample(int sampleIndex, int samples, float phi) const {
+    float GoldenAngle = 2.4F;
+
+    float r = sqrt(sampleIndex + 0.5F) / sqrt(samples);
+    float theta = sampleIndex * GoldenAngle + phi;
+
+    float sine = sin(theta);
+    float cosine = cos(theta);
+
+    return Vector(r * cosine, r * sine,0);
+}
+
+float Camera::InterleavedGradientNoise(Vector pos) const {
+    Vector magic = Vector(0.06711056, 0.00583715, 52.9829189);
+    double integralPart = 0;
+    return modf(magic[0] * modf(pos.dot(Vector(magic[0],magic[1],magic[2])), &integralPart), &integralPart);
 }
