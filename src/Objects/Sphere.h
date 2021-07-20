@@ -15,8 +15,6 @@ public:
 	bool intersect(const Ray& ray, Point& impact)const override;
 
 private:
-	float rayon;
 	Material mat;
-	Vector center;
 };
 

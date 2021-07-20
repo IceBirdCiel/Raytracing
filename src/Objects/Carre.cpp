@@ -1,8 +1,10 @@
 #include "Carre.h"
 
-Carre::Carre(Vector pos, Vector rot, float size, float width, float height, Material mat) : Object(pos,rot,size,mat){}
+Carre::Carre(Vector pos, Vector rot, float scale, Material mat) : Object(pos,rot,scale,mat){
+	this->mat = mat;
+}
 
-Carre::Carre() {}
+Carre::Carre(): Object(Vector(0, 0, 0), Vector(0, 0, 0), 1, Material()) {}
 
 Material Carre::getMaterial(const Point& p)const {
 	return this->mat;

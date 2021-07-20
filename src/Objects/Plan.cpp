@@ -1,6 +1,8 @@
 #include "Plan.h"
 
-Plan::Plan(Vector pos, Vector rot, Material mat):Object(pos,rot,1,mat) {}
+Plan::Plan(Vector pos, Vector rot, Material mat):Object(pos,rot,1,mat) {
+	this->mat = mat;
+}
 
 Plan::Plan():Object(Vector(),Vector(),1,Material()) {}
 

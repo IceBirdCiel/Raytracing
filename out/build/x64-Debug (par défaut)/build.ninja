@@ -171,6 +171,14 @@ build CMakeFiles\Raytracing.dir\src\Rendering\Skybox.cpp.obj: CXX_COMPILER__Rayt
   TARGET_COMPILE_PDB = CMakeFiles\Raytracing.dir\
   TARGET_PDB = Raytracing.pdb
 
+build CMakeFiles\Raytracing.dir\src\Objects\Cube.cpp.obj: CXX_COMPILER__Raytracing_Debug ..\..\..\src\Objects\Cube.cpp || cmake_object_order_depends_target_Raytracing
+  FLAGS = /DWIN32 /D_WINDOWS /GR /EHsc /Zi /Ob0 /Od /RTC1 -MDd -std:c++latest
+  INCLUDES = -I..\..\..\vendor\stb
+  OBJECT_DIR = CMakeFiles\Raytracing.dir
+  OBJECT_FILE_DIR = CMakeFiles\Raytracing.dir\src\Objects
+  TARGET_COMPILE_PDB = CMakeFiles\Raytracing.dir\
+  TARGET_PDB = Raytracing.pdb
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Raytracing
@@ -179,7 +187,7 @@ build CMakeFiles\Raytracing.dir\src\Rendering\Skybox.cpp.obj: CXX_COMPILER__Rayt
 #############################################
 # Link the executable Raytracing.exe
 
-build Raytracing.exe: CXX_EXECUTABLE_LINKER__Raytracing_Debug CMakeFiles\Raytracing.dir\src\Main.cpp.obj CMakeFiles\Raytracing.dir\src\Math\Vector.cpp.obj CMakeFiles\Raytracing.dir\src\Math\Point.cpp.obj CMakeFiles\Raytracing.dir\src\Math\Ray.cpp.obj CMakeFiles\Raytracing.dir\src\Math\Matrix.cpp.obj CMakeFiles\Raytracing.dir\src\Materials\Color.cpp.obj CMakeFiles\Raytracing.dir\src\Objects\Entity.cpp.obj CMakeFiles\Raytracing.dir\src\Objects\Light.cpp.obj CMakeFiles\Raytracing.dir\src\Materials\Material.cpp.obj CMakeFiles\Raytracing.dir\src\Objects\Camera.cpp.obj CMakeFiles\Raytracing.dir\src\Scene\Scene.cpp.obj CMakeFiles\Raytracing.dir\src\Objects\Plan.cpp.obj CMakeFiles\Raytracing.dir\src\Rendering\Raytracer.cpp.obj CMakeFiles\Raytracing.dir\src\Rendering\Image.cpp.obj CMakeFiles\Raytracing.dir\src\Objects\Sphere.cpp.obj CMakeFiles\Raytracing.dir\src\Rendering\Skybox.cpp.obj
+build Raytracing.exe: CXX_EXECUTABLE_LINKER__Raytracing_Debug CMakeFiles\Raytracing.dir\src\Main.cpp.obj CMakeFiles\Raytracing.dir\src\Math\Vector.cpp.obj CMakeFiles\Raytracing.dir\src\Math\Point.cpp.obj CMakeFiles\Raytracing.dir\src\Math\Ray.cpp.obj CMakeFiles\Raytracing.dir\src\Math\Matrix.cpp.obj CMakeFiles\Raytracing.dir\src\Materials\Color.cpp.obj CMakeFiles\Raytracing.dir\src\Objects\Entity.cpp.obj CMakeFiles\Raytracing.dir\src\Objects\Light.cpp.obj CMakeFiles\Raytracing.dir\src\Materials\Material.cpp.obj CMakeFiles\Raytracing.dir\src\Objects\Camera.cpp.obj CMakeFiles\Raytracing.dir\src\Scene\Scene.cpp.obj CMakeFiles\Raytracing.dir\src\Objects\Plan.cpp.obj CMakeFiles\Raytracing.dir\src\Rendering\Raytracer.cpp.obj CMakeFiles\Raytracing.dir\src\Rendering\Image.cpp.obj CMakeFiles\Raytracing.dir\src\Objects\Sphere.cpp.obj CMakeFiles\Raytracing.dir\src\Rendering\Skybox.cpp.obj CMakeFiles\Raytracing.dir\src\Objects\Cube.cpp.obj
   FLAGS = /DWIN32 /D_WINDOWS /GR /EHsc /Zi /Ob0 /Od /RTC1 -MDd
   LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib

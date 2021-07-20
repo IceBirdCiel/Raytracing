@@ -8,7 +8,7 @@ class Object : public Entity
 public:
 
     Object(){}
-    Object(Material mat):m_mat(mat){}
+    //Object(Material mat):m_mat(mat){}
     Object(Vector pos, Vector rot, float scale, Material mat):Entity(pos,rot,Vector(scale,scale,scale)), m_mat(mat){}
 
     [[nodiscard]] virtual Material getMaterial(const Point& p) const = 0;

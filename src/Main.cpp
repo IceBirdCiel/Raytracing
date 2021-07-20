@@ -4,7 +4,9 @@
 #include "Rendering/Image.h"
 #include "Rendering/Raytracer.h"
 #include "Objects/Sphere.h"
+#include "Objects/Cube.h"
 #include "Objects/Plan.h"
+#include "Objects/Carre.h"
 #include "Objects/Camera.h"
 #include "Materials/Material.h"
 #include "Scene/Scene.h"
@@ -30,13 +32,14 @@ int main(int argc, char** argv) {
     Material black(ambient,Color(0,0, 0),specular,0.1);
     Material white(ambient, Color(1, 1, 1), specular, 0.1);
 
-    scene.addObject(new Sphere(Vector(0, 0, 0),Vector(),1.5f,green));
+    Object* cube = new Cube(Vector(0, -1, 0), Vector(50,0,0), 1.f, green);
+    scene.addObject(cube);
     scene.addObject(new Sphere(Vector(1.2, -0.5, -3),Vector(),1.5f,red));
+    scene.addObject(new Carre(Vector(0, 0, -1),Vector(),1.f,magenta));
+    scene.addObject(new Plan(Vector(0, 0, -2),Vector(-90,0,0),white));
     scene.addObject(new Sphere(Vector(-1.9, -0.5, -1), Vector(), 1.0f, white));
     scene.addObject(new Sphere(Vector(2, 2.0, -2.5), Vector(), 0.5f, yellow));
     scene.addObject(new Sphere(Vector(-1.9, 1.9, 0),Vector(),0.85f,blue));
-    //scene.addObject(new Plan(Vector(0, 0, 0),Vector(0,0,0),green));
-    //scene.addObject(new Plan(Vector(0, 0, 50), Vector(90,0,0), white));
 
     scene.addLight(Light(Vector(0,8,-5),Vector(),1, Color(0,0,0), Color(1,1,1), Color(1,1,1)));
 
