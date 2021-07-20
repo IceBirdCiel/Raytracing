@@ -1,14 +1,14 @@
 #include "Material.h"
 
 Material::Material(Color a, Color d, Color s, float sh):
-        ka(a),
-        kd(d),
-        ks(s),
+        ambient(a),
+        diffuse(d),
+        specular(s),
         shininess(sh){}
 
 Material::Material() {
-    this->ka = Color(0, 0, 0);
-    this->kd = Color(0, 0, 0);
-    this->ks = Color(0, 0, 0);
+    this->ambient = Color(0, 0, 0);
+    this->diffuse = Color(0, 0, 0);
+    this->specular = Color(0, 0, 0);
     this->shininess = 0;
 }

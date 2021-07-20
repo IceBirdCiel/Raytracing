@@ -6,12 +6,14 @@ Color::Color(float R, float G, float B): r(std::clamp(R, 0.0f, 1.0f)), g(std::cl
 {
 }
 
-Color Color::multiply(const Color& c) const
-{
-    float r = this->r * c.r;
-    float g = this->g * c.g;
-    float b = this->b * c.b;
-
-    return Color(r,g,b);
+Color Color::operator*(float value) const {
+    return Color(r*value,g*value,b*value);
 }
 
+Color Color::operator*(const Color& c) const {
+    return Color(r*c.r,g*c.g,b*c.b);
+}
+
+Color Color::operator+(const Color& c) const {
+    return Color(r + c.r, g + c.g, b + c.b);
+}

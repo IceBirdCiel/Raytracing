@@ -8,19 +8,17 @@
 class Light: public Entity
 {
 public:
-    Light(Vector pos, Vector rot, Vector s);
+    Light(Vector pos, Vector rot, float scale, Color a, Color d, Color s);
     Ray getRayToLight(const Point& p)const;
     Ray getRayFromLight(const Point& p)const;
     Vector getVectorToLight(const Point& p)const;
     Vector getVectorFromLight(const Point& p)const;
 
-    Color id;
-    Color is;
+    Color ambient;
+    Color diffuse;
+    Color specular;
 
 private:
-    Vector position;
-    Vector rotation;
-    Vector size;
     Matrix trans;
     Matrix transInv;
 };

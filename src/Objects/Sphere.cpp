@@ -10,22 +10,10 @@ Material Sphere::getMaterial(const Point& p)const {
 	return this->mat;
 }
 
-Ray Sphere::getNormals(const Point& p, const Point& o)const {
-	Point obs = globalToLocal(o);
-	Point imp = globalToLocal(p);
-
-	Ray ray;
-	float distance = 
-		sqrt(obs[0] * obs[0] + obs[1] * obs[1] + obs[2] * obs[2]);
-
-	ray.origin = p;
-
-	if (distance < 1) ray.vector = imp * -1;
-	else ray.vector = imp;
-
-	ray.vector = ray.vector.normalized();
-
-	return ray;
+Ray Sphere::getNormals(const Point& impact, const Point& observer) const {
+	Point obs = globalToLocal(observer);
+	Point imp = globalToLocal(impact);
+	return Ray(impact,sqrt(pow(obs[0],2) + pow(obs[1],2) + pow(obs[2],2)) < 1 ? Vector(-imp[0],-imp[1],-imp[2]) : Vector(imp[0],imp[1],imp[2]));
 }
 
 bool Sphere::intersect(const Ray & ray, Point& impact)const {

@@ -7,9 +7,9 @@ public:
     Material(Color a, Color d, Color s, float sh);
     Material();
 
-    Color ka;
-    Color kd;
-    Color ks;
+    Color ambient;
+    Color diffuse;
+    Color specular;
     float shininess;
 };
 

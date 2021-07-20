@@ -25,6 +25,11 @@ public:
 
     Ray localToGlobal(const Ray& r)const;
     Ray globalToLocal(const Ray& r)const;
+    Vector right() const;
+    Vector up() const;
+    Vector forward() const;
+
+    Vector getPosition() const;
 
     void printTransform() const;
 

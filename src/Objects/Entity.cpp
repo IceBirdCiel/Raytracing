@@ -100,3 +100,17 @@ Ray Entity::globalToLocal(const Ray& r)const {
 void Entity::printTransform() const {
     std::cout << trans <<std::endl;
 }
+
+Vector Entity::getPosition() const {
+    return localToGlobal(Vector(0,0,0));
+}
+
+Vector Entity::right() const {
+    return localToGlobal(Vector(1,0,0));
+}
+Vector Entity::up() const {
+    return localToGlobal(Vector(0,1,0));
+}
+Vector Entity::forward() const {
+    return localToGlobal(Vector(0,0,1));
+}
