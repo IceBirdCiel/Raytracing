@@ -18,11 +18,11 @@ public:
     int nbLights() const;
     [[nodiscard]] const Light getLight(int index) const;
     void addLight(Light light);
-    void addObject(Sphere object);
-    bool closestObjectIntersected(Ray ray, Sphere& object, Point& closestImpact) const ;
+    void addObject(Object* object);
+    Object* closestObjectIntersected(Ray ray, Point& closestImpact) const ;
 private:
     std::vector<Light> _lights;
-    std::vector<Sphere> _objects;
+    std::vector<Object*> _objects;
     Color _background;
     Color _ambiant;
 };

@@ -7,7 +7,7 @@ class Camera : public Entity {
 public:
     Camera(Vector pos, Vector rot, float focalLength, float aperture, float focalPoint);
     void setSensorSize(float sizeX, float sizeY);
-    Ray getRay(float x, float y);
+    Ray getRay(float x, float y) const;
 private:
     float m_focalLength = 24;//the distance between the camera origin and the sensor in millimeters
     float m_aperture = 5.6;//the ratio of the focal length over the diaphragm's diameter

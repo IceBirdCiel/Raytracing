@@ -34,27 +34,33 @@ void Scene::addLight(Light light)
     _lights.emplace_back(light);
 }
 
-void Scene::addObject(Sphere object) {
+void Scene::addObject(Object* object) {
     _objects.emplace_back(object);
 }
 
-bool Scene::closestObjectIntersected(Ray ray, Sphere& object, Point& closestImpact) const {
-    float distance = INT8_MAX;
+Object* Scene::closestObjectIntersected(Ray ray, Point& closestImpact) const {
+    float distance = INT16_MAX;
+    Object* Lior;
     Point impact;
-    bool hit = false;
-    for (int i = 1; i < _objects.size(); ++i) {
-        Sphere obj = _objects[i];
-        if(obj.intersect(ray, impact)){
-            hit = true;
+    bool collisionDetected = false;
+    for (int i = 0; i < _objects.size(); ++i) {
+        Object* objectToIntersect = _objects[i];
+        if(objectToIntersect->intersect(ray, impact)){
             Vector diff(ray.origin[0] - impact[0], ray.origin[1] - impact[1], ray.origin[2] - impact[2]);
             float dist = diff.norm();
             if(dist < distance){
-                object = obj;
-                distance = dist;
+                Lior = objectToIntersect;
                 closestImpact = impact;
+
+                distance = dist;
             }
+            collisionDetected = true;
         }
     }
-    return hit;
+    if(collisionDetected){
+        return Lior;
+    }else{
+        return nullptr;
+    }
 }
 

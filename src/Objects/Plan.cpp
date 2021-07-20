@@ -1,19 +1,8 @@
 #include "Plan.h"
 
-Plan::Plan(Vector pos, Vector rot, Material mat) {
-	translate(pos[0], pos[1], pos[2]);
-	rotateX(rot[0]);
-	rotateY(rot[1]);
-	rotateZ(rot[2]);
-	this->mat = mat;
-}
+Plan::Plan(Vector pos, Vector rot, Material mat):Object(pos,rot,1,mat) {}
 
-Plan::Plan() {
-	translate(0, 0, 0);
-	rotateX(0);
-	rotateY(0);
-	rotateZ(0);
-}
+Plan::Plan():Object(Vector(),Vector(),1,Material()) {}
 
 Material Plan::getMaterial(const Point& p)const {
 	return this->mat;
