@@ -1,4 +1,4 @@
-    #include <iostream>
+#include <iostream>
 #include "Math/Vector.h"
 #include "Math/Matrix.h"
 #include "Rendering/Image.h"
@@ -56,6 +56,6 @@ int main(int argc, char** argv) {
     raytracer.setSampleCount(1);
 
     raytracer.render(scene, renderImage);
-renderImage.save("render");
+    renderImage.save("render");
 
 }

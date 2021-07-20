@@ -12,6 +12,5 @@ public:
 
 private:
 	Material mat;
-	float width, height;
 };
 

@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <iostream>
 
-Color::Color(float R, float G, float B): r(std::clamp(R, 0.0f, 1.0f)), g(std::clamp(G, 0.0f, 1.0f)), b(std::clamp(B, 0.0f, 1.0f))
+Color::Color(float R, float G, float B) : r(std::clamp(R, 0.0f, 1.0f)), g(std::clamp(G, 0.0f, 1.0f)), b(std::clamp(B, 0.0f, 1.0f))
 {
 }
 

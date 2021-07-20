@@ -1,0 +1,22 @@
+# ninja log v5
+13	1309	648516684	CMakeFiles/Raytracing.dir/src/Math/Vector.cpp.obj	4535b1f975ba7377
+42	1355	648516684	CMakeFiles/Raytracing.dir/src/Materials/Color.cpp.obj	bf9005acd0136096
+30	1373	648516684	CMakeFiles/Raytracing.dir/src/Math/Ray.cpp.obj	b9235b5fb23729b8
+20	1412	648516684	CMakeFiles/Raytracing.dir/src/Math/Point.cpp.obj	e666356792bd0ae4
+52	1521	648516684	CMakeFiles/Raytracing.dir/src/Objects/Entity.cpp.obj	6da7fe7804561e25
+2	1616	648516684	CMakeFiles/Raytracing.dir/src/Main.cpp.obj	c5becafc92ea0e52
+1413	1742	648516684	CMakeFiles/Raytracing.dir/src/Materials/Material.cpp.obj	cfa0297512b36303
+1522	2436	648516685	CMakeFiles/Raytracing.dir/src/Rendering/Skybox.cpp.obj	8e37777df36d9642
+1355	2556	648516685	CMakeFiles/Raytracing.dir/src/Objects/Camera.cpp.obj	51ae7131c3d38caa
+1374	2644	648516685	CMakeFiles/Raytracing.dir/src/Objects/Light.cpp.obj	665c034f46376b00
+1311	2961	648516686	CMakeFiles/Raytracing.dir/src/Math/Matrix.cpp.obj	b9909a8cdcfec406
+1617	3013	648516686	CMakeFiles/Raytracing.dir/src/Scene/Scene.cpp.obj	1f6321749d2eac37
+1742	3124	648516686	CMakeFiles/Raytracing.dir/src/Rendering/Raytracer.cpp.obj	a8b641981ac3911f
+2436	3503	648516686	CMakeFiles/Raytracing.dir/src/Objects/Sphere.cpp.obj	3b4cee3c54461d54
+2645	3661	648516686	CMakeFiles/Raytracing.dir/src/Objects/Plan.cpp.obj	52a335fdad8ad250
+2558	3960	648516687	CMakeFiles/Raytracing.dir/src/Rendering/Image.cpp.obj	a2e18a729123d94c
+3961	4531	648516687	Raytracing.exe	4100221b43eba193
+2	976	648516758	CMakeFiles/Raytracing.dir/src/Main.cpp.obj	c5becafc92ea0e52
+979	1368	648516759	Raytracing.exe	4100221b43eba193
+2	988	648516898	CMakeFiles/Raytracing.dir/src/Main.cpp.obj	c5becafc92ea0e52
+989	1388	648516899	Raytracing.exe	4100221b43eba193

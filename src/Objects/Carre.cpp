@@ -1,21 +1,8 @@
 #include "Carre.h"
 
-Carre::Carre(Vector pos, Vector rot, float size, float width, float height, Material mat) {
-	translate(pos[0], pos[1], pos[2]);
-	rotateX(rot[0]);
-	rotateY(rot[1]);
-	rotateZ(rot[2]);
-	scale(size);
+Carre::Carre(Vector pos, Vector rot, float size, float width, float height, Material mat) : Object(pos,rot,size,mat){}
 
-	this->width = width;
-	this->height = height;
-	this->mat = mat;
-}
-
-Carre::Carre() {
-	this->width = 0;
-	this->height = 0;
-}
+Carre::Carre() {}
 
 Material Carre::getMaterial(const Point& p)const {
 	return this->mat;
