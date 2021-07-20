@@ -11,14 +11,9 @@ public:
     Object(Material mat):m_mat(mat){}
     Object(Vector pos, Vector rot, float scale, Material mat):Entity(pos,rot,Vector(scale,scale,scale)), m_mat(mat){}
 
-    virtual Material getMaterial(const Point& p)const {
-        Color white(1,1,1);
-        return Material(white,white,white,1);
-    };
-    virtual Ray getNormal(const Point& p)const {
-        return Ray(Point(0,0,0), Vector(1,1,1));
-    };
-    virtual bool intersect(const Ray& ray, Point& impact)const {return false;};
+    [[nodiscard]] virtual Material getMaterial(const Point& p) const = 0;
+    [[nodiscard]] virtual Ray getNormals(const Point& p, const Point& o)const = 0;
+    virtual bool intersect(const Ray& ray, Point& impact)const = 0;
 
 private:
     Material m_mat{};

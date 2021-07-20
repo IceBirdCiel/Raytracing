@@ -3,10 +3,12 @@
 #include <vector>
 #include "../Materials/Color.h"
 #include "../Objects/Light.h"
+#include "../Objects/Sphere.h"
 
 class Scene
 {
 public:
+    Scene(){};
     Color getBackground() const;
     Color getAmbiant() const;
 
@@ -14,11 +16,13 @@ public:
     void setBackground(Color color);
 
     int nbLights() const;
-    const Light* getLight(int index) const;
-    void addLight(Light* light);
-    // todo object* closer_intersected
+    [[nodiscard]] const Light* getLight(int index) const;
+    void addLight(const Light& light);
+    void addObject(const Sphere& object);
+    bool closestObjectIntersected(Ray ray, Sphere& object, Point& closestImpact) const ;
 private:
     std::vector<Light*> _lights;
+    std::vector<Sphere*> _objects;
     Color _background;
     Color _ambiant;
 };

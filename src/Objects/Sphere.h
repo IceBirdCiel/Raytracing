@@ -10,9 +10,9 @@ class Sphere : public Object
 public:
     Sphere(Vector pos, Vector rot, float scale, Material mat);
 	Sphere();
-	Material getMaterial(const Point& p)const;
-	Ray getNormals(const Point& p, const Point& o)const;
-	bool intersect(const Ray& ray, Point& impact)const;
+    [[nodiscard]] Material getMaterial(const Point& p)const override;
+	[[nodiscard]] Ray getNormals(const Point& p, const Point& o)const override;
+	bool intersect(const Ray& ray, Point& impact)const override;
 
 private:
 	float rayon;
