@@ -54,7 +54,7 @@ Color Image::getColor(int x, int y) const {
     uint8_t r = m_rgb_image[dataPos];
     uint8_t g = m_rgb_image[dataPos+1];
     uint8_t b = m_rgb_image[dataPos+2];
-    std::cout << "getColor (" << (int)r << ", " << (int)g << ", " << (int)b << ")" << std::endl;
+    //std::cout << "getColor (" << (int)r << ", " << (int)g << ", " << (int)b << ")" << std::endl;
     return Color(r/256.0f, g/256.0f, b/256.0f);
 }
 

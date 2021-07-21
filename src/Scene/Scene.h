@@ -4,6 +4,7 @@
 #include "../Materials/Color.h"
 #include "../Objects/Light.h"
 #include "../Objects/Sphere.h"
+#include "../Rendering/Image.h"
 
 class Scene
 {

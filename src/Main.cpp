@@ -1,4 +1,4 @@
-    #include <iostream>
+#include <iostream>
 #include "Math/Vector.h"
 #include "Math/Matrix.h"
 #include "Rendering/Image.h"
@@ -7,6 +7,7 @@
 #include "Objects/Camera.h"
 #include "Materials/Material.h"
 #include "Scene/Scene.h"
+#include "Rendering/Skybox.h"
 #include <algorithm>
 
 int main(int argc, char** argv) {
@@ -16,6 +17,8 @@ int main(int argc, char** argv) {
     //                   THE REAL SHIT
 
     Scene scene;
+    scene.setBackground(Color(0.2, 0.2, 1));
+    Skybox skybox("phalzer_forest_01.png");
 
     Color ambient(0.2,0.2,0);
     Color diffuse(1,0,0);
@@ -102,10 +105,16 @@ int main(int argc, char** argv) {
 
                 //std::cout << normal << std::endl;
                 renderImage.setColor(x,y,finalColor);
+            } else {
+                // plain color
+                //renderImage.setColor(x, y, scene.getBackground());
+
+                // skybox
+                renderImage.setColor(x, y, skybox.getColor(ray));
             }
             pixelsProcessed++;
         }
-        /*
+
         progress = pixelsProcessed / (float)pixelsAmount;
         std::cout << "[";
         int pos = barWidth * progress;
@@ -115,8 +124,7 @@ int main(int argc, char** argv) {
             else std::cout << " ";
         }
         std::cout << "] " << int(progress * 100.0) << " %\r";
-        std::cout.flush();*/
-}
-renderImage.save("render");
-
+        std::cout.flush();
+    }
+    renderImage.save("render");
 }

@@ -57,4 +57,3 @@ bool Scene::closestObjectIntersected(Ray ray, Sphere& object, Point& closestImpa
     }
     return hit;
 }
-
