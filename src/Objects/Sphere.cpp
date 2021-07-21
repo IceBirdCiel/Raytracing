@@ -10,6 +10,7 @@ Ray Sphere::getNormals(const Point& impact, const Point& observer) const {
 	Vector v = sqrt(pow(obs[0], 2) + pow(obs[1], 2) + pow(obs[2], 2)) < 1 ? Vector(-imp[0], -imp[1], -imp[2]) : Vector(imp[0], imp[1], imp[2]);
 	Ray r(Point(0,0,0), v.normalized());
 	r = localToGlobal(r);
+    r.vector = r.vector.normalized();
 	return r;
 }
 

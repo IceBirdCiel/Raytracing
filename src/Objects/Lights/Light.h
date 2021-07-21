@@ -20,10 +20,6 @@ public:
     Color _ambient;
     Color _diffuse;
     Color _specular;
-
-private:
-    Matrix trans;
-    Matrix transInv;
 };
 
 
