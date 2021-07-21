@@ -63,4 +63,3 @@ Object* Scene::closestObjectIntersected(Ray ray, Point& closestImpact) const {
         return nullptr;
     }
 }
-
