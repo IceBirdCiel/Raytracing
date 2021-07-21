@@ -4,6 +4,7 @@ DirectionalLight::DirectionalLight(Vector pos, Vector rot, float scale, Color a,
 	Light(pos, rot, scale, a, d, s){}
 
 Color DirectionalLight::getLambert(const Ray& normal, Vector cameraForward, const Material& material) const {
+    //return Color(normal.vector[0], normal.vector[1], normal.vector[2]);
     Color ambiant = material.ambient * _ambient;
     Vector dir = this->forward();
     

@@ -6,7 +6,7 @@
 class Cube : public Object
 {
 public:
-	Cube(Vector pos, Vector rot, float size, Material mat);
+	Cube(const Vector& pos,const  Vector& rot, float size,const Material& mat);
 	Cube();
 	Material getMaterial(const Point& p)const;
 	Ray getNormals(const Point& p, const Point& o)const;

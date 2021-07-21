@@ -8,7 +8,7 @@
 class Carre : public Object
 {
 public:
-	Carre(Vector pos, Vector rot, float scale, Material mat);
+	Carre(const Vector& pos,const  Vector& rot, float scale,const  Material& mat);
 	Carre();
 	Material getMaterial(const Point& p)const;
 	Ray getNormals(const Point& p, const Point& o)const;
