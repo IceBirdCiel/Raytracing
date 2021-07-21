@@ -69,6 +69,8 @@ Color Raytracer::getColorForRay(Ray ray, const Scene& scene) const {
 
         Light* l = scene.getLight(0);
 
+    } else {
+        finalColor = scene.getBackground(ray);
     }
     return finalColor;
 }

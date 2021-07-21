@@ -13,6 +13,7 @@
 #include "Scene/Scene.h"
 #include "Objects/Lights/DirectionalLight.h"
 #include "Objects/Lights/SpotLight.h"
+#include "Rendering/Skybox.h"
 #include <algorithm>
 
 int main(int argc, char** argv) {
@@ -22,6 +23,10 @@ int main(int argc, char** argv) {
     //                   THE REAL SHIT
 
     Scene scene;
+    scene.setBackground(Color(0.2, 0.2, 1));
+    Skybox * skybox = new Skybox("phalzer_forest_01.png");
+    scene.setSkybox(skybox);
+
     Color specular(1,1,1);
 
     Material red(Color(1,0, 0),Color(1,0, 0),specular,5);

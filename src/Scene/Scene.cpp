@@ -10,8 +10,11 @@ void Scene::setAmbiant(Color color)
     _ambiant = color;
 }
 
-Color Scene::getBackground() const
+Color Scene::getBackground(const Ray& ray) const
 {
+    if(_skybox != nullptr){
+        return _skybox->getColor(ray);
+    }
     return _background;
 }
 
@@ -62,4 +65,8 @@ Object* Scene::closestObjectIntersected(Ray ray, Point& closestImpact) const {
     }else{
         return nullptr;
     }
+}
+
+void Scene::setSkybox(Skybox *skybox) {
+    _skybox = skybox;
 }
