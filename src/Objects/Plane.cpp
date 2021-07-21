@@ -1,14 +1,8 @@
 #include "Plane.h"
 
-Plane::Plane(Vector pos, Vector rot, Material mat):Object(pos,rot,1,mat) {
-	this->mat = mat;
-}
+Plane::Plane(Vector pos, Vector rot, Material mat):Object(pos,rot,Vector(1,1,1),mat) {}
 
-Plane::Plane():Object(Vector(),Vector(),1,Material()) {}
-
-Material Plane::getMaterial(const Point& p)const {
-	return this->mat;
-}
+Plane::Plane():Object() {}
 
 Ray Plane::getNormals(const Point& p, const Point& o)const {
 	Point point = globalToLocal(o);

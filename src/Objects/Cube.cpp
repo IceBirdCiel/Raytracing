@@ -1,14 +1,9 @@
 #include "Cube.h"
 
-Cube::Cube(const Vector& pos,const  Vector& rot, float size,const  Material& mat) : Object(pos,rot,size, mat) {
-    this->mat = mat;
-}
+Cube::Cube(const Vector& pos,const  Vector& rot, const Vector& size,const  Material& mat) : Object(pos,rot,size, mat) {}
 
 Cube::Cube() {}
 
-Material Cube::getMaterial(const Point& p)const {
-    return this->mat;
-}
 
 Ray Cube::getNormals(const Point& p, const Point& o)const {
     Vector n(0, 0, 0);

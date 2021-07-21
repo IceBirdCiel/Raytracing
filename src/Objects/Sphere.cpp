@@ -1,14 +1,8 @@
 #include "Sphere.h"
 
-Sphere::Sphere(const Vector&  pos, const Vector&  rot, float scale, const Material& mat): Object(pos,rot,scale,mat) {
-	this->mat = mat;
-}
+Sphere::Sphere(const Vector&  pos, const Vector&  rot, const Vector& scale, const Material& mat): Object(pos,rot,scale,mat) {}
 
-Sphere::Sphere(): Object(Vector(0,0,0),Vector(0,0,0),1,Material()){}
-
-Material Sphere::getMaterial(const Point& p)const {
-	return this->mat;
-}
+Sphere::Sphere(): Object(){}
 
 Ray Sphere::getNormals(const Point& impact, const Point& observer) const {
 	Point obs = globalToLocal(observer);

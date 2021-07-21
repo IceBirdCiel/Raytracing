@@ -1,14 +1,8 @@
 #include "Square.h"
 
-Square::Square(const Vector& pos,const  Vector& rot, float scale,const  Material& mat) : Object(pos,rot,scale,mat){
-	this->mat = mat;
-}
+Square::Square(const Vector& pos,const  Vector& rot, const Vector& scale,const  Material& mat) : Object(pos,rot,scale,mat){}
 
-Square::Square(): Object(Vector(0, 0, 0), Vector(0, 0, 0), 1, Material()) {}
-
-Material Square::getMaterial(const Point& p)const {
-	return this->mat;
-}
+Square::Square(): Object() {}
 
 Ray Square::getNormals(const Point& p, const Point& o)const {
 	Point point = globalToLocal(o);
@@ -44,5 +38,5 @@ bool Square::intersect(const Ray& ray, Point& impact)const {
 		impact = localToGlobal(impact);
 		return true;
 	}
-	else false;
+	else return false;
 }
