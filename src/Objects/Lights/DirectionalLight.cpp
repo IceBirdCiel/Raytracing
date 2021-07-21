@@ -23,11 +23,12 @@ Color DirectionalLight::getPhong(const Ray& normal, Vector cameraForward, const 
     
     Color specular(0,0,0);
 
-    Vector reflect = dir + (-normal.vector * 2 * dir.dot(-normal.vector));
-    float angle1 = pow(normal.vector.dot(reflect), material.shininess);
-    angle1 = (angle1 < 0) ? 0 : angle1;
-    specular = material.specular * _specular * angle1;
-
+    //Vector reflect = dir - normal.vector * ( 2 * dir.dot(normal.vector));
+    Vector reflect = normal.vector.normalized().reflect(dir);
+    //float spec = pow(material.shininess, cameraForward.dot(reflect));
+    float spec = pow(std::max(cameraForward.dot(reflect), 0.f), material.shininess);
+    //spec = (spec < 0) ? 0 : spec;
+    specular = material.specular * _specular * spec;
     Color phong = lambert + specular;
 
     return phong;

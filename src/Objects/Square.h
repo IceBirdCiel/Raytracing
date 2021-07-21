@@ -5,11 +5,11 @@
 #include "../Math/Vector.h"
 #include "../Math/Ray.h"
 
-class Carre : public Object
+class Square : public Object
 {
 public:
-	Carre(const Vector& pos,const  Vector& rot, float scale,const  Material& mat);
-	Carre();
+	Square(const Vector& pos,const  Vector& rot, float scale,const  Material& mat);
+	Square();
 	Material getMaterial(const Point& p)const;
 	Ray getNormals(const Point& p, const Point& o)const;
 	bool intersect(const Ray& ray, Point& impact)const;

@@ -15,6 +15,7 @@ public:
     Vector normalized() const;
     Vector cross(Vector v) const;
     float dot(Vector v) const;
+    Vector reflect(const Vector& v)const;
 
     float operator [](int index) const;
     float& operator [](int index);

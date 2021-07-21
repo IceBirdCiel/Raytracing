@@ -26,6 +26,10 @@ float Vector::dot(Vector v) const
     return m_x*v[0] + m_y * v[1] + m_z * v[2];
 }
 
+Vector Vector::reflect(const Vector& v)const{
+    return v - (*this) * (2 * v.dot((*this)));
+}
+
 float Vector::operator[](int index) const
 {
     if (index == 0) return m_x;

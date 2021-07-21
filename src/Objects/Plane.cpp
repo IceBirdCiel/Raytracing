@@ -1,16 +1,16 @@
-#include "Plan.h"
+#include "Plane.h"
 
-Plan::Plan(Vector pos, Vector rot, Material mat):Object(pos,rot,1,mat) {
+Plane::Plane(Vector pos, Vector rot, Material mat):Object(pos,rot,1,mat) {
 	this->mat = mat;
 }
 
-Plan::Plan():Object(Vector(),Vector(),1,Material()) {}
+Plane::Plane():Object(Vector(),Vector(),1,Material()) {}
 
-Material Plan::getMaterial(const Point& p)const {
+Material Plane::getMaterial(const Point& p)const {
 	return this->mat;
 }
 
-Ray Plan::getNormals(const Point& p, const Point& o)const {
+Ray Plane::getNormals(const Point& p, const Point& o)const {
 	Point point = globalToLocal(o);
 	Point imp = globalToLocal(p);
 	Ray ray;
@@ -27,7 +27,7 @@ Ray Plan::getNormals(const Point& p, const Point& o)const {
 	return ray;
 }
 
-bool Plan::intersect(const Ray& ray, Point& impact)const {
+bool Plane::intersect(const Ray& ray, Point& impact)const {
 	Ray r = globalToLocal(ray);
 	float oz = r.origin[2];
 	float vz = r.vector[2];

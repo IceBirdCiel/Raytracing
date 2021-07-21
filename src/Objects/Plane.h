@@ -3,11 +3,11 @@
 #include "Object.h"
 #include "../Math/Matrix.h"
 
-class Plan : public Object
+class Plane : public Object
 {
 public:
-    Plan(Vector pos, Vector rot, Material mat);
-    Plan();
+    Plane(Vector pos, Vector rot, Material mat);
+    Plane();
     Material getMaterial(const Point& p)const;
     Ray getNormals(const Point& p, const Point& o)const;
     bool intersect(const Ray& ray, Point& impact)const;

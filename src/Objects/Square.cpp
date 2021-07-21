@@ -1,16 +1,16 @@
-#include "Carre.h"
+#include "Square.h"
 
-Carre::Carre(const Vector& pos,const  Vector& rot, float scale,const  Material& mat) : Object(pos,rot,scale,mat){
+Square::Square(const Vector& pos,const  Vector& rot, float scale,const  Material& mat) : Object(pos,rot,scale,mat){
 	this->mat = mat;
 }
 
-Carre::Carre(): Object(Vector(0, 0, 0), Vector(0, 0, 0), 1, Material()) {}
+Square::Square(): Object(Vector(0, 0, 0), Vector(0, 0, 0), 1, Material()) {}
 
-Material Carre::getMaterial(const Point& p)const {
+Material Square::getMaterial(const Point& p)const {
 	return this->mat;
 }
 
-Ray Carre::getNormals(const Point& p, const Point& o)const {
+Ray Square::getNormals(const Point& p, const Point& o)const {
 	Point point = globalToLocal(o);
 	Point imp = globalToLocal(p);
 	Ray ray;
@@ -27,7 +27,7 @@ Ray Carre::getNormals(const Point& p, const Point& o)const {
 	return ray;
 }
 
-bool Carre::intersect(const Ray& ray, Point& impact)const {
+bool Square::intersect(const Ray& ray, Point& impact)const {
 	Ray r = globalToLocal(ray);
 	float oz = r.origin[2];
 	float vz = r.vector[2];
