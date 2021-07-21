@@ -7,7 +7,7 @@
 class Entity
 {
 public:
-    Entity(Vector pos, Vector rot, Vector scale);
+    Entity(const Vector&  pos, const Vector&  rot, const Vector&  scale);
     Entity();
     virtual ~Entity() = default;
 
@@ -29,13 +29,14 @@ public:
     Vector up() const;
     Vector forward() const;
 
-    Vector getPosition() const;
+    Point getPosition() const;
 
     void printTransform() const;
 
 private:
     Matrix trans;
     Matrix transInv;
-
-
+    Vector _position;
+    static double degToRad;
+    void addToTransform(const Vector& pos, const Vector& rot, const Vector& scale);
 };

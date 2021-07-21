@@ -1,6 +1,6 @@
 #include "Carre.h"
 
-Carre::Carre(Vector pos, Vector rot, float scale, Material mat) : Object(pos,rot,scale,mat){
+Carre::Carre(const Vector& pos,const  Vector& rot, float scale,const  Material& mat) : Object(pos,rot,scale,mat){
 	this->mat = mat;
 }
 

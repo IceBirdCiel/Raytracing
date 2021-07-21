@@ -1,6 +1,6 @@
 #include "Entity.h"
 
-Entity::Entity(Vector pos, Vector rot,Vector s) {
+Entity::Entity(const Vector&  pos, const Vector&  rot,const Vector& s) {
     scale(s);
     rotateX(rot[0]);
     rotateY(rot[1]);
@@ -23,10 +23,11 @@ void Entity::translate(float x, float y, float z) {
 
 void Entity::rotateX(float deg) {
     Matrix m;
-    m(1, 1) = cos(deg);
-    m(1, 2) = -sin(deg);
-    m(2, 1) = sin(deg);
-    m(2, 2) = cos(deg);
+    float rad = deg*degToRad;
+    m(1, 1) = cos(rad);
+    m(1, 2) = -sin(rad);
+    m(2, 1) = sin(rad);
+    m(2, 2) = cos(rad);
 
     trans = m * trans;
     transInv = trans.inverse();
@@ -34,10 +35,11 @@ void Entity::rotateX(float deg) {
 
 void Entity::rotateY(float deg) {
     Matrix m;
-    m(0, 0) = cos(deg);
-    m(0, 2) = sin(deg);
-    m(2, 0) = -sin(deg);
-    m(2, 2) = cos(deg);
+    float rad = deg*degToRad;
+    m(0, 0) = cos(rad);
+    m(0, 2) = sin(rad);
+    m(2, 0) = -sin(rad);
+    m(2, 2) = cos(rad);
 
     trans = m * trans;
     transInv = trans.inverse();
@@ -45,10 +47,11 @@ void Entity::rotateY(float deg) {
 
 void Entity::rotateZ(float deg) {
     Matrix m;
-    m(0, 0) = cos(deg);
-    m(0, 1) = -sin(deg);
-    m(1, 0) = sin(deg);
-    m(1, 1) = cos(deg);
+    float rad = deg*degToRad;
+    m(0, 0) = cos(rad);
+    m(0, 1) = -sin(rad);
+    m(1, 0) = sin(rad);
+    m(1, 1) = cos(rad);
 
 
     trans = m * trans;
@@ -101,8 +104,8 @@ void Entity::printTransform() const {
     std::cout << trans <<std::endl;
 }
 
-Vector Entity::getPosition() const {
-    return localToGlobal(Vector(0,0,0));
+Point Entity::getPosition() const {
+    return localToGlobal(Point(0,0,0));
 }
 
 Vector Entity::right() const {
@@ -114,3 +117,11 @@ Vector Entity::up() const {
 Vector Entity::forward() const {
     return localToGlobal(Vector(0,0,1));
 }
+
+
+void Entity::addToTransform(const Vector& pos, const Vector& rot, const Vector& scale) {
+    //(12, 0, 0);
+    //(12, 1, 0);
+}
+
+double Entity::degToRad = 3.14159265359/180.0;

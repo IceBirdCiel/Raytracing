@@ -1,6 +1,6 @@
 #include "Cube.h"
 
-Cube::Cube(Vector pos, Vector rot, float size, Material mat) : Object(pos,rot,size, mat) {
+Cube::Cube(const Vector& pos,const  Vector& rot, float size,const  Material& mat) : Object(pos,rot,size, mat) {
     this->mat = mat;
 }
 

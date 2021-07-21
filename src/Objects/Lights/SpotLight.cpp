@@ -15,8 +15,10 @@ Color SpotLight::getPhong(const Ray& normal, Vector cameraForward, const Materia
     //POINT LIGHT LIGHTING
     //NEEDS TO END UP INSIDE OF RAYTRACER CLASS OR AT LEAST IN A FUNCTION
 
-    Vector impactPos(normal.origin[0],normal.origin[1],normal.origin[2]);
-    Vector lightDir = (getPosition() - impactPos).normalized();
+    Point dirpoint = (getPosition() - normal.origin);
+    Vector lightDir = Vector(dirpoint[0], dirpoint[1], dirpoint[2]);
+    float distance    = lightDir.norm();
+    lightDir = lightDir.normalized();
     // _diffuse shading
     float diff = std::max(normal.vector.dot(lightDir), 0.0f);
     // _specular shading
@@ -25,7 +27,6 @@ Color SpotLight::getPhong(const Ray& normal, Vector cameraForward, const Materia
 
     float spec = pow(std::max(cameraForward.dot(reflectDir), 0.0f), material.shininess);
     // attenuation
-    float distance    = (getPosition() - impactPos).norm();
     float attenuation = 1.0 / (lightConstant + lightLinear * distance + lightQuadratic * (distance * distance));
     // combine results
     Color ambient  = _ambient * material.diffuse; //vec3(texture(material._diffuse, TexCoords));
