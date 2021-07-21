@@ -75,3 +75,8 @@ bool Cylinder::intersect(const Ray& ray, Point& impact)const {
         }
     }
 }
+
+Point Cylinder::getTextureCoordinates(const Point &p) const {
+    //todo
+    return Point();
+}

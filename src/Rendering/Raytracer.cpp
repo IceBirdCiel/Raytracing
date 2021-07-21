@@ -62,9 +62,10 @@ Color Raytracer::getColorForRay(Ray ray, const Scene& scene) const {
 
         Ray normal = obj->getNormals(impact,ray.origin);
         Material material = obj->getMaterial(impact);
+
         for (int i = 0; i < scene.nbLights(); ++i) {
             Light* light = scene.getLight(i);
-            finalColor = finalColor + light->getPhong(normal,_camera.forward(), material);
+            finalColor = finalColor + light->getPhong(normal,_camera.forward(), material, *obj);
         }
 
         Light* l = scene.getLight(0);

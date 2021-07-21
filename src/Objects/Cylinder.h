@@ -11,5 +11,6 @@ public:
     Cylinder();
     Ray getNormals(const Point& p, const Point& o)const;
     bool intersect(const Ray& ray, Point& impact)const;
+    virtual Point getTextureCoordinates(const Point& p) const;
 
 };

@@ -13,7 +13,7 @@
 #include "Scene/Scene.h"
 #include "Objects/Lights/DirectionalLight.h"
 #include "Objects/Lights/SpotLight.h"
-#include "Rendering/Skybox.h"
+#include "Rendering/SkySphere.h"
 #include <algorithm>
 
 int main(int argc, char** argv) {
@@ -24,20 +24,21 @@ int main(int argc, char** argv) {
 
     Scene scene;
     scene.setBackground(Color(0.2, 0.2, 1));
-    Skybox * skybox = new Skybox("phalzer_forest_01.png");
-    scene.setSkybox(skybox);
+    //SkySphere * skybox = new SkySphere("phalzer_forest_01.png");
+    //scene.setSkybox(skybox);
 
     Color specular(1,1,1);
 
     Material red(Color(1,0, 0),Color(1,0, 0),specular,5);
     Material yellow(Color(1,1, 0),Color(1,1, 0),specular,5);
-    Material green(Color(0,1, 0),Color(0,1, 0),specular,5);;
+    Material green(Color(0,1, 0),Color(0,1, 0),specular,5);
     Material cyan(Color(0,1, 1),Color(0,1, 1),specular,5);
     Material blue(Color(0,0, 1),Color(0,0, 1),specular,5);
     Material magenta(Color(1,0, 1),Color(1,0, 1),specular,5);
+    //magenta.texture = new Image("lena.png");
     Material black(Color(0,0, 0),Color(0,0, 0),specular,5);
     Material white(Color(1, 1, 1), Color(1, 1, 1), specular, 5);
-
+    white.texture = new Image("lena.png");
     Object* cube = new Cube(Vector(0, 0, 0), Vector(45,45,30), Vector(1,1,1), green);
     scene.addObject(cube);
     Object* sphere = new Sphere(Vector(2, -0.5, -3),Vector(0,0,90),Vector(1,1,1),yellow);
@@ -45,7 +46,7 @@ int main(int argc, char** argv) {
     sphere->printTransform();
     scene.addObject(sphere);
 
-    scene.addObject(new Sphere(Vector(-1.9, -0.5, -1), Vector(), Vector(1,0.5f,0.5f), white));
+    scene.addObject(new Sphere(Vector(-1.9, -0.5, -1), Vector(0, 90, 90), Vector(1,1,1), white));
     scene.addObject(new Sphere(Vector(0, 2.0, -2.5), Vector(), Vector(1,1,1), red));
     scene.addObject(new Sphere(Vector(-1.9, 1.9, 0),Vector(),Vector(0.85f,0.85f,0.85f),blue));
 

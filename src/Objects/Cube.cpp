@@ -68,3 +68,8 @@ float Cube::min(const float a, const float b)const {
 float Cube::max(const float a, const float b)const {
     return (a > b) ? a : b;
 }
+
+Point Cube::getTextureCoordinates(const Point &p) const {
+    //todo
+    return Point();
+}

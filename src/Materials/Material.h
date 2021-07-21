@@ -1,5 +1,6 @@
 #pragma once
 #include "Color.h"
+#include "../Rendering/Image.h"
 
 class Material
 {
@@ -11,6 +12,7 @@ public:
     Color diffuse;
     Color specular;
     float shininess;
+    Image* texture;
 };
 
 

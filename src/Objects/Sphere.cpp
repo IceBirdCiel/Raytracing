@@ -1,3 +1,5 @@
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include "Sphere.h"
 
 Sphere::Sphere(const Vector&  pos, const Vector&  rot, const Vector& scale, const Material& mat): Object(pos,rot,scale,mat) {}
@@ -8,8 +10,9 @@ Ray Sphere::getNormals(const Point& impact, const Point& observer) const {
 	Point obs = globalToLocal(observer);
 	Point imp = globalToLocal(impact);
 	Vector v = sqrt(pow(obs[0], 2) + pow(obs[1], 2) + pow(obs[2], 2)) < 1 ? Vector(-imp[0], -imp[1], -imp[2]) : Vector(imp[0], imp[1], imp[2]);
-	Ray r(Point(0,0,0), v.normalized());
+	Ray r(imp, v.normalized());
 	r = localToGlobal(r);
+	r.vector = r.vector.normalized();
 	return r;
 }
 
@@ -65,4 +68,14 @@ bool Sphere::intersect(const Ray & ray, Point& impact)const {
 			return false;
 		}
 	}
+}
+
+Point Sphere::getTextureCoordinates(const Point &p) const {
+    Point lp = globalToLocal(p);
+    float rho = std::sqrt(lp.dot(lp));
+    float theta = std::atan2(lp[1], lp[0]);
+    float sigma = std::acos(lp[2]/rho);
+    float x = -theta/(2*M_PI)+0.5f;
+    float y = sigma/M_PI;
+    return Point(x, y, 0);
 }
