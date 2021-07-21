@@ -3,23 +3,34 @@
 DirectionalLight::DirectionalLight(Vector pos, Vector rot, float scale, Color a, Color d, Color s) :
 	Light(pos, rot, scale, a, d, s){}
 
-Color DirectionalLight::getLambert(const Ray& normal, Vector cameraForward, const Material& material) const {
+Color DirectionalLight::getLambert(const Ray& normal, Vector cameraForward, const Material& material, const Object& obj) const {
     //return Color(normal.vector[0], normal.vector[1], normal.vector[2]);
+
     Color ambiant = material.ambient * _ambient;
     Vector dir = this->forward();
     
-    Color diffuse(0,0,0);
+    Color diffuse = material.diffuse;
     float angle = normal.vector.dot(dir);
-    diffuse = material.diffuse * _diffuse * angle;
+
+    if(material.texture != nullptr){
+        Point texCoords = obj.getTextureCoordinates(normal.origin);
+        float x = texCoords[0] * (float) material.texture->getWidth();
+        float y = texCoords[1] * (float) material.texture->getHeight();
+        Color pixelColor = material.texture->getColor(x, y);
+        //std::cout << pixelColor.r << ", " << pixelColor.g << ", "  << pixelColor.b << std::endl;
+        diffuse = pixelColor * diffuse;
+    }
+
+    diffuse = diffuse * _diffuse * angle;
 
     Color lambert = ambiant + diffuse;
 
     return lambert;
 }
 
-Color DirectionalLight::getPhong(const Ray& normal, Vector cameraForward, const Material& material) const {
+Color DirectionalLight::getPhong(const Ray& normal, Vector cameraForward, const Material& material, const Object& obj) const {
     Vector dir = this->forward();
-    Color lambert = getLambert(normal, cameraForward, material);
+    Color lambert = getLambert(normal, cameraForward, material, obj);
     
     Color specular(0,0,0);
 

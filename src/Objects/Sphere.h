@@ -12,5 +12,6 @@ public:
 	Sphere();
 	[[nodiscard]] Ray getNormals(const Point& p, const Point& o)const override;
 	bool intersect(const Ray& ray, Point& impact)const override;
+    virtual Point getTextureCoordinates(const Point& p) const;
 };
 

@@ -5,7 +5,7 @@
 #include "../Objects/Lights/Light.h"
 #include "../Objects/Sphere.h"
 #include "../Rendering/Image.h"
-#include "../Rendering/Skybox.h"
+#include "../Rendering/SkySphere.h"
 
 class Scene
 {
@@ -16,7 +16,7 @@ public:
 
     void setAmbiant(Color color);
     void setBackground(Color color);
-    void setSkybox(Skybox* skybox);
+    void setSkybox(SkySphere* skybox);
 
     int nbLights() const;
     [[nodiscard]] Light* getLight(int index) const;
@@ -28,6 +28,6 @@ private:
     std::vector<Object*> _objects;
     Color _background;
     Color _ambiant;
-    Skybox* _skybox;
+    SkySphere* _skybox;
 };
 

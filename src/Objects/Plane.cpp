@@ -41,3 +41,9 @@ bool Plane::intersect(const Ray& ray, Point& impact)const {
 	}
 	else return false;
 }
+
+Point Plane::getTextureCoordinates(const Point &p) const {
+    Point local = globalToLocal(p);
+    //todo
+    return Point();
+}

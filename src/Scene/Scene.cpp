@@ -67,6 +67,6 @@ Object* Scene::closestObjectIntersected(Ray ray, Point& closestImpact) const {
     }
 }
 
-void Scene::setSkybox(Skybox *skybox) {
+void Scene::setSkybox(SkySphere *skybox) {
     _skybox = skybox;
 }

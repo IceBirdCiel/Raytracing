@@ -1,6 +1,6 @@
 #include "Square.h"
 
-Square::Square(const Vector& pos,const  Vector& rot, const Vector& scale,const  Material& mat) : Object(pos,rot,scale,mat){}
+Square::Square(const Vector& pos,const  Vector& rot, const Vector& scale,const Material& mat) : Object(pos,rot,scale,mat){}
 
 Square::Square(): Object() {}
 
@@ -39,4 +39,10 @@ bool Square::intersect(const Ray& ray, Point& impact)const {
 		return true;
 	}
 	else return false;
+}
+
+Point Square::getTextureCoordinates(const Point &p) const {
+    Point local = globalToLocal(p);
+    float edge = 1;
+    return Point(local[0] / edge + 0.5f, local[1] / edge + 0.5f, 0.0f);
 }

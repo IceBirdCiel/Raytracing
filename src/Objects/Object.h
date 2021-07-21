@@ -18,6 +18,8 @@ public:
     [[nodiscard]] virtual Ray getNormals(const Point& p, const Point& o)const = 0;
     virtual bool intersect(const Ray& ray, Point& impact)const = 0;
 
+    [[nodiscard]] virtual Point getTextureCoordinates(const Point& p) const = 0;
+
 private:
     Material m_mat{};
 };
