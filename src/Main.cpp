@@ -11,6 +11,7 @@
 #include "Materials/Material.h"
 #include "Scene/Scene.h"
 #include "Objects/Lights/DirectionalLight.h"
+#include "Objects/Lights/SpotLight.h"
 #include <algorithm>
 
 int main(int argc, char** argv) {
@@ -45,7 +46,7 @@ int main(int argc, char** argv) {
     //scene.addObject(new Plan(Vector(-3, -3, -5),Vector(0,-30,0),white));
     //scene.addObject(new Plan(Vector(-3, -3, -4),Vector(0,60,0),white));
 
-    scene.addLight(new DirectionalLight(Vector(0,0,-8),Vector(0,90,0),1, Color(0,0,0), Color(1,1,1), Color(1,1,1)));
+    scene.addLight(new DirectionalLight(Vector(0, 0, -8), Vector(0, 90, 0), 1, Color(0, 0, 0), Color(1, 1, 1), Color(0.5, 0.5, 0.5)));
 
     Vector camPos(0,0.5,-10);
     Vector rotation(0,0,0);
