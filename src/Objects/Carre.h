@@ -1,5 +1,9 @@
 #pragma once
+
+#include "../Materials/Material.h"
 #include "Object.h"
+#include "../Math/Vector.h"
+#include "../Math/Ray.h"
 
 class Carre : public Object
 {
@@ -13,4 +17,3 @@ public:
 private:
 	Material mat;
 };
-

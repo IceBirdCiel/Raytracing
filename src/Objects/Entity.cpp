@@ -1,11 +1,11 @@
 #include "Entity.h"
 
 Entity::Entity(Vector pos, Vector rot,Vector s) {
-    translate(pos[0],pos[1],pos[2]);
     scale(s);
     rotateX(rot[0]);
     rotateY(rot[1]);
     rotateZ(rot[2]);
+    translate(pos[0], pos[1], pos[2]);
 }
 
 Entity::Entity() {}

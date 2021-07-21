@@ -15,12 +15,12 @@ Ray Cube::getNormals(const Point& p, const Point& o)const {
     Point imp = globalToLocal(p);
     Point obs = globalToLocal(o);
 
-    if (abs(imp[0] - 1) < 0.1) n[0] = 1;
-    if (abs(imp[0] + 1) < 0.1) n[0] = -1;
-    if (abs(imp[1] - 1) < 0.1) n[1] = 1;
-    if (abs(imp[1] + 1) < 0.1) n[1] = -1;
-    if (abs(imp[2] - 1) < 0.1) n[2] = 1;
-    if (abs(imp[2] + 1) < 0.1) n[2] = -1;
+    if (abs(imp[0] - 1) < 0.0001) n[0] = 1;
+    if (abs(imp[0] + 1) < 0.0001) n[0] = -1;
+    if (abs(imp[1] - 1) < 0.0001) n[1] = 1;
+    if (abs(imp[1] + 1) < 0.0001) n[1] = -1;
+    if (abs(imp[2] - 1) < 0.0001) n[2] = 1;
+    if (abs(imp[2] + 1) < 0.0001) n[2] = -1;
 
     if (obs[0]< 1 && obs[0]> -1 && obs[1]< 1 && obs[1]> -1 && obs[2]< 1 && obs[2]> -1) {
         n = -n;
