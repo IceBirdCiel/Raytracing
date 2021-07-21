@@ -10,6 +10,7 @@
 #include "Objects/Camera.h"
 #include "Materials/Material.h"
 #include "Scene/Scene.h"
+#include "Objects/Lights/SpotLight.h"
 #include <algorithm>
 
 int main(int argc, char** argv) {
@@ -43,7 +44,7 @@ int main(int argc, char** argv) {
     scene.addObject(new Plan(Vector(-3, -3, -5),Vector(0,-30,0),white));
     scene.addObject(new Plan(Vector(-3, -3, -4),Vector(0,60,0),white));
 
-    scene.addLight(Light(Vector(0,8,-5),Vector(),1, Color(0,0,0), Color(1,1,1), Color(1,1,1)));
+    scene.addLight(new SpotLight(Vector(0,0,-5),Vector(),1, Color(0,0,0), Color(1,1,1), Color(1,1,1)));
 
     Vector camPos(0,0.5,-8);
     Vector rotation(0,0,0);

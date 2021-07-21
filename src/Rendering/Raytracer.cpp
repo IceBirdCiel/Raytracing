@@ -54,50 +54,21 @@ void Raytracer::render(const Scene& scene, Image& image) const{
 }
 
 Color Raytracer::getColorForRay(Ray ray, const Scene& scene) const {
-    Color finalColor = _backgroundColor;
+    Color finalColor(0,0,0);
     Point impact;
     Object* obj = scene.closestObjectIntersected(ray,impact);
     if(obj != nullptr){
         //std::cout << "collide" << std::endl;
 
-        /*for (int i = 0; i < scene.nbLights(); ++i) {
-
-        }*/
-
         Ray normal = obj->getNormals(impact,ray.origin);
-
         Material material = obj->getMaterial(impact);
+        for (int i = 0; i < scene.nbLights(); ++i) {
+            Light* light = scene.getLight(i);
+            finalColor = finalColor + light->getIllumination(ray,_camera.forward(), material);
+        }
 
+        Light* l = scene.getLight(0);
 
-        Light l = scene.getLight(0);
-        float lightConstant = 0.1f;
-        float lightLinear = 1.0f;
-        float lightQuadratic = 0.3f;
-
-        //POINT LIGHT LIGHTING
-        //NEEDS TO END UP INSIDE OF RAYTRACER CLASS OR AT LEAST IN A FUNCTION
-
-        Vector impactPos(normal.origin[0],normal.origin[1],normal.origin[2]);
-        Vector lightDir = (l.getPosition() - impactPos).normalized();
-        // diffuse shading
-        float diff = std::max(normal.vector.dot(lightDir), 0.0f);
-        // specular shading
-
-        Vector reflectDir = -lightDir - normal.vector * (2 * lightDir.dot(normal.vector));
-
-        float spec = pow(std::max(_camera.forward().dot(reflectDir), 0.0f), material.shininess);
-        // attenuation
-        float distance    = (l.getPosition() - impactPos).norm();
-        float attenuation = 1.0 / (lightConstant + lightLinear * distance + lightQuadratic * (distance * distance));
-        // combine results
-        Color ambient  = l.ambient * material.diffuse; //vec3(texture(material.diffuse, TexCoords));
-        Color diffuse  = l.diffuse * material.diffuse;//l.diffuse  * diff * vec3(texture(material.diffuse, TexCoords));
-        //Todo: add the specular coeff
-        Color specular = l.specular * material.specular;//l.specular * spec * vec3(texture(material.specular, TexCoords));
-        ambient  = ambient * attenuation;
-        diffuse  = diffuse * attenuation;
-        specular  = specular * attenuation;
-        finalColor = (ambient + diffuse + specular);
     }
     return finalColor;
 }

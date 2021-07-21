@@ -1,7 +1,7 @@
 #include "Light.h"
 
 
-Light::Light(Vector pos, Vector rot, float scale, Color a, Color d, Color s):Entity(pos,rot,Vector(scale,scale,scale)), ambient(a), diffuse(d), specular(s) {
+Light::Light(Vector pos, Vector rot, float scale, Color a, Color d, Color s): Entity(pos,rot,Vector(scale,scale,scale)), _ambient(a), _diffuse(d), _specular(s) {
 
 }
 

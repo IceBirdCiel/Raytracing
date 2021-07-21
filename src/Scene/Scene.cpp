@@ -25,11 +25,11 @@ int Scene::nbLights() const
     return _lights.size();
 }
 
-const Light Scene::getLight(int index) const
+Light* Scene::getLight(int index) const
 {
     return _lights[index];
 }
-void Scene::addLight(Light light)
+void Scene::addLight(Light* light)
 {
     _lights.emplace_back(light);
 }
