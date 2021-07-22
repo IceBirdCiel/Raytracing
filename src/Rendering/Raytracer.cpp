@@ -6,7 +6,7 @@ void Raytracer::setCamera(const Camera& cam) {
 _camera = cam;
 }
 
-void Raytracer::render(const Scene& scene, Image& image) const{
+void Raytracer::render(const Scene& scene, Image& image){
 
     /*int pixelsAmount = height*width;
     int pixelsProcessed = 0;
@@ -27,9 +27,10 @@ void Raytracer::render(const Scene& scene, Image& image) const{
             float b = 0;
 
             float random = InterleavedGradientNoise(x,y);
+            _camera.setupForRay(_sampleCount,random);
             //multisampling
             for (int i = 0; i < _sampleCount; ++i) {
-                Ray ray = _camera.getRay(viewportX,viewportY, random);
+                Ray ray = _camera.getRay(viewportX,viewportY, i);
                 Color c = getColorForRay(ray,scene);
                 r += c.r;
                 g += c.g;
@@ -65,7 +66,7 @@ Color Raytracer::getColorForRay(Ray ray, const Scene& scene) const {
 
         for (int i = 0; i < scene.nbLights(); ++i) {
             Light* light = scene.getLight(i);
-            finalColor = finalColor + light->getPhong(normal,_camera.forward(), material, *obj);
+            finalColor = finalColor + light->getPhong(normal.normalized(),_camera.forward(), material, *obj);
         }
 
         Light* l = scene.getLight(0);
@@ -85,7 +86,7 @@ void Raytracer::setSampleCount(int samples) {
 }
 
 float Raytracer::InterleavedGradientNoise(float x, float y) const {
-    Vector pos(x,y,0);
+    Vector pos(x*10,y*10,0);
     Vector magic = Vector(0.06711056, 0.00583715, 52.9829189);
     double integralPart = 0;
     return modf(magic[0] * modf(pos.dot(Vector(magic[0],magic[1],magic[2])), &integralPart), &integralPart);

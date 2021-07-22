@@ -6,7 +6,7 @@
 class Plane : public Object
 {
 public:
-    Plane(Vector pos, Vector rot, Material mat);
+    Plane(Vector pos, Vector rot, Vector scale, Material mat);
     Plane();
     Ray getNormals(const Point& p, const Point& o)const;
     bool intersect(const Ray& ray, Point& impact)const;

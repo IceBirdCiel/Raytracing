@@ -1,6 +1,6 @@
 #include "Plane.h"
 
-Plane::Plane(Vector pos, Vector rot, Material mat):Object(pos,rot,Vector(1,1,1),mat) {}
+Plane::Plane(Vector pos, Vector rot, Vector scale, Material mat):Object(pos,rot,scale,mat) {}
 
 Plane::Plane():Object() {}
 
@@ -43,7 +43,11 @@ bool Plane::intersect(const Ray& ray, Point& impact)const {
 }
 
 Point Plane::getTextureCoordinates(const Point &p) const {
-    Point local = globalToLocal(p);
-    //todo
-    return Point();
+    Point localPoint = globalToLocal(p);
+    float X = localPoint[0]-(int)localPoint[0];
+    float Y = localPoint[1]-(int)localPoint[1];
+    if(X<0)X+=1;
+    if(Y<0)Y+=1;
+    return Point(X,Y,0);
+
 }

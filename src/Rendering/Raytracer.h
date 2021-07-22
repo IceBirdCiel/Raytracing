@@ -11,7 +11,7 @@ public:
     void setCamera(const Camera& cam);
     void setBackgroundColor(Color c);
     void setSampleCount(int samples);
-    void render(const Scene& scene, Image& image) const;
+    void render(const Scene& scene, Image& image);
 private:
 
     Color getColorForRay(Ray ray, const Scene& scene) const;

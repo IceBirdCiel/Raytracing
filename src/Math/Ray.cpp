@@ -15,3 +15,8 @@ std::ostream& operator<<(std::ostream &os, const Ray& r) {
     os << "Direction: (" << r.vector[0] << ", " << r.vector[1] << ", " << r.vector[2] << ")";
     return os;
 }
+
+Ray Ray::normalized() const {
+    Vector nVec = vector.normalized();
+    return Ray(origin, nVec);
+}

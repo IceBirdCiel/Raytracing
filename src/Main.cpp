@@ -47,43 +47,64 @@ int main(int argc, char** argv) {
     Material donoro(Color(0.7, 0.6, 0.7), Color(0.6,0, 0.6), specular, 50);
     donoro.texture = new Image("lena.jpg");
 
+
+    Material carpet(Color(1, 1, 1), Color(1, 1, 1), specular, 1);
+    carpet.texture = new Image("carpet.jpg");
+
+    Material wood(Color(1, 1, 1), Color(1, 1, 1), specular, 1);
+    wood.texture = new Image("wood.jpg");
+
+    Material brick(Color(1, 1, 1), Color(1, 1, 1), specular, 1);
+    brick.texture = new Image("brick.jpg");
+
+    Material window(Color(1, 1, 1), Color(1, 1, 1), specular, 1);
+    window.texture = new Image("theWindow.png");
+
     //walls
     //sol
-    scene.addObject(new Plane(Vector(0, -3, 5), Vector(90,0,0), grey));
+    scene.addObject(new Plane(Vector(0, -3, 5), Vector(90,-60,0), Vector(10,10,10), wood));
     //mur arriere
-    scene.addObject(new Plane(Vector(0, -3, 5), Vector(0,30,0), grey));
-    scene.addObject(new Plane(Vector(-5, -3, 5), Vector(0,-60,0), grey));
+    scene.addObject(new Plane(Vector(0, -3, 5), Vector(180,30,0), Vector(3,3,3), brick));
+    scene.addObject(new Plane(Vector(-5, -3, 5), Vector(180,-60,0), Vector(3,3,3), brick));
+    //ceiling
+    scene.addObject(new Plane(Vector(0, 4.5, 5), Vector(90,-60,0), Vector(10,10,10), white));
 
-    //scene.addObject(new Sphere(Vector(0, 0, 0), Vector(0,90,90), Vector(1.5,1.5,1.5), lena));
-    scene.addObject( new Sphere(Vector(2, -1, -3),Vector(0,90,90),Vector(1,1,1),blue));
+    //window
+    scene.addObject(new Square(Vector(4, 1, 2), Vector(180,30,0), Vector(2.5/8.f*5,2.5,2.5), window));
+
+    scene.addObject(new Sphere(Vector(0, 0, 0), Vector(0,90,90), Vector(1.5,1.5,1.5), lena));
+    scene.addObject( new Sphere(Vector(1, -1, -5),Vector(0,90,90),Vector(1,1,1),blue));
     scene.addObject(new Cube(Vector(-5, -2, 3), Vector(0,30,0), Vector(1.f,1.f,1.5f), orange));
     
-    scene.addObject(new Cube(Vector(-3, 1, 0), Vector(0, 0, 45), Vector(1.f, 1.f, 1.f), donoro));
+    scene.addObject(new Cube(Vector(-5, -0.1, 3), Vector(45, 0, 35.264), Vector(0.5f, 0.5f, 0.5f), donoro));
     
-    scene.addObject(new Sphere(Vector(1, 2.0, -2.5), Vector(), Vector(1,1,1), orange));
+    scene.addObject(new Sphere(Vector(1, 2.0, -2.5), Vector(), Vector(0.5,0.5,0.5), orange));
     scene.addObject(new Sphere(Vector(-2, -1.2, -2), Vector(0,90,90), Vector(0.75,0.75,0.75), red));
-    scene.addObject(new Sphere(Vector(-1.7, 1.0, 0),Vector(),Vector(0.65f,0.65f,0.65f),magenta));
+    scene.addObject(new Sphere(Vector(-1.7, 1.0, 2),Vector(),Vector(0.65f,0.65f,0.65f),magenta));
     scene.addObject(new Sphere(Vector(-0.5, -1.0, -0.7),Vector(),Vector(0.65f,0.65f,0.65f),green));
-    scene.addObject(new Sphere(Vector(0.5, -0.5, -2.5),Vector(),Vector(0.25f,0.25f,0.25f),yellow));
+    scene.addObject(new Sphere(Vector(0.85, -0.7, -2.5),Vector(),Vector(0.35f,0.35f,0.35f),yellow));
 
-    scene.addObject(new Square(Vector(2, 0, -3), Vector(90, 0, 0),Vector(1.f,1.f,1.f), magenta));
+    //Carpet
+    scene.addObject(new Square(Vector(-1.5, -2.95, 0), Vector(90, 30, 0),Vector(2.f,2.f,2.f), carpet));
+
     //pillars
-    scene.addObject(new Cylinder(Vector(3, 0, 0), Vector(0, 0, 0), Vector(0.5f,0.5f,0.5f), white));
-    scene.addObject(new Cylinder(Vector(1.5, 0, 3), Vector(0, 0, 0), Vector(0.5f,0.5f,0.5f), white));
+    //scene.addObject(new Cylinder(Vector(3, 0, 0), Vector(0, 0, 0), Vector(0.5f,0.5f,0.5f), white));
+    //scene.addObject(new Cylinder(Vector(1.5, 0, 3), Vector(0, 0, 0), Vector(0.5f,0.5f,0.5f), white));
     scene.addObject(new Cylinder(Vector(-2, 0, 4.5), Vector(0, 0, 0), Vector(0.5f,0.5f,0.5f), white));
-    scene.addObject(new Cylinder(Vector(-5, 4, 3), Vector(90, 30, 0), Vector(0.5f,0.5f,0.5f), red));
+    scene.addObject(new Cylinder(Vector(-6, 3, 3), Vector(90, 30, 0), Vector(0.2f,0.2f,0.2f), red));
+    scene.addObject(new Cylinder(Vector(-6, 3.5, 3), Vector(90, 30, 0), Vector(0.2f,0.2f,0.2f), red));
 
     //scene.addObject(new Plane(Vector(-3, -3, -5),Vector(0,-30,0),white));
     //scene.addObject(new Plane(Vector(-3, -3, -4),Vector(0,60,0),white));
 
-    scene.addLight(new DirectionalLight(Vector(0,0,-8),Vector(0,130,70),1, Color(0.0,0.0,0.0), Color(1,1,1), Color(1,1,1)));
+    scene.addLight(new DirectionalLight(Vector(0,0,-8),Vector(0,130,70),1, Color(0.1,0.1,0.1), Color(1,1,1), Color(1,1,1)));
 
     Vector camPos(0,0.5,-7);
     Vector rotation(5,0,0);
-    Camera cam(camPos,rotation,24,2.8,8);
+    Camera cam(camPos,rotation,24,2.8,6.5);
     cam.setSensorSize(36,24);
 
-    int height = 500;
+    int height = 600;
     int width = height / 2.0f * 3.0f;
 
     Image renderImage(width,height, Color(1,0,1));
@@ -91,7 +112,7 @@ int main(int argc, char** argv) {
     Raytracer raytracer;
     raytracer.setCamera(cam);
     raytracer.setBackgroundColor(Color(0,0,0));
-    raytracer.setSampleCount(1);
+    raytracer.setSampleCount(25);
 
     raytracer.render(scene, renderImage);
     renderImage.save("render");

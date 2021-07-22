@@ -11,5 +11,6 @@ public:
     Ray(Point o, Vector v);
     Ray();
     friend std::ostream& operator<<(std::ostream& os, const Ray& ray);
+    Ray normalized() const;
 };
 
