@@ -2,12 +2,12 @@
 // Created by Antoine on 21/07/2021.
 //
 
-#include "PointLight.h"
+#include "SpotLight.h"
 
-PointLight::PointLight(Vector pos, Vector rot, float scale, Color a, Color d, Color s) : Light(pos, rot, scale, a, d, s) {
+SpotLight::SpotLight(Vector pos, Vector rot, float scale, Color a, Color d, Color s) : Light(pos, rot, scale, a, d, s) {
 
 }
-Color PointLight::getPhong(const Ray& normal, Vector cameraForward, const Material& material, const Object& obj) const {
+Color SpotLight::getPhong(const Ray& normal, Vector cameraForward, const Material& material, const Object& obj) const {
     float lightConstant = 0.5f;
     float lightLinear = 0.5f;
     float lightQuadratic = 0.1f;

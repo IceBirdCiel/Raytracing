@@ -70,23 +70,6 @@ float Cube::max(const float a, const float b)const {
 }
 
 Point Cube::getTextureCoordinates(const Point &p) const {
-    Point p2 = globalToLocal(p);
-    float u, v;
-
-    if (p2[0] - 0.999 > 0 || p2[0] < -0.999) {
-        u = (p2[2] + 1) / 2;
-        v = (p2[1] + 1) / 2;
-    }
-
-    else if (p2[1] > 0.999 || p2[1] < -0.999) {
-        u = (p2[0] + 1) / 2;
-        v = (p2[2] + 1) / 2;
-    }
-
-    else if (p2[2] > 0.999 || p2[2] < -0.999) {
-        u = (p2[0] + 1) / 2;
-        v = (p2[1] + 1) / 2;
-    }
-
-    return Point(u, v, 0);
+    //todo
+    return Point();
 }

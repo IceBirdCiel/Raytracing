@@ -14,8 +14,8 @@ Color DirectionalLight::getLambert(const Ray& normal, Vector cameraForward, cons
 
     if(material.texture != nullptr){
         Point texCoords = obj.getTextureCoordinates(normal.origin);
-        int x = texCoords[0] * (material.texture->getWidth() - 1);
-        int y = texCoords[1] * (material.texture->getHeight() - 1);
+        float x = texCoords[0] * (float) material.texture->getWidth();
+        float y = texCoords[1] * (float) material.texture->getHeight();
         Color pixelColor = material.texture->getColor(x, y);
         //std::cout << pixelColor.r << ", " << pixelColor.g << ", "  << pixelColor.b << std::endl;
         diffuse = pixelColor * diffuse;
