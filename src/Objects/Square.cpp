@@ -16,6 +16,7 @@ Ray Square::getNormals(const Point& p, const Point& o)const {
 	if (point[2] < 0) ray.vector[2] = -1;
 	else ray.vector[2] = 1;
 
+	ray.vector = ray.vector.normalized();
 	ray = localToGlobal(ray);
 
 	return ray;
@@ -29,12 +30,11 @@ bool Square::intersect(const Ray& ray, Point& impact)const {
 	float t = -1 * (oz / vz);
 	float px = r.origin[0] + r.vector[0] * t;
 	float py = r.origin[1] + r.vector[1] * t;
-	float pz = r.origin[2] + r.vector[2] * t;
-
+	
 	if (t > 0 && px < 1 && px >= -1 && py < 1 && py >= -1) {
 		impact[0] = px;
-		impact[0] = py;
-		impact[0] = pz;
+		impact[1] = py;
+		impact[2] = 0;
 		impact = localToGlobal(impact);
 		return true;
 	}
@@ -43,6 +43,7 @@ bool Square::intersect(const Ray& ray, Point& impact)const {
 
 Point Square::getTextureCoordinates(const Point &p) const {
     Point local = globalToLocal(p);
-    float edge = 1;
-    return Point(local[0] / edge + 0.5f, local[1] / edge + 0.5f, 0.0f);
+    Vector edge(2,2,2);
+    return Point(local[0] / edge[0] + 0.5f, local[1] / edge[1] + 0.5f, 0.0f);
+	
 }
