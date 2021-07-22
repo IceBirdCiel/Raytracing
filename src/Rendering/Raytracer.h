@@ -11,14 +11,17 @@ public:
     void setCamera(const Camera& cam);
     void setBackgroundColor(Color c);
     void setSampleCount(int samples);
-    void render(const Scene& scene, Image& image);
+    void render(std::shared_ptr<Scene> scene, std::shared_ptr<Image> image);
 private:
 
-    Color getColorForRay(Ray ray, const Scene& scene) const;
+    Color getColorForRay(Ray ray, std::shared_ptr<Scene> scene) const;
     [[nodiscard]] float InterleavedGradientNoise(float x, float y) const;
+    void renderZone(int minX, int minY,int maxX,int maxY, int width, int height);
 
     Camera _camera;
     Color _backgroundColor;
     int _sampleCount;
+    std::shared_ptr<Scene> _scene;
+    std::shared_ptr<Image> _renderImage;
 
 };

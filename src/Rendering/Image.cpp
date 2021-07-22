@@ -32,6 +32,9 @@ Image::Image(int width, int height, Color baseColor): m_width(width), m_height(h
 
     fillImage(baseColor);
 }
+Image::Image(){
+
+}
 
 Image::~Image() {
     stbi_image_free(m_rgb_image);
@@ -46,6 +49,7 @@ void Image::fillImage(const Color& c) {
 }
 
 void Image::save(const std::string& name) const {
+    std::cout << "Image saved as '" + name + ".png'\n";
     stbi_write_png((name + ".png").c_str(), m_width, m_height, m_nbChannels, m_rgb_image, m_width * m_nbChannels);
 }
 

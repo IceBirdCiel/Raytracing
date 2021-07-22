@@ -13,6 +13,13 @@ target_include_directories(Raytracing PRIVATE "vendor/stb")
 #si ca marche pas faire ca
 #target_link_libraries(Raytracing PRIVATE glfw3)
 
+find_package(OpenMP)
+if (OPENMP_FOUND)
+    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+    set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
+endif()
+
 #déplacement des ressources vers le dossier de build pour pouvoir les inclure
 add_custom_command(TARGET Raytracing PRE_BUILD
         COMMAND robocopy ${PROJECT_SOURCE_DIR}/resources/ ${PROJECT_BINARY_DIR}/resources /E /NS /NC /NFL /NDL /NP /NJH /NJS  || cmd /c "exit /b 0")

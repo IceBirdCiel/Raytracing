@@ -12,6 +12,7 @@ public:
     Image(int width, int height);
     Image(int width, int height, Color baseColor);
     Image(const Image &img);
+    Image();
     ~Image();
 
     void save(const std::string& name) const;
