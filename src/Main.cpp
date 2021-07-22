@@ -30,13 +30,13 @@ int main(int argc, char** argv) {
     Color specular(0.75,0.75,0.75);
 
     Material red(Color(1,0, 0),Color(1,0, 0),specular,50);
-    red.texture = new Image("Nicolas.jpg");
+    red.texture = new Image("lena.jpg");
     Material yellow(Color(1,1, 0),Color(1,1, 0),specular,50);
     Material orange(Color(1,0.5, 0),Color(1,0.5, 0),specular,50);
     Material green(Color(0,1, 0),Color(0,1, 0),specular,50);;
     Material cyan(Color(0,1, 1),Color(0,1, 1),specular,50);
     Material blue(Color(0,0, 1),Color(0,0, 1),specular,50);
-    blue.texture = new Image("Nico.jpg");
+    blue.texture = new Image("lena.jpg");
     Material magenta(Color(1,0, 1),Color(1,0, 1),specular,50);
     magenta.texture = new Image("lena.png");
     Material black(Color(0,0, 0),Color(0,0, 0),specular,5);
@@ -45,7 +45,7 @@ int main(int argc, char** argv) {
     lena.texture = new Image("lena.png");
     Material grey(Color(0.7, 0.6, 0.7), Color(0.385, 0.385, 0.4), specular, 50);
     Material donoro(Color(0.7, 0.6, 0.7), Color(0.6,0, 0.6), specular, 50);
-    donoro.texture = new Image("donoro.jpg");
+    donoro.texture = new Image("lena.jpg");
 
     //walls
     //sol
