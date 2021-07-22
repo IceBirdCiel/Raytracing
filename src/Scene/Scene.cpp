@@ -42,7 +42,7 @@ void Scene::addObject(Object* object) {
 }
 
 Object* Scene::closestObjectIntersected(Ray ray, Point& closestImpact) const {
-    float distance = INT16_MAX;
+    float distance = FLT_MAX;
     Object* Lior = nullptr;
     Point impact;
     bool collisionDetected = false;
