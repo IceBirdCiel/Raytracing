@@ -12,7 +12,7 @@
 #include "Materials/Material.h"
 #include "Scene/Scene.h"
 #include "Objects/Lights/DirectionalLight.h"
-#include "Objects/Lights/SpotLight.h"
+#include "Objects/Lights/PointLight.h"
 #include "Rendering/SkySphere.h"
 #include <algorithm>
 
