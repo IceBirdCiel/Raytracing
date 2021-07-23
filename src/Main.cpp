@@ -51,7 +51,9 @@ int main(int argc, char** argv) {
     Material white(Color(1, 1, 1), Color(1, 1, 1), specular, 50);
     Material grey(Color(0.7, 0.6, 0.7), Color(0.385, 0.385, 0.4), specular, 50);
     Material lena(Color(0,0,0), Color(1,1,1), specular, 50);
-    lena.texture = new Image("lena.jpg");
+    Image *lenaTex = new Image("lena.png");
+    //lenaTex->convertToLinear(2.2);
+    lena.texture = lenaTex;
 
 
     Material earth(Color(0, 0, 0), Color(1, 1, 1), specular, 75);
@@ -157,6 +159,8 @@ int main(int argc, char** argv) {
     auto finish = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed = finish - start;
     std::cout << "Image finished rendering!\nRender duration : " << elapsed.count() << " s\n";
+    renderImage->convertToLinear();
+    //renderImage->revertLinear();
     renderImage->save("render");
 
 }
