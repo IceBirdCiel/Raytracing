@@ -13,6 +13,7 @@ struct Color
     Color operator *(const Color& c) const;
     Color operator *(float value) const;
     Color operator +(const Color& c) const;
+    Color& operator =(const Color& c) = default;
 };
 
 

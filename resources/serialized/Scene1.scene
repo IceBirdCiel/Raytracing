@@ -1,6 +1,6 @@
 {
     "background": {
-        "color": [0.2, 0.2, 1]
+        "color": [0, 0, 0]
     },
     "textures": [
         {
@@ -58,21 +58,21 @@
         },
         {
             "name": "orange",
-            "ambiant": [0.05, 0.05, 0.05],
+            "ambient": [0.05, 0.05, 0.05],
             "diffuse": [1, 0.5, 0],
             "specular": [1, 1, 1],
             "shininess": 50
         },
         {
             "name": "white",
-            "ambiant": [0.05, 0.05, 0.05],
+            "ambient": [0.05, 0.05, 0.05],
             "diffuse": [1, 1, 1],
             "specular": [1, 1, 1],
             "shininess": 5
         },
         {
             "name": "lena",
-            "ambiant": [0.05, 0.05, 0.05],
+            "ambient": [0.05, 0.05, 0.05],
             "diffuse": [1, 1, 1],
             "specular": [1, 1, 1],
             "shininess": 200,
@@ -80,7 +80,7 @@
         },
         {
             "name": "earth",
-            "ambiant": [0.05, 0.05, 0.05],
+            "ambient": [0.05, 0.05, 0.05],
             "diffuse": [1, 1, 1],
             "specular": [1, 1, 1],
             "shininess": 100,
@@ -88,7 +88,7 @@
         },
         {
             "name": "mars",
-            "ambiant": [0.05, 0.05, 0.05],
+            "ambient": [0.05, 0.05, 0.05],
             "diffuse": [1, 1, 1],
             "specular": [1, 1, 1],
             "shininess": 5,
@@ -96,7 +96,7 @@
         },
         {
             "name": "football",
-            "ambiant": [0.05, 0.05, 0.05],
+            "ambient": [0.05, 0.05, 0.05],
             "diffuse": [1, 1, 1],
             "specular": [1, 1, 1],
             "shininess": 35,
@@ -104,7 +104,7 @@
         },
         {
             "name": "tennis",
-            "ambiant": [0.05, 0.05, 0.05],
+            "ambient": [0.05, 0.05, 0.05],
             "diffuse": [1, 1, 1],
             "specular": [1, 1, 1],
             "shininess": 100,
@@ -112,7 +112,7 @@
         },
         {
             "name": "weirdbluesphere",
-            "ambiant": [0.05, 0.05, 0.05],
+            "ambient": [0.05, 0.05, 0.05],
             "diffuse": [1, 1, 1],
             "specular": [1, 1, 1],
             "shininess": 100,
@@ -120,7 +120,7 @@
         },
         {
             "name": "carpet",
-            "ambiant": [0.05, 0.05, 0.05],
+            "ambient": [0.05, 0.05, 0.05],
             "diffuse": [1, 1, 1],
             "specular": [1, 1, 1],
             "shininess": 1,
@@ -128,7 +128,7 @@
         },
         {
             "name": "wood",
-            "ambiant": [0.05, 0.05, 0.05],
+            "ambient": [0.05, 0.05, 0.05],
             "diffuse": [1, 1, 1],
             "specular": [1, 1, 1],
             "shininess": 1,
@@ -136,7 +136,7 @@
         },
         {
             "name": "brick",
-            "ambiant": [0.05, 0.05, 0.05],
+            "ambient": [0.05, 0.05, 0.05],
             "diffuse": [1, 1, 1],
             "specular": [1, 1, 1],
             "shininess": 100,
@@ -144,7 +144,7 @@
         },
         {
             "name": "window",
-            "ambiant": [0.05, 0.05, 0.05],
+            "ambient": [0.05, 0.05, 0.05],
             "diffuse": [1, 1, 1],
             "specular": [1, 1, 1],
             "shininess": 100,
@@ -152,7 +152,7 @@
         },
         {
             "name": "portal",
-            "ambiant": [0.05, 0.05, 0.05],
+            "ambient": [0.05, 0.05, 0.05],
             "diffuse": [1, 1, 1],
             "specular": [1, 1, 1],
             "shininess": 1,
@@ -160,6 +160,44 @@
         }
     ],
     "objects": [
+        {
+            "type": "plane",
+            "position": [0, -3, 5],
+            "rotation": [90, -60, 0],
+            "scale": [10, 10, 10],
+            "material": "wood"
+        },
+        {
+            "type": "plane",
+            "position": [0, -3, 5],
+            "rotation": [180, 30, 0],
+            "scale": [3, 3, 3],
+            "material": "brick"
+        },
 
+
+        {
+            "type": "pointLight",
+            "position": [2, 2, -3.5],
+            "rotation": [0, 130, 70],
+            "scale": [1, 1, 1],
+            "ambient": [0.2, 0.3, 1],
+            "diffuse": [0.2, 0.3, 1],
+            "specular": [1, 1, 1],
+            "lightConstant": 0.1,
+            "lightLinear": 0.3,
+            "lightQuadratic": 0.1,
+            "intensity": 2
+        },
+        {
+            "type": "camera",
+            "position": [0, 0.5, -7],
+            "rotation": [5, 0, 0],
+            "scale": [1, 1, 1],
+            "focalLength": 24,
+            "aperture": 5000,
+            "focalPoint": 5.9,
+            "sensorSize": [36, 24]
+        }
     ]
 }
