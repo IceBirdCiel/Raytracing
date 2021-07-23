@@ -11,7 +11,7 @@ public:
     void setCamera(const Camera& cam);
     void setBackgroundColor(Color c);
     void setSampleCount(int samples);
-    void render(std::shared_ptr<Scene> scene, std::shared_ptr<Image> image);
+    void render(std::shared_ptr<Scene> scene, std::shared_ptr<Image>& image, int ssaa);
 private:
 
     Color getColorForRay(Ray ray, std::shared_ptr<Scene> scene) const;

@@ -59,7 +59,7 @@ int main(int argc, char** argv) {
     Material earth(Color(0, 0, 0), Color(1, 1, 1), specular, 75);
     earth.texture = new Image("earth.jpg");
 
-    Material mars(Color(0, 0, 0), Color(1, 1, 1), specular, 15);
+    Material mars(Color(0, 0, 0), Color(1, 1, 1), specular, 25);
     mars.texture = new Image("mars.jpg");
     Material football(Color(1,1,1), Color(1, 1, 1), specular, 15);
     football.texture = new Image("football.png");
@@ -78,7 +78,7 @@ int main(int argc, char** argv) {
     brick.texture = new Image("brick.jpg");
 
     Material window(Color(1, 1, 1), Color(1, 1, 1), specular, 1);
-    window.texture = new Image("theWindow.png");
+    window.texture = new Image("theWindow2.png");
 
     Material uv(Color(1, 1, 1), Color(1, 1, 1), specular, 1);
     uv.texture = new Image("uv.png");
@@ -106,15 +106,13 @@ int main(int argc, char** argv) {
     scene->addObject(new Sphere(Vector(-2, -1.2, -2), Vector(0,90,90), Vector(0.75,0.75,0.75), mars));
 
     //football
-    scene->addObject(new Sphere(Vector(1, 1.5, -2.5), Vector(), Vector(0.5,0.5,0.5), football));
+    scene->addObject(new Sphere(Vector(1, 1.5, -2.5), Vector(90,45,0), Vector(0.5,0.5,0.5), football,tennis,4));
 
     //tennis
     scene->addObject(new Sphere(Vector(0.85, -0.7, -2.5),Vector(),Vector(0.35f,0.35f,0.35f),tennis));
 
     //weird blue sphere
-    Object* blueSphere = new Sphere(Vector(1, -1, -5), Vector(0, 90, 90), Vector(1, 1, 1), weirdbluesphere);
-    scene->addObject( blueSphere);
-    blueSphere->printTransform();
+    scene->addObject( new Sphere(Vector(1, -1, -5),Vector(0,90,90),Vector(1,1,1),football));
 
     scene->addObject(new Cube(Vector(-5, -2, 3), Vector(0,30,0), Vector(1.f,1.f,1.5f), orange));
     
@@ -122,7 +120,7 @@ int main(int argc, char** argv) {
 
     scene->addObject(new Sphere(Vector(-1.9, 1.0, 2),Vector(0,90,90),Vector(0.65f,0.65f,0.65f),lena));
     //
-    scene->addObject(new Sphere(Vector(-0.5, -1.0, -0.7),Vector(0,90,90),Vector(0.65f,0.65f,0.65f),uv));
+    scene->addObject(new Sphere(Vector(-0.5, -1.0, -0.7),Vector(90,45,0),Vector(0.65f,0.65f,0.65f),weirdbluesphere));
 
     //Carpet
     scene->addObject(new Square(Vector(-1.5, -2.95, 0), Vector(90, 30, 0),Vector(2.f,2.f,2.f), carpet));
@@ -141,11 +139,11 @@ int main(int argc, char** argv) {
 
     Vector camPos(0,0.5,-7);
     Vector rotation(5,0,0);
-    Camera cam(camPos,rotation,24,500,6.5);
+    Camera cam(camPos,rotation,24,5000,6.5);
     cam.setSensorSize(36,24);
 
     int height = 600;
-    int width = height / 2.0f * 3.0f;
+    int width = height / 2.0f * 3.f;
 
     auto renderImage = std::make_shared<Image>(width,height, Color(1,0,1));
 
@@ -156,7 +154,7 @@ int main(int argc, char** argv) {
 
     std::cout << "\nStarting to render image !\n";
     auto start = std::chrono::high_resolution_clock::now();
-    raytracer.render(scene, renderImage);
+    raytracer.render(scene, renderImage,2);
     auto finish = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed = finish - start;
     std::cout << "Image finished rendering!\nRender duration : " << elapsed.count() << " s\n";

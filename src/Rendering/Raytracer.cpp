@@ -1,5 +1,6 @@
 #include "Raytracer.h"
 #include <thread>
+#include <utility>
 #include <omp.h>
 
 Raytracer::Raytracer(): _camera(Camera(Vector(0,0,-10),Vector(),24,2.8,10)), _sampleCount(1) {}
@@ -8,14 +9,13 @@ void Raytracer::setCamera(const Camera& cam) {
 _camera = cam;
 }
 
-void Raytracer::render(std::shared_ptr<Scene> scene, std::shared_ptr<Image> image){
+void Raytracer::render(std::shared_ptr<Scene> scene, std::shared_ptr<Image>& image, int ssaa){
 
     /*int pixelsAmount = height*width;
     int pixelsProcessed = 0;
     float progress = 0;
     int barWidth = 70;*/
-
-    _scene = scene;
+    _scene = std::move(scene);
     _renderImage = image;
     int width = image->getWidth();
     int height = image->getHeight();
@@ -24,25 +24,44 @@ void Raytracer::render(std::shared_ptr<Scene> scene, std::shared_ptr<Image> imag
     for(int y = 0; y < height; ++y){
         for(int x = 0; x < width; ++x){
 
-            //conversion from screen space to view space
-            float viewportX = (x / ((float)width-1)  * 2) - 1;
-            float viewportY = ((height - y) / ((float)height-1) * 2) - 1;
+            float pixelR = 0;
+            float pixelG = 0;
+            float pixelB = 0;
 
-            float r = 0;
-            float g = 0;
-            float b = 0;
+            //for loop for super sampling anti aliasing
+            for (int subX = 0; subX < ssaa; ++subX) {
+                for (int subY = 0; subY < ssaa; ++subY) {
+                    //conversion from screen space to view space
+                    float viewportX = ((x+ ((float)subX/(float)ssaa)) / ((float)width-1)  * 2) - 1;//+ 1/(float)subX
+                    float viewportY = ((height - y + ((float)subY/(float)ssaa)) / ((float)height-1) * 2) - 1;// + 1/(float)subY
 
-            float random = InterleavedGradientNoise(x,y);
-            _camera.setupForRay(_sampleCount,random);
-            //multisampling
-            for (int i = 0; i < _sampleCount; ++i) {
-                Ray ray = _camera.getRay(viewportX,viewportY, i);
-                Color c = getColorForRay(ray,_scene);
-                r += c.r;
-                g += c.g;
-                b += c.b;
+                    float r = 0;
+                    float g = 0;
+                    float b = 0;
+
+                    float random = InterleavedGradientNoise(x,y);
+                    _camera.setupForRay(_sampleCount,random);
+                    //multisampling
+                    for (int i = 0; i < _sampleCount; ++i) {
+                        Ray ray = _camera.getRay(viewportX,viewportY, i);
+                        Color c = getColorForRay(ray,_scene);
+                        r += c.r;
+                        g += c.g;
+                        b += c.b;
+                    }
+                    pixelR += r/_sampleCount;
+                    pixelG += g/_sampleCount;
+                    pixelB += b/_sampleCount;
+                }
             }
+
+            int subSamplesCount = ssaa*ssaa;
+            pixelR = pixelR/(float)subSamplesCount;
+            pixelG = pixelG/(float)subSamplesCount;
+            pixelB = pixelB/(float)subSamplesCount;
+
             //on calcule la couleur finale en faisant la moyenne des couleurs obtenues
+            _renderImage->setColor(x,y,Color(pixelR,pixelG,pixelB));
             _renderImage->setColor(x,y,Color(r/(float)_sampleCount,g/(float)_sampleCount,b/(float)_sampleCount));
             
             //pixelsProcessed++;
