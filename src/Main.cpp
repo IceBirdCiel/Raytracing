@@ -129,11 +129,11 @@ int main(int argc, char** argv) {
     //scene->addObject(new Plane(Vector(-3, -3, -5),Vector(0,-30,0),white));
     //scene->addObject(new Plane(Vector(-3, -3, -4),Vector(0,60,0),white));
 
-    scene->addLight(new DirectionalLight(Vector(0,0,-8),Vector(0,130,70),1, Color(0.1,0.1,0.1), Color(1,1,1), Color(1,1,1)));
+    scene->addLight(new PointLight(Vector(0,1,-1.5),Vector(0,130,70),1, Color(0.1,0.1,0.1), Color(1,1,1), Color(1,1,1)));
 
     Vector camPos(0,0.5,-7);
     Vector rotation(5,0,0);
-    Camera cam(camPos,rotation,24,2.8,6.5);
+    Camera cam(camPos,rotation,24,500,6.5);
     cam.setSensorSize(36,24);
 
     int height = 600;
@@ -144,7 +144,7 @@ int main(int argc, char** argv) {
     Raytracer raytracer;
     raytracer.setCamera(cam);
     raytracer.setBackgroundColor(Color(0,0,0));
-    raytracer.setSampleCount(25);
+    raytracer.setSampleCount(1);
 
     std::cout << "\nStarting to render image !\n";
     auto start = std::chrono::high_resolution_clock::now();

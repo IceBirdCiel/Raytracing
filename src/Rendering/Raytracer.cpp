@@ -124,7 +124,7 @@ Color Raytracer::getColorForRay(Ray ray, std::shared_ptr<Scene> scene) const {
 
         for (int i = 0; i < scene->nbLights(); ++i) {
             Light* light = scene->getLight(i);
-            finalColor = finalColor + light->getPhong(normal.normalized(),_camera.forward(), material, *obj);
+            finalColor = finalColor + light->getLambert(normal.normalized(),_camera.forward(), material, *obj);
         }
 
         Light* l = scene->getLight(0);
