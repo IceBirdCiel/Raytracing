@@ -3,6 +3,7 @@
 #include "Sphere.h"
 
 Sphere::Sphere(const Vector&  pos, const Vector&  rot, const Vector& scale, const Material& mat): Object(pos,rot,scale,mat) {}
+Sphere::Sphere(const Vector&  pos, const Vector&  rot, const Vector& scale, const Material& mat, const Material& mat2, int repeat): Object(pos,rot,scale,mat,mat2,repeat) {}
 
 Sphere::Sphere(): Object(){}
 
@@ -78,4 +79,20 @@ Point Sphere::getTextureCoordinates(const Point &p) const {
     float x = -theta/(2*M_PI)+0.5f;
     float y = sigma/M_PI;
     return Point(x, y, 0);
+}
+Material Sphere::getMaterial(const Point& p) const {
+    //return m_mat;
+    if(!m_duo)return m_mat;
+    //std::cout << "IBIDIBABIDIBOU ! m_duo " << m_duo << "\n";
+    Point coordinates = getTextureCoordinates(p);
+    float x = fmod(coordinates[0]*2*m_repeat, 2);
+    float y = fmod(coordinates[1]*m_repeat, 2);
+    if(y < 1.f){
+        x = 2-x;
+    }
+    if( x < 1.f){
+        return m_mat;
+    }else{
+        return m_mat2;
+    }
 }
