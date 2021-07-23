@@ -126,7 +126,7 @@ int main(int argc, char** argv) {
     //pillars
     //scene->addObject(new Cylinder(Vector(3, 0, 0), Vector(0, 0, 0), Vector(0.5f,0.5f,0.5f), white));
     //scene->addObject(new Cylinder(Vector(1.5, 0, 3), Vector(0, 0, 0), Vector(0.5f,0.5f,0.5f), white));
-    scene->addObject(new Cylinder(Vector(-2, 0, 4.5), Vector(0, 0, 0), Vector(0.5f,0.5f,0.5f), white));
+    scene->addObject(new Cylinder(Vector(-2, 0, 4.5), Vector(0, 0, 0), Vector(0.5f,0.5f,0.5f), lena));
     scene->addObject(new Cylinder(Vector(-6, 3, 3), Vector(90, 30, 0), Vector(0.2f,0.2f,0.2f), red));
     scene->addObject(new Cylinder(Vector(-6, 3.5, 3), Vector(90, 30, 0), Vector(0.2f,0.2f,0.2f), red));
 
