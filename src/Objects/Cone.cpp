@@ -21,43 +21,52 @@ Ray Cone::getNormals(const Point& p, const Point& o)const {
 bool Cone::intersect(const Ray& ray, Point& impact)const {
     Ray r = globalToLocal(ray);
 
-    float a = r.vector[0] * r.vector[0] + r.vector[2] * r.vector[2] - r.vector[1] * r.vector[1];
-    float b = 2 * (r.origin[0] * r.vector[0] - r.origin[2] * r.vector[2] + r.vector[1] * r.origin[1]);
-    float c = r.origin[0] * r.origin[0] + r.origin[1] * r.origin[1] - (r.origin[2]-1) * (r.origin[2]-1);
+    Vector down(0, -1, 0);
+
+    float a = r.vector.dot(down) - cos(1);
+    float b = 2 * (r.vector.dot(down)*r.origin.dot(Point(down[0], down[1], down[2]))) 
+        - r.vector.dot(Vector(r.origin[0], r.origin[1], r.origin[2]))*pow(cos(1),2);
+    //float c = r.origin[0] * r.origin[0] + r.origin[1] * r.origin[1] - (r.origin[2]-1) * (r.origin[2]-1);
+    float c = pow(r.origin.dot(Point(down[0], down[1], down[2])),2)- r.origin.dot(r.origin * pow(cos(1),2));
 
     float delta = (b * b) - (4 * a * c);
-    if (delta < 0)
-    {
-        return false;
-    }
 
-    else {
-        float t1 = (-b - sqrt(delta)) / (2 * a);
-        float t2 = (-b + sqrt(delta)) / (2 * a);
-        float res = 0;
-        if (t1 < 0) {
-            res = t2;
-        }
-        if (t2 < 0) {
-            res = t1;
-        }
-        if (t1 > 0.001 && t2 > 0.001)
+    if (cos(1) < 0) {
+        if (delta < 0)
         {
-            res = (t1 < t2) ? t1 : t2;
+            return false;
         }
-        if (res > 0.001) {
 
-            float check = r.origin[0] + res * r.vector[1];
+        else {
+            float t1 = (-b - sqrt(delta)) / (2 * a);
+            float t2 = (-b + sqrt(delta)) / (2 * a);
+            float res = 0;
+            if (t1 < 0) {
+                res = t2;
+            }
+            if (t2 < 0) {
+                res = t1;
+            }
+            if (t1 > 0.001 && t2 > 0.001)
+            {
+                res = (t1 < t2) ? t1 : t2;
+            }
+            if (res > 0.001) {
 
-            if (check < r.origin[1]) {
-                float px = r.origin[0] + res * r.vector[0];
-                float py = r.origin[1] + res * r.vector[1];
-                float pz = r.origin[2] + res * r.vector[2];
-                impact[0] = px;
-                impact[1] = py;
-                impact[2] = pz;
-                impact = localToGlobal(impact);
-                return true;
+                float check = r.origin[0] + res * r.vector[1];
+
+                if (check < r.origin[1]) {
+                    float px = r.origin[0] + res * r.vector[0];
+                    float py = r.origin[1] + res * r.vector[1];
+                    float pz = r.origin[2] + res * r.vector[2];
+
+                    Point i(px, py, pz);
+                    if ((i - Point(0, 1, 0)).dot((Point(down[0], down[1], down[2]))) > 0) {
+                        impact = i;
+                        impact = localToGlobal(impact);
+                        return true;
+                    }
+                }
             }
         }
         return false;
