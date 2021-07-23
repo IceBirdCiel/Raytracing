@@ -3,6 +3,11 @@
 DirectionalLight::DirectionalLight(Vector pos, Vector rot, float scale, Color a, Color d, Color s) :
 	Light(pos, rot, scale, a, d, s){}
 
+float DirectionalLight::getLightingBehaviour(Ray normal, Vector& direction) const {
+    direction = this->forward();
+    return 1;
+}
+/*
 Color DirectionalLight::getLambert(const Ray& normal, Vector cameraForward, const Material& material, const Object& obj) const {
     //return Color(normal.vector[0], normal.vector[1], normal.vector[2]);
 
@@ -43,4 +48,4 @@ Color DirectionalLight::getPhong(const Ray& normal, Vector cameraForward, const 
     Color phong = lambert + specular;
 
     return phong;
-}
+}*/

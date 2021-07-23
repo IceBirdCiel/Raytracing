@@ -131,6 +131,12 @@
 		<Unit filename="D:/Workspace/C++/Raytracing/src/Objects/Camera.h">
 			<Option target="Raytracing"/>
 		</Unit>
+		<Unit filename="D:/Workspace/C++/Raytracing/src/Objects/Cone.cpp">
+			<Option target="Raytracing"/>
+		</Unit>
+		<Unit filename="D:/Workspace/C++/Raytracing/src/Objects/Cone.h">
+			<Option target="Raytracing"/>
+		</Unit>
 		<Unit filename="D:/Workspace/C++/Raytracing/src/Objects/Cube.cpp">
 			<Option target="Raytracing"/>
 		</Unit>

@@ -4,10 +4,17 @@
 
 #include "PointLight.h"
 
-PointLight::PointLight(Vector pos, Vector rot, float scale, Color a, Color d, Color s) : Light(pos, rot, scale, a, d, s) {
+PointLight::PointLight(Vector pos, Vector rot, float scale, Color a, Color d, Color s,float lightC, float lightL, float lightQ) : Light(pos, rot, scale, a, d, s), lightConstant(lightC), lightLinear(lightL), lightQuadratic(lightQ) {
 
 }
 
+float PointLight::getLightingBehaviour(Ray normal, Vector& direction) const {
+    Point dirpoint = (getPosition() - normal.origin);
+    direction = Vector(dirpoint[0], dirpoint[1], dirpoint[2]);
+    float distance = direction.norm();
+    return 1.0 / (lightConstant + lightLinear * distance + lightQuadratic * (distance * distance));
+}
+/*
 Color PointLight::getLambert(const Ray& normal, Vector cameraForward, const Material& material, const Object& obj)const {
     float lightConstant = 0.5f;
     float lightLinear = 0.5f;
@@ -63,4 +70,4 @@ Color PointLight::getPhong(const Ray& normal, Vector cameraForward, const Materi
     specular  = specular * attenuation;
     return Color(lambert + specular);
 }
-
+*/

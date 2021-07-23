@@ -90,46 +90,6 @@ void Raytracer::render(std::shared_ptr<Scene> scene, std::shared_ptr<Image>& ima
     th4.join();*/
 }
 
-void Raytracer::renderZone(int minX, int minY,int maxX,int maxY, int width, int height){
-
-    for(int y = minY; y < maxY; ++y){
-        for(int x = minX; x < maxX; ++x){
-
-            //conversion from screen space to view space
-            float viewportX = (x / ((float)width-1)  * 2) - 1;
-            float viewportY = ((height - y) / ((float)height-1) * 2) - 1;
-
-            float r = 0;
-            float g = 0;
-            float b = 0;
-
-            float random = InterleavedGradientNoise(x,y);
-            _camera.setupForRay(_sampleCount,random);
-            //multisampling
-            for (int i = 0; i < _sampleCount; ++i) {
-                Ray ray = _camera.getRay(viewportX,viewportY, i);
-                Color c = getColorForRay(ray,_scene);
-                r += c.r;
-                g += c.g;
-                b += c.b;
-            }
-            //on calcule la couleur finale en faisant la moyenne des couleurs obtenues
-            _renderImage->setColor(x,y,Color(r/(float)_sampleCount,g/(float)_sampleCount,b/(float)_sampleCount));
-            //pixelsProcessed++;
-        }
-        /*
-        progress = pixelsProcessed / (float)pixelsAmount;
-        std::cout << "[";
-        int pos = barWidth * progress;
-        for (int i = 0; i < barWidth; ++i) {
-            if (i < pos) std::cout << "|";
-            else if (i == pos) std::cout << " ";
-            else std::cout << " ";
-        }
-        std::cout << "] " << int(progress * 100.0) << " %\r";
-        std::cout.flush();*/
-    }
-}
 Color Raytracer::getColorForRay(Ray ray, std::shared_ptr<Scene> scene) const {
     Color finalColor(0,0,0);
     Point impact;
@@ -142,7 +102,7 @@ Color Raytracer::getColorForRay(Ray ray, std::shared_ptr<Scene> scene) const {
 
         for (int i = 0; i < scene->nbLights(); ++i) {
             Light* light = scene->getLight(i);
-            finalColor = finalColor + light->getLambert(normal.normalized(),_camera.forward(), material, *obj);
+            finalColor = finalColor + light->getPhong(normal.normalized(),_camera.forward(), material, *obj);
         }
 
         Light* l = scene->getLight(0);
