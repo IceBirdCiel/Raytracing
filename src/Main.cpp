@@ -8,6 +8,7 @@
 #include "Objects/Plane.h"
 #include "Objects/Square.h"
 #include "Objects/Cylinder.h"
+#include "Objects/Cone.h"
 #include "Objects/Camera.h"
 #include "Materials/Material.h"
 #include "Scene/Scene.h"
@@ -91,12 +92,15 @@ int main(int argc, char** argv) {
     scene->addObject(new Plane(Vector(-5, -3, 5), Vector(180,-60,0), Vector(3,3,3), brick));
     //ceiling
     scene->addObject(new Plane(Vector(0, 4.5, 5), Vector(90,-60,0), Vector(10,10,10), white));
+    Object* cone = new Cone(Vector(0, 0, 0), Vector(0, 0, 0), Vector(1, 1, 1), white);
+    scene->addObject(cone);
+    cone->printTransform();
 
     //window
     scene->addObject(new Square(Vector(4, 1, 2), Vector(180,30,0), Vector(2.5/8.f*5,2.5,2.5), window));
 
     //planets
-    scene->addObject(new Sphere(Vector(0, 0, 0), Vector(0,90,90), Vector(1.5,1.5,1.5), earth));
+    //scene->addObject(new Sphere(Vector(0, 0, 0), Vector(0,90,90), Vector(1.5,1.5,1.5), earth));
     scene->addObject(new Sphere(Vector(-2, -1.2, -2), Vector(0,90,90), Vector(0.75,0.75,0.75), mars));
 
     //football
@@ -106,7 +110,9 @@ int main(int argc, char** argv) {
     scene->addObject(new Sphere(Vector(0.85, -0.7, -2.5),Vector(),Vector(0.35f,0.35f,0.35f),tennis));
 
     //weird blue sphere
-    scene->addObject( new Sphere(Vector(1, -1, -5),Vector(0,90,90),Vector(1,1,1),weirdbluesphere));
+    Object* blueSphere = new Sphere(Vector(1, -1, -5), Vector(0, 90, 90), Vector(1, 1, 1), weirdbluesphere);
+    scene->addObject( blueSphere);
+    blueSphere->printTransform();
 
     scene->addObject(new Cube(Vector(-5, -2, 3), Vector(0,30,0), Vector(1.f,1.f,1.5f), orange));
     
@@ -129,9 +135,9 @@ int main(int argc, char** argv) {
     //scene->addObject(new Plane(Vector(-3, -3, -5),Vector(0,-30,0),white));
     //scene->addObject(new Plane(Vector(-3, -3, -4),Vector(0,60,0),white));
 
-    scene->addLight(new PointLight(Vector(0,1,-1.5),Vector(0,130,70),1, Color(0.1,0.1,0.1), Color(1,1,1), Color(1,1,1)));
+    scene->addLight(new DirectionalLight(Vector(0,1,-1.5),Vector(0,130,70),1, Color(0.1,0.1,0.1), Color(1,1,1), Color(1,1,1)));
 
-    Vector camPos(0,0.5,-7);
+    Vector camPos(0,0.5,-20);
     Vector rotation(5,0,0);
     Camera cam(camPos,rotation,24,500,6.5);
     cam.setSensorSize(36,24);
