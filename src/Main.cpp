@@ -14,6 +14,7 @@
 #include "Objects/Lights/DirectionalLight.h"
 #include "Objects/Lights/PointLight.h"
 #include "Rendering/SkySphere.h"
+#include "Objects/Triangle.h"
 #include <algorithm>
 #include <chrono>
 #include <memory>
@@ -34,8 +35,6 @@ int main(int argc, char** argv) {
     Color specular(0.75,0.75,0.75);
 
     Material red(Color(1,0, 0),Color(1,0, 0),specular,50);
-
-
 
     //red.texture = new Image("lena.jpg");
     Material yellow(Color(1,1, 0),Color(1,1, 0),specular,50);
@@ -100,6 +99,7 @@ int main(int argc, char** argv) {
     scene->addObject(new Cylinder(Vector(-2, 0, 4.5), Vector(0, 0, 0), Vector(0.5f,0.5f,0.5f), white));
     scene->addObject(new Cylinder(Vector(-6, 3, 3), Vector(90, 30, 0), Vector(0.2f,0.2f,0.2f), red));
     scene->addObject(new Cylinder(Vector(-6, 3.5, 3), Vector(90, 30, 0), Vector(0.2f,0.2f,0.2f), red));
+    scene->addObject(new Triangle(Vector(-1, -2.5, 0), Vector(90, 30, 0), Vector(1, 1, 1), red, Point(0, 0, 0), Point(0, 1, 0), Point(1, 0, 0)));
 
     //scene->addObject(new Plane(Vector(-3, -3, -5),Vector(0,-30,0),white));
     //scene->addObject(new Plane(Vector(-3, -3, -4),Vector(0,60,0),white));
