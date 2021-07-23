@@ -3,7 +3,7 @@
 
 class PointLight: public Light {
 public:
-    PointLight(Vector pos, Vector rot, float scale, Color a, Color d, Color s,float lightC, float lightL, float lightQ);
+    PointLight(Vector pos, Vector rot, float scale, Color a, Color d, Color s,float lightC, float lightL, float lightQ, float i);
     float getLightingBehaviour(Ray normal, Vector& direction) const override;
 private:
     float lightConstant = 0.5f;

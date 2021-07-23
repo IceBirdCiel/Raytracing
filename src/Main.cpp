@@ -32,59 +32,56 @@ int main(int argc, char** argv) {
     //SkySphere * skybox = new SkySphere("phalzer_forest_01.png");
     //scene->setSkybox(skybox);
 
-    Color specular(0.75,0.75,0.75);
 
-    Material red(Color(1,0, 0),Color(1,0, 0),specular,50);
+    Color ambiant = Color(0.05,0.05,0.05);
+    Color specular(1,1,1);
 
+    Material red(ambiant,Color(1,0, 0),specular,200);
 
-
-    //red.texture = new Image("lena.jpg");
-    Material yellow(Color(1,1, 0),Color(1,1, 0),specular,50);
-    Material orange(Color(1,0.5, 0),Color(1,0.5, 0),specular,50);
-    Material green(Color(0,1, 0),Color(0,1, 0),specular,50);;
-    Material cyan(Color(0,1, 1),Color(0,1, 1),specular,50);
-    Material blue(Color(0,0, 1),Color(0,0, 1),specular,50);
-    blue.texture = new Image("lena.jpg");
-    Material magenta(Color(1,0, 1),Color(1,0, 1),specular,50);
-    magenta.texture = new Image("lena.png");
-    Material black(Color(0,0, 0),Color(0,0, 0),specular,5);
-    Material white(Color(1, 1, 1), Color(1, 1, 1), specular, 50);
-    Material grey(Color(0.7, 0.6, 0.7), Color(0.385, 0.385, 0.4), specular, 50);
-    Material lena(Color(0,0,0), Color(1,1,1), specular, 50);
+    Material orange(ambiant,Color(1,0.5, 0),specular,50);
+    Material white(ambiant, Color(1, 1, 1), specular, 5);
+    Material lena(ambiant, Color(1,1,1), specular, 200);
     Image *lenaTex = new Image("lena.png");
-    //lenaTex->convertToLinear(2.2);
+    //lenaTex->convertToLinear();
     lena.texture = lenaTex;
 
 
-    Material earth(Color(0, 0, 0), Color(1, 1, 1), specular, 75);
+    Material earth(ambiant, Color(1, 1, 1), specular, 100);
     earth.texture = new Image("earth.jpg");
+    //earth.texture->convertToLinear();
 
-    Material mars(Color(0, 0, 0), Color(1, 1, 1), specular, 25);
+    Material mars(ambiant, Color(1, 1, 1), specular, 5);
     mars.texture = new Image("mars.jpg");
-    Material football(Color(1,1,1), Color(1, 1, 1), specular, 15);
+    //mars.texture->convertToLinear();
+    Material football(ambiant, Color(1, 1, 1), specular, 35);
     football.texture = new Image("football.png");
-    Material tennis(Color(1,1,1), Color(1, 1, 1), specular, 100);
+    //football.texture->convertToLinear();
+    Material tennis(ambiant, Color(1, 1, 1), specular, 100);
     tennis.texture = new Image("tennis.png");
-    Material weirdbluesphere(Color(1,1,1), Color(1, 1, 1), specular, 100);
+    //tennis.texture->convertToLinear();
+    Material weirdbluesphere(ambiant, Color(1, 1, 1), specular, 100);
     weirdbluesphere.texture = new Image("weirdbluesphere.jpg");
+    //weirdbluesphere.texture->convertToLinear();
 
-    Material carpet(Color(1, 1, 1), Color(1, 1, 1), specular, 1);
+    Material carpet(ambiant, Color(1, 1, 1), specular, 1);
     carpet.texture = new Image("carpet.jpg");
+    //carpet.texture->convertToLinear();
 
-    Material wood(Color(1, 1, 1), Color(1, 1, 1), specular, 1);
+    Material wood(ambiant, Color(1, 1, 1), specular, 1);
     wood.texture = new Image("wood.jpg");
+    //wood.texture->convertToLinear();
 
-    Material brick(Color(1, 1, 1), Color(1, 1, 1), specular, 1);
+    Material brick(ambiant, Color(1, 1, 1), specular, 100);
     brick.texture = new Image("brick.jpg");
+    //brick.texture->convertToLinear();
 
-    Material window(Color(1, 1, 1), Color(1, 1, 1), specular, 1);
+    Material window(ambiant, Color(1, 1, 1), specular, 100);
     window.texture = new Image("theWindow2.png");
+    //window.texture->convertToLinear();
 
-    Material uv(Color(1, 1, 1), Color(1, 1, 1), specular, 1);
-    uv.texture = new Image("uv.png");
-
-    Material portal(Color(1, 1, 1), Color(1, 1, 1), specular, 1);
+    Material portal(ambiant, Color(1, 1, 1), specular, 1);
     portal.texture = new Image("portal.png");
+    //portal.texture->convertToLinear();
 
     //walls
     //sol
@@ -107,7 +104,7 @@ int main(int argc, char** argv) {
     scene->addObject(new Sphere(Vector(-2, -1.2, -2), Vector(0,90,90), Vector(0.75,0.75,0.75), mars));
 
     //football
-    scene->addObject(new Sphere(Vector(1, 1.5, -2.5), Vector(90,45,0), Vector(0.5,0.5,0.5), football,tennis,4));
+    scene->addObject(new Sphere(Vector(1, 1.0, -2), Vector(0,90,90), Vector(0.3,0.3,0.3), football,tennis,4));
 
     //tennis
     scene->addObject(new Sphere(Vector(0.85, -0.7, -2.5),Vector(),Vector(0.35f,0.35f,0.35f),tennis));
@@ -136,11 +133,18 @@ int main(int argc, char** argv) {
     //scene->addObject(new Plane(Vector(-3, -3, -5),Vector(0,-30,0),white));
     //scene->addObject(new Plane(Vector(-3, -3, -4),Vector(0,60,0),white));
 
-    scene->addLight(new DirectionalLight(Vector(0,1,-1.5),Vector(0,130,70),1, Color(0.1,0.1,0.1), Color(1,1,1), Color(1,1,1)));
+    //directionnal light
+    //scene->addLight(new DirectionalLight(Vector(0,1,-1.5),Vector(0,130,70),1, Color(0.1,0.1,0.1), Color(1,1,1), Color(1,1,1)));
+
+    //spotlights
+    scene->addLight(new PointLight(Vector(2,2,-3.5),Vector(0,130,70),1, Color(0.2,.3,1), Color(0.2,.3,1), Color(1,1,1),0.1,0.3,0.1,2));
+    scene->addLight(new PointLight(Vector(-3,1,-2.5),Vector(0,130,70),1, Color(1,.5,.5), Color(1,.5,.5), Color(1,1,1),0.1,0.3,0.1,2));
+    scene->addLight(new PointLight(Vector(-1,3,2.5),Vector(0,130,70),1, Color(1,0.95,0.9), Color(1,0.95,0.9), Color(1,1,1),0.05,0.3,0.1,1));
+    scene->addLight(new PointLight(Vector(0,-2,-4),Vector(0,130,70),1, Color(1,0.95,0.9), Color(1,0.95,0.9), Color(1,1,1),0.3,0.05,0.2,0.5));
 
     Vector camPos(0,0.5,-7);
     Vector rotation(5,0,0);
-    Camera cam(camPos,rotation,24,5000,6.5);
+    Camera cam(camPos,rotation,24,5000,5.9);
     cam.setSensorSize(36,24);
 
     int height = 600;
@@ -155,11 +159,11 @@ int main(int argc, char** argv) {
 
     std::cout << "\nStarting to render image !\n";
     auto start = std::chrono::high_resolution_clock::now();
-    raytracer.render(scene, renderImage,2);
+    raytracer.render(scene, renderImage,4);
     auto finish = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed = finish - start;
     std::cout << "Image finished rendering!\nRender duration : " << elapsed.count() << " s\n";
-    renderImage->convertToLinear();
+    //renderImage->convertToLinear();
     //renderImage->revertLinear();
     renderImage->save("render");
 

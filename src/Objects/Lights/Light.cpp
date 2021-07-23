@@ -1,7 +1,7 @@
 #include "Light.h"
 
 
-Light::Light(Vector pos, Vector rot, float scale, Color a, Color d, Color s): Entity(pos,rot,Vector(scale,scale,scale)), _ambient(a), _diffuse(d), _specular(s) {
+Light::Light(Vector pos, Vector rot, float scale, Color a, Color d, Color s, float i): Entity(pos,rot,Vector(scale,scale,scale)), _ambient(a), _diffuse(d), _specular(s), intensity(i) {
 
 }
 
@@ -12,21 +12,24 @@ Color Light::getLambert(const Ray& normal, Vector cameraForward, const Material&
 
     float attenuation = getLightingBehaviour(normal,dir);
 
-    Color ambiant = material.ambient * _ambient * attenuation;
-    Color diffuse = material.diffuse;
-    float angle = normal.vector.dot(dir);
+    Color ambiant = material.ambient * _ambient * attenuation * intensity;
+    Color diffuse = Color();
 
-    if(material.texture != nullptr){
-        Point texCoords = obj.getTextureCoordinates(normal.origin);
-        int x = texCoords[0] * (material.texture->getWidth() - 1);
-        int y = texCoords[1] * (material.texture->getHeight() - 1);
-        Color pixelColor = material.texture->getColor(x, y);
-        //std::cout << pixelColor.r << ", " << pixelColor.g << ", "  << pixelColor.b << std::endl;
-        diffuse = pixelColor * diffuse;
+    bool didntHitObjects = !castShadow(normal.origin,dir);
+    if(didntHitObjects){
+        float angle = normal.vector.normalized().dot(dir);
+
+        if(material.texture != nullptr){
+            Point texCoords = obj.getTextureCoordinates(normal.origin);
+            int x = texCoords[0] * (material.texture->getWidth() - 1);
+            int y = texCoords[1] * (material.texture->getHeight() - 1);
+            Color pixelColor = material.texture->getColor(x, y);
+            //std::cout << pixelColor.r << ", " << pixelColor.g << ", "  << pixelColor.b << std::endl;
+            diffuse = pixelColor * diffuse;
+        }
+
+        diffuse = diffuse * material.diffuse * _diffuse * angle * attenuation  * intensity;
     }
-
-    diffuse = diffuse * _diffuse * angle * attenuation;
-
     Color lambert = ambiant + diffuse;
 
     return lambert;
@@ -44,10 +47,25 @@ Color Light::getPhong(const Ray& normal, Vector cameraForward, const Material& m
     //float spec = pow(material.shininess, cameraForward.dot(reflect));
     float spec = pow(std::max(cameraForward.dot(reflect), 0.f), material.shininess);
     //spec = (spec < 0) ? 0 : spec;
-    Color specular = material.specular * _specular * spec * attenuation;
+    Color specular = material.specular * _specular * spec * attenuation  * intensity;
     Color phong = lambert + specular;
 
     return phong;
+}
+
+bool Light::castShadow(const Point& impact, const Vector& direction) const {
+
+    return false;
+}
+
+Color Light::Ambient() const {
+    return _ambient;
+}
+Color Light::Specular() const {
+    return _specular;
+}
+Color Light::Diffuse() const {
+    return _diffuse;
 }
 /*
 
