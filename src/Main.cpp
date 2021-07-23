@@ -51,7 +51,9 @@ int main(int argc, char** argv) {
     Material white(Color(1, 1, 1), Color(1, 1, 1), specular, 50);
     Material grey(Color(0.7, 0.6, 0.7), Color(0.385, 0.385, 0.4), specular, 50);
     Material lena(Color(0,0,0), Color(1,1,1), specular, 50);
-    lena.texture = new Image("lena.jpg");
+    Image *lenaTex = new Image("lena.png");
+    //lenaTex->convertToLinear(2.2);
+    lena.texture = lenaTex;
 
 
     Material earth(Color(0, 0, 0), Color(1, 1, 1), specular, 75);
@@ -92,15 +94,15 @@ int main(int argc, char** argv) {
     scene->addObject(new Plane(Vector(-5, -3, 5), Vector(180,-60,0), Vector(3,3,3), brick));
     //ceiling
     scene->addObject(new Plane(Vector(0, 4.5, 5), Vector(90,-60,0), Vector(10,10,10), white));
-    Object* cone = new Cone(Vector(0, 0, 0), Vector(0, 0, 0), Vector(1, 1, 1), white);
+    /*Object* cone = new Cone(Vector(0, 0, 0), Vector(0, 0, 0), Vector(1, 1, 1), white);
     scene->addObject(cone);
     cone->printTransform();
-
+    */
     //window
     scene->addObject(new Square(Vector(4, 1, 2), Vector(180,30,0), Vector(2.5/8.f*5,2.5,2.5), window));
 
     //planets
-    //scene->addObject(new Sphere(Vector(0, 0, 0), Vector(0,90,90), Vector(1.5,1.5,1.5), earth));
+    scene->addObject(new Sphere(Vector(0, 0, 0), Vector(0,90,90), Vector(1.5,1.5,1.5), earth));
     scene->addObject(new Sphere(Vector(-2, -1.2, -2), Vector(0,90,90), Vector(0.75,0.75,0.75), mars));
 
     //football
@@ -137,7 +139,7 @@ int main(int argc, char** argv) {
 
     scene->addLight(new DirectionalLight(Vector(0,1,-1.5),Vector(0,130,70),1, Color(0.1,0.1,0.1), Color(1,1,1), Color(1,1,1)));
 
-    Vector camPos(0,0.5,-20);
+    Vector camPos(0,0.5,-7);
     Vector rotation(5,0,0);
     Camera cam(camPos,rotation,24,500,6.5);
     cam.setSensorSize(36,24);
@@ -158,6 +160,8 @@ int main(int argc, char** argv) {
     auto finish = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed = finish - start;
     std::cout << "Image finished rendering!\nRender duration : " << elapsed.count() << " s\n";
+    renderImage->convertToLinear();
+    //renderImage->revertLinear();
     renderImage->save("render");
 
 }

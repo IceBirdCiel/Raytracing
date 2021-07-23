@@ -44,6 +44,7 @@ void Raytracer::render(std::shared_ptr<Scene> scene, std::shared_ptr<Image> imag
             }
             //on calcule la couleur finale en faisant la moyenne des couleurs obtenues
             _renderImage->setColor(x,y,Color(r/(float)_sampleCount,g/(float)_sampleCount,b/(float)_sampleCount));
+            
             //pixelsProcessed++;
         }
         /*

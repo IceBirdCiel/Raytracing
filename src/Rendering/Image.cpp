@@ -69,6 +69,33 @@ void Image::setColor(int x, int y, const Color& color) {
     m_rgb_image[dataPos+2] = (uint8_t)(color.b*255.999f);
 }
 
+void Image::convertToLinear() {
+    for (int y = 0; y < m_height; y++) {
+        for (int x = 0; x < m_width; x++) {
+            int dataPos = (y * m_width + x) * m_nbChannels;
+            
+            uint8_t r = m_rgb_image[dataPos];
+            uint8_t g = m_rgb_image[dataPos+1];
+            uint8_t b = m_rgb_image[dataPos+2];
+            m_rgb_image[dataPos] = (uint8_t)(255.999f* pow((r/255.999f), 1/2.2));
+            m_rgb_image[dataPos+1] = (uint8_t)(255.999f* pow((g/255.999f), 1/2.2));
+            m_rgb_image[dataPos+2] = (uint8_t) (255.999f* pow((b/255.999f), 1/2.2));
+        }
+    }
+}
+
+void Image::revertLinear() {
+    for (int y = 0; y < m_height; y++) {
+        for (int x = 0; x < m_width; x++) {
+            Color c = getColor(x, y);
+            float r = pow(c.r, 2.2);
+            float g = pow(c.g, 2.2);
+            float b = pow(c.b, 2.2);
+            setColor(x,y,Color(r, g, b));
+        }
+    }
+}
+
 int Image::getWidth() const {
     return m_width;
 }
