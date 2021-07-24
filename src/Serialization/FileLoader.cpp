@@ -2,6 +2,7 @@
 #include <fstream>
 #include <map>
 #include "FileLoader.h"
+#include "../Objects/Plane.h"
 
 std::shared_ptr<Scene> FileLoader::loadScene(const std::string &fileName) {
     std::ifstream file;
@@ -29,12 +30,29 @@ std::shared_ptr<Scene> FileLoader::loadScene(const std::string &fileName) {
         }
         json materialsData = data["materials"];
         for(json& matData : materialsData){
-            auto material = new Material(matData["ambient"], matData["diffuse"], matData["specular"], matData["shininess"]);
+            auto material = new Material((Color) matData["ambient"], (Color) matData["diffuse"],
+                     (Color) matData["specular"], (float) matData["shininess"]);
             _materials[matData["name"]] = material;
 
             auto matTexId = matData.find("texture");
             if(matTexId != matData.end()){
                 material->texture = _textures[matTexId.value()];
+            }
+        }
+        json objectsData = data["objects"];
+        for(json& objData : objectsData){
+            std::string type = objData["type"];
+            Vector position(objData["position"]);
+            Vector rotation(objData["rotation"]);
+            Vector scale(objData["scale"]);
+
+            Material* objMat = nullptr;
+            auto matId = objData.find("material");
+            if(matId != objData.end()){
+                objMat = _materials[matId.value()];
+            }
+            if(type == "plane"){
+                scene->addObject(new Plane(position, rotation, scale, *objMat));
             }
         }
 

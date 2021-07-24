@@ -6,7 +6,7 @@
 struct Color
 {
     Color(float r, float g, float b);
-    Color(const nlohmann::json& colorData);
+    explicit Color(const nlohmann::json& colorData);
     Color() =default;
 
     float r = 0;

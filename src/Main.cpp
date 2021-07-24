@@ -133,11 +133,12 @@ int main(int argc, char** argv) {
     //scene->addLight(new DirectionalLight(Vector(0,1,-1.5),Vector(0,130,70),1, Color(0.1,0.1,0.1), Color(1,1,1), Color(1,1,1)));
 
     //spotlights
+     */
     scene->addLight(new PointLight(Vector(2,2,-3.5),Vector(0,130,70),1, Color(0.2,.3,1), Color(0.2,.3,1), Color(1,1,1),0.1,0.3,0.1,2));
     scene->addLight(new PointLight(Vector(-3,1,-2.5),Vector(0,130,70),1, Color(1,.5,.5), Color(1,.5,.5), Color(1,1,1),0.1,0.3,0.1,2));
     scene->addLight(new PointLight(Vector(-1,3,2.5),Vector(0,130,70),1, Color(1,0.95,0.9), Color(1,0.95,0.9), Color(1,1,1),0.05,0.3,0.1,1));
     scene->addLight(new PointLight(Vector(0,-2,-4),Vector(0,130,70),1, Color(1,0.95,0.9), Color(1,0.95,0.9), Color(1,1,1),0.3,0.05,0.2,0.5));
-*/
+
     Vector camPos(0,0.5,-7);
     Vector rotation(5,0,0);
     scene->camera = new Camera(camPos,rotation,24,5000,5.9);
