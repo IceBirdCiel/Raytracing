@@ -3,11 +3,7 @@
 #include <utility>
 #include <omp.h>
 
-Raytracer::Raytracer(): _camera(Camera(Vector(0,0,-10),Vector(),24,2.8,10)), _sampleCount(1) {}
-
-void Raytracer::setCamera(const Camera& cam) {
-_camera = cam;
-}
+Raytracer::Raytracer(): _sampleCount(1) {}
 
 void Raytracer::render(std::shared_ptr<Scene> scene, std::shared_ptr<Image>& image, int ssaa){
 
@@ -40,10 +36,10 @@ void Raytracer::render(std::shared_ptr<Scene> scene, std::shared_ptr<Image>& ima
                     float b = 0;
 
                     float random = InterleavedGradientNoise(x,y);
-                    _camera.setupForRay(_sampleCount,random);
+                    _scene->camera->setupForRay(_sampleCount,random);
                     //multisampling
                     for (int i = 0; i < _sampleCount; ++i) {
-                        Ray ray = _camera.getRay(viewportX,viewportY, i);
+                        Ray ray = _scene->camera->getRay(viewportX,viewportY, i);
                         Color c = getColorForRay(ray,_scene);
                         r += c.r;
                         g += c.g;
@@ -92,7 +88,7 @@ void Raytracer::render(std::shared_ptr<Scene> scene, std::shared_ptr<Image>& ima
     th4.join();*/
 }
 
-Color Raytracer::getColorForRay(Ray ray, std::shared_ptr<Scene> scene) const {
+Color Raytracer::getColorForRay(Ray ray, const std::shared_ptr<Scene>& scene) const {
     Color finalColor(0,0,0);
     float r = 0;
     float g = 0;
@@ -111,7 +107,7 @@ Color Raytracer::getColorForRay(Ray ray, std::shared_ptr<Scene> scene) const {
             Ray lightRay = Ray(light->getPosition(), Vector(temp[0],temp[1],temp[2]).normalized());
             Point tempImpact;
             bool shadow = obj != scene->closestObjectIntersected(lightRay,tempImpact);
-            Color phongColor = getPhong(light, shadow, normal.normalized(),_camera.forward(), material, *obj);
+            Color phongColor = getPhong(light, shadow, normal.normalized(),_scene->camera->forward(), material, *obj);
             r += phongColor.r;
             g += phongColor.g;
             b += phongColor.b;
@@ -121,10 +117,6 @@ Color Raytracer::getColorForRay(Ray ray, std::shared_ptr<Scene> scene) const {
         finalColor = scene->getBackground(ray);
     }
     return finalColor;
-}
-
-void Raytracer::setBackgroundColor(Color c) {
-    _backgroundColor = c;
 }
 
 void Raytracer::setSampleCount(int samples) {

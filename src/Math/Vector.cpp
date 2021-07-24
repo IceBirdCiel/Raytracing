@@ -75,6 +75,12 @@ Vector Vector::operator=(Point p)const {
     return Vector(p[0], p[1], p[2]);
 }
 
+Vector::Vector(const nlohmann::json &vecData) {
+    (*this)[0] = vecData[0];
+    (*this)[1] = vecData[1];
+    (*this)[2] = vecData[2];
+}
+
 std::ostream& operator<<(std::ostream& os, const Vector& v)
 {
     return os << "(" << v[0] << ", " << v[1] << ", " << v[2] << ")";
