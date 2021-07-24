@@ -3,6 +3,7 @@
 #include <map>
 #include "FileLoader.h"
 #include "../Objects/Plane.h"
+#include "../Objects/Lights/PointLight.h"
 
 std::shared_ptr<Scene> FileLoader::loadScene(const std::string &fileName) {
     std::ifstream file;
@@ -53,6 +54,25 @@ std::shared_ptr<Scene> FileLoader::loadScene(const std::string &fileName) {
             }
             if(type == "plane"){
                 scene->addObject(new Plane(position, rotation, scale, *objMat));
+            } else if(type == "square") {
+
+            } else if(type == "sphere") {
+
+            } else if(type == "cube") {
+
+            } else if(type == "cylinder") {
+
+            } else if(type == "pointLight"){
+                scene->addLight(new PointLight(position, rotation, scale[0], (Color) objData["ambient"],
+                           (Color) objData["diffuse"], (Color) objData["specular"], objData["lightConstant"],
+                           objData["lightLinear"], objData["lightQuadratic"], objData["intensity"]));
+            } else if(type == "camera"){
+                scene->camera = new Camera(position, rotation, objData["focalLength"],
+                           objData["aperture"], objData["focalPoint"]);
+                std::vector<float> sensorSize = objData["sensorSize"];
+                scene->camera->setSensorSize(sensorSize[0], sensorSize[1]);
+            } else {
+                std::cerr << "Unrecognized object type : " << type << std::endl;
             }
         }
 
