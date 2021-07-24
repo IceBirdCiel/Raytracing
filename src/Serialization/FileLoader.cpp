@@ -60,7 +60,14 @@ std::shared_ptr<Scene> FileLoader::loadScene(const std::string &fileName) {
             } else if(type == "square") {
                 scene->addObject(new Square(position, rotation, scale, *objMat));
             } else if(type == "sphere") {
-                scene->addObject(new Sphere(position, rotation, scale, *objMat));
+                Material* objMat2 = nullptr;
+                auto matId2 = objData.find("material2");
+                if(matId2 != objData.end()){
+                    objMat2 = _materials[matId2.value()];
+                }
+                if(objMat2 != nullptr)
+                    scene->addObject(new Sphere(position, rotation, scale, *objMat, *objMat2, 4));
+                else scene->addObject(new Sphere(position, rotation, scale, *objMat));
             } else if(type == "cube") {
                 scene->addObject(new Cube(position, rotation, scale, *objMat));
             } else if(type == "cylinder") {
