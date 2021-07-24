@@ -51,7 +51,7 @@
     "materials": [
         {
             "name": "red",
-            "ambiant": [0.05, 0.05, 0.05],
+            "ambient": [0.05, 0.05, 0.05],
             "diffuse": [1, 0, 0],
             "specular": [1, 1, 1],
             "shininess": 200

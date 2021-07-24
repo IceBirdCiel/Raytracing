@@ -17,6 +17,7 @@ std::shared_ptr<Scene> FileLoader::loadScene(const std::string &fileName) {
         json data = json::parse(fileContent);
 
         std::map<std::string, Image*> _textures;
+        std::map<std::string, Material*> _materials;
         auto scene = std::make_shared<Scene>();
         scene->setBackground(Color(data["background"]["color"][0],data["background"]["color"][1], data["background"]["color"][2]));
 
@@ -25,6 +26,16 @@ std::shared_ptr<Scene> FileLoader::loadScene(const std::string &fileName) {
             std::string texFileName = textureData["src"];
             auto texture = new Image(texFileName);
             _textures[textureData["id"]] = texture;
+        }
+        json materialsData = data["materials"];
+        for(json& matData : materialsData){
+            auto material = new Material(matData["ambient"], matData["diffuse"], matData["specular"], matData["shininess"]);
+            _materials[matData["name"]] = material;
+
+            auto matTexId = matData.find("texture");
+            if(matTexId != matData.end()){
+                material->texture = _textures[matTexId.value()];
+            }
         }
 
         return scene;
