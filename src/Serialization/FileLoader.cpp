@@ -4,6 +4,9 @@
 #include "FileLoader.h"
 #include "../Objects/Plane.h"
 #include "../Objects/Lights/PointLight.h"
+#include "../Objects/Square.h"
+#include "../Objects/Cylinder.h"
+#include "../Objects/Cube.h"
 
 std::shared_ptr<Scene> FileLoader::loadScene(const std::string &fileName) {
     std::ifstream file;
@@ -55,13 +58,13 @@ std::shared_ptr<Scene> FileLoader::loadScene(const std::string &fileName) {
             if(type == "plane"){
                 scene->addObject(new Plane(position, rotation, scale, *objMat));
             } else if(type == "square") {
-
+                scene->addObject(new Square(position, rotation, scale, *objMat));
             } else if(type == "sphere") {
-
+                scene->addObject(new Sphere(position, rotation, scale, *objMat));
             } else if(type == "cube") {
-
+                scene->addObject(new Cube(position, rotation, scale, *objMat));
             } else if(type == "cylinder") {
-
+                scene->addObject(new Cylinder(position, rotation, scale, *objMat));
             } else if(type == "pointLight"){
                 scene->addLight(new PointLight(position, rotation, scale[0], (Color) objData["ambient"],
                            (Color) objData["diffuse"], (Color) objData["specular"], objData["lightConstant"],

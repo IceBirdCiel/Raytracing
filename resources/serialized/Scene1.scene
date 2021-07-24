@@ -188,6 +188,13 @@
             "scale": [10, 10, 10],
             "material": "white"
         },
+        {
+            "type": "square",
+            "position": [4, 1, 2],
+            "rotation": [180, 30, 0],
+            "scale": [1.5625, 2.5, 2.5],
+            "material": "window"
+        },
 
 
         {
