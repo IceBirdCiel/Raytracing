@@ -1,5 +1,6 @@
 #include "Raytracer.h"
 #include <thread>
+#include <utility>
 #include <omp.h>
 
 Raytracer::Raytracer(): _camera(Camera(Vector(0,0,-10),Vector(),24,2.8,10)), _sampleCount(1) {}
@@ -8,14 +9,13 @@ void Raytracer::setCamera(const Camera& cam) {
 _camera = cam;
 }
 
-void Raytracer::render(std::shared_ptr<Scene> scene, std::shared_ptr<Image> image){
+void Raytracer::render(std::shared_ptr<Scene> scene, std::shared_ptr<Image>& image, int ssaa){
 
     /*int pixelsAmount = height*width;
     int pixelsProcessed = 0;
     float progress = 0;
     int barWidth = 70;*/
-
-    _scene = scene;
+    _scene = std::move(scene);
     _renderImage = image;
     int width = image->getWidth();
     int height = image->getHeight();
@@ -24,26 +24,46 @@ void Raytracer::render(std::shared_ptr<Scene> scene, std::shared_ptr<Image> imag
     for(int y = 0; y < height; ++y){
         for(int x = 0; x < width; ++x){
 
-            //conversion from screen space to view space
-            float viewportX = (x / ((float)width-1)  * 2) - 1;
-            float viewportY = ((height - y) / ((float)height-1) * 2) - 1;
+            float pixelR = 0;
+            float pixelG = 0;
+            float pixelB = 0;
 
-            float r = 0;
-            float g = 0;
-            float b = 0;
+            //for loop for super sampling anti aliasing
+            for (int subX = 0; subX < ssaa; ++subX) {
+                for (int subY = 0; subY < ssaa; ++subY) {
+                    //conversion from screen space to view space
+                    float viewportX = ((x+ ((float)subX/(float)ssaa)) / ((float)width-1)  * 2) - 1;//+ 1/(float)subX
+                    float viewportY = ((height - y + ((float)subY/(float)ssaa)) / ((float)height-1) * 2) - 1;// + 1/(float)subY
 
-            float random = InterleavedGradientNoise(x,y);
-            _camera.setupForRay(_sampleCount,random);
-            //multisampling
-            for (int i = 0; i < _sampleCount; ++i) {
-                Ray ray = _camera.getRay(viewportX,viewportY, i);
-                Color c = getColorForRay(ray,_scene);
-                r += c.r;
-                g += c.g;
-                b += c.b;
+                    float r = 0;
+                    float g = 0;
+                    float b = 0;
+
+                    float random = InterleavedGradientNoise(x,y);
+                    _camera.setupForRay(_sampleCount,random);
+                    //multisampling
+                    for (int i = 0; i < _sampleCount; ++i) {
+                        Ray ray = _camera.getRay(viewportX,viewportY, i);
+                        Color c = getColorForRay(ray,_scene);
+                        r += c.r;
+                        g += c.g;
+                        b += c.b;
+                    }
+                    pixelR += r/_sampleCount;
+                    pixelG += g/_sampleCount;
+                    pixelB += b/_sampleCount;
+                }
             }
+
+            int subSamplesCount = ssaa*ssaa;
+            pixelR = pixelR/(float)subSamplesCount;
+            pixelG = pixelG/(float)subSamplesCount;
+            pixelB = pixelB/(float)subSamplesCount;
+
             //on calcule la couleur finale en faisant la moyenne des couleurs obtenues
-            _renderImage->setColor(x,y,Color(r/(float)_sampleCount,g/(float)_sampleCount,b/(float)_sampleCount));
+            _renderImage->setColor(x,y,Color(pixelR,pixelG,pixelB));
+            _renderImage->setColor(x,y,Color(pixelR,pixelG,pixelB));
+
             //pixelsProcessed++;
         }
         /*
@@ -72,48 +92,11 @@ void Raytracer::render(std::shared_ptr<Scene> scene, std::shared_ptr<Image> imag
     th4.join();*/
 }
 
-void Raytracer::renderZone(int minX, int minY,int maxX,int maxY, int width, int height){
-
-    for(int y = minY; y < maxY; ++y){
-        for(int x = minX; x < maxX; ++x){
-
-            //conversion from screen space to view space
-            float viewportX = (x / ((float)width-1)  * 2) - 1;
-            float viewportY = ((height - y) / ((float)height-1) * 2) - 1;
-
-            float r = 0;
-            float g = 0;
-            float b = 0;
-
-            float random = InterleavedGradientNoise(x,y);
-            _camera.setupForRay(_sampleCount,random);
-            //multisampling
-            for (int i = 0; i < _sampleCount; ++i) {
-                Ray ray = _camera.getRay(viewportX,viewportY, i);
-                Color c = getColorForRay(ray,_scene);
-                r += c.r;
-                g += c.g;
-                b += c.b;
-            }
-            //on calcule la couleur finale en faisant la moyenne des couleurs obtenues
-            _renderImage->setColor(x,y,Color(r/(float)_sampleCount,g/(float)_sampleCount,b/(float)_sampleCount));
-            //pixelsProcessed++;
-        }
-        /*
-        progress = pixelsProcessed / (float)pixelsAmount;
-        std::cout << "[";
-        int pos = barWidth * progress;
-        for (int i = 0; i < barWidth; ++i) {
-            if (i < pos) std::cout << "|";
-            else if (i == pos) std::cout << " ";
-            else std::cout << " ";
-        }
-        std::cout << "] " << int(progress * 100.0) << " %\r";
-        std::cout.flush();*/
-    }
-}
 Color Raytracer::getColorForRay(Ray ray, std::shared_ptr<Scene> scene) const {
     Color finalColor(0,0,0);
+    float r = 0;
+    float g = 0;
+    float b = 0;
     Point impact;
     Object* obj = scene->closestObjectIntersected(ray,impact);
     if(obj != nullptr){
@@ -124,11 +107,16 @@ Color Raytracer::getColorForRay(Ray ray, std::shared_ptr<Scene> scene) const {
 
         for (int i = 0; i < scene->nbLights(); ++i) {
             Light* light = scene->getLight(i);
-            finalColor = finalColor + light->getPhong(normal.normalized(),_camera.forward(), material, *obj);
+            Point temp = impact - light->getPosition();
+            Ray lightRay = Ray(light->getPosition(), Vector(temp[0],temp[1],temp[2]).normalized());
+            Point tempImpact;
+            bool shadow = obj != scene->closestObjectIntersected(lightRay,tempImpact);
+            Color phongColor = getPhong(light, shadow, normal.normalized(),_camera.forward(), material, *obj);
+            r += phongColor.r;
+            g += phongColor.g;
+            b += phongColor.b;
         }
-
-        Light* l = scene->getLight(0);
-
+        finalColor = Color(r,g,b);
     } else {
         finalColor = scene->getBackground(ray);
     }
@@ -148,4 +136,52 @@ float Raytracer::InterleavedGradientNoise(float x, float y) const {
     Vector magic = Vector(0.06711056, 0.00583715, 52.9829189);
     double integralPart = 0;
     return modf(magic[0] * modf(pos.dot(Vector(magic[0],magic[1],magic[2])), &integralPart), &integralPart);
+}
+
+Color Raytracer::getLambert(Light* light, bool shadow, const Ray& normal, const Material& material,
+                            const Object& obj) const {
+
+    Vector dir;
+    float attenuation = light->getLightingBehaviour(normal,dir);
+    Color ambiant = material.ambient * light->Ambient() * attenuation * light->intensity;
+    Color diffuse = Color(0,0,0);
+    if(!shadow){
+        float angle = normal.vector.normalized().dot(dir);
+
+        diffuse = Color(1,1,1);
+        if(material.texture != nullptr){
+            Point texCoords = obj.getTextureCoordinates(normal.origin);
+            int x = texCoords[0] * (material.texture->getWidth() - 1);
+            int y = texCoords[1] * (material.texture->getHeight() - 1);
+            Color pixelColor = material.texture->getColor(x, y);
+            //std::cout << pixelColor.r << ", " << pixelColor.g << ", "  << pixelColor.b << std::endl;
+            diffuse = pixelColor;
+        }
+        diffuse = diffuse * material.diffuse * light->Diffuse() * angle * attenuation  * light->intensity;
+    }
+    Color lambert = ambiant + diffuse;
+
+    return lambert;
+    return Color();
+}
+
+Color Raytracer::getPhong(Light* light, bool shadow, const Ray& normal, Vector cameraForward, const Material& material,
+                          const Object& obj) const {
+    Vector dir;
+
+    float attenuation = light->getLightingBehaviour(normal,dir);
+
+    Color lambert = getLambert(light, shadow, normal, material, obj);
+    Color phong = lambert;
+    if(!shadow){
+        //Vector reflect = dir - normal.vector * ( 2 * dir.dot(normal.vector));
+        Vector reflect = normal.vector.normalized().reflect(dir);
+        //float spec = pow(material.shininess, cameraForward.dot(reflect));
+        float spec = pow(std::max(cameraForward.dot(reflect), 0.f), material.shininess);
+        //spec = (spec < 0) ? 0 : spec;
+        Color specular = material.specular * light->Specular() * spec * attenuation  * light->intensity;
+        phong = phong + specular;
+    }
+
+    return phong;
 }

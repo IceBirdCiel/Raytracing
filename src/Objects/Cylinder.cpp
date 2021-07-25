@@ -1,3 +1,5 @@
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include "Cylinder.h"
 
 Cylinder::Cylinder(const Vector& pos, const Vector& rot, const Vector& scale, Material mat): Object(pos,rot,scale,mat){}
@@ -77,6 +79,15 @@ bool Cylinder::intersect(const Ray& ray, Point& impact)const {
 }
 
 Point Cylinder::getTextureCoordinates(const Point &p) const {
-    //todo
-    return Point();
+    Point lp = globalToLocal(p);
+    
+    float rho = std::sqrt(lp.dot(lp));
+    float theta = std::atan2(lp[1], lp[0]);
+    float sigma = std::acos(lp[1] / rho);
+    float x = -theta / (2 * M_PI) + 0.5f;
+    float y = sigma / M_PI;
+
+    if (x < 0) x += 1;
+    if (y < 0) y += 1;
+    return Point(x, y, 0);
 }

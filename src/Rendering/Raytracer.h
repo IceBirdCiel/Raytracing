@@ -11,7 +11,9 @@ public:
     void setCamera(const Camera& cam);
     void setBackgroundColor(Color c);
     void setSampleCount(int samples);
-    void render(std::shared_ptr<Scene> scene, std::shared_ptr<Image> image);
+    void render(std::shared_ptr<Scene> scene, std::shared_ptr<Image>& image, int ssaa);
+    Color getLambert(Light*  light, bool shadow, const Ray& normal, const Material& material, const Object& obj) const;
+    Color getPhong(Light*  light, bool shadow, const Ray& normal,Vector cameraForward, const Material& material, const Object& obj) const;
 private:
 
     Color getColorForRay(Ray ray, std::shared_ptr<Scene> scene) const;
