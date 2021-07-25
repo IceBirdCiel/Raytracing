@@ -7,7 +7,7 @@ void Scene::setBackground(Color color)
 
 void Scene::setAmbiant(Color color)
 {
-    _ambiant = color;
+    _ambient = color;
 }
 
 Color Scene::getBackground(const Ray& ray) const
@@ -20,7 +20,7 @@ Color Scene::getBackground(const Ray& ray) const
 
 Color Scene::getAmbiant() const
 {
-    return _ambiant;
+    return _ambient;
 }
 
 int Scene::nbLights() const
@@ -69,4 +69,10 @@ Object* Scene::closestObjectIntersected(Ray ray, Point& closestImpact) const {
 
 void Scene::setSkybox(SkySphere *skybox) {
     _skybox = skybox;
+}
+
+Scene::~Scene() {
+    delete camera;
+    if(_skybox != nullptr)
+        delete _skybox;
 }

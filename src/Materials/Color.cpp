@@ -16,3 +16,7 @@ Color Color::operator*(const Color& c) const {
 Color Color::operator+(const Color& c) const {
     return Color(r + c.r, g + c.g, b + c.b);
 }
+
+Color::Color(const nlohmann::json &colorData) : Color(colorData[0], colorData[1], colorData[2]){
+
+}

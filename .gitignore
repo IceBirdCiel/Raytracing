@@ -355,6 +355,7 @@ out/
 
 ### CMake ###
 cmake-build-debug/
+cmake-build-release/
 CMakeLists.txt.user
 CMakeCache.txt
 CMakeFiles

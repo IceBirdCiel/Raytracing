@@ -15,71 +15,67 @@
 #include "Objects/Lights/DirectionalLight.h"
 #include "Objects/Lights/PointLight.h"
 #include "Rendering/SkySphere.h"
+#include "Serialization/FileLoader.h"
 #include <algorithm>
 #include <chrono>
 #include <memory>
 
 
 int main(int argc, char** argv) {
-
-
-    std::cout << "Hello World !" << std::endl;
-
     //                   THE REAL SHIT
 
-    auto scene = std::make_shared<Scene>();
-    scene->setBackground(Color(0.2, 0.2, 1));
+    auto scene = FileLoader::loadScene("resources/serialized/Scene1.scene");
     //SkySphere * skybox = new SkySphere("phalzer_forest_01.png");
     //scene->setSkybox(skybox);
 
 
-    Color ambiant = Color(0.05,0.05,0.05);
+    /*Color ambient = Color(0.05, 0.05, 0.05);
     Color specular(1,1,1);
 
-    Material red(ambiant,Color(1,0, 0),specular,200);
+    Material red(ambient, Color(1, 0, 0), specular, 200);
 
-    Material orange(ambiant,Color(1,0.5, 0),specular,50);
-    Material white(ambiant, Color(1, 1, 1), specular, 5);
-    Material lena(ambiant, Color(1,1,1), specular, 200);
+    Material orange(ambient, Color(1, 0.5, 0), specular, 50);
+    Material white(ambient, Color(1, 1, 1), specular, 5);
+    Material lena(ambient, Color(1, 1, 1), specular, 200);
     Image *lenaTex = new Image("lena.png");
     //lenaTex->convertToLinear();
     lena.texture = lenaTex;
 
 
-    Material earth(ambiant, Color(1, 1, 1), specular, 100);
+    Material earth(ambient, Color(1, 1, 1), specular, 100);
     earth.texture = new Image("earth.jpg");
     //earth.texture->convertToLinear();
 
-    Material mars(ambiant, Color(1, 1, 1), specular, 5);
+    Material mars(ambient, Color(1, 1, 1), specular, 5);
     mars.texture = new Image("mars.jpg");
     //mars.texture->convertToLinear();
-    Material football(ambiant, Color(1, 1, 1), specular, 35);
+    Material football(ambient, Color(1, 1, 1), specular, 35);
     football.texture = new Image("football.png");
     //football.texture->convertToLinear();
-    Material tennis(ambiant, Color(1, 1, 1), specular, 100);
+    Material tennis(ambient, Color(1, 1, 1), specular, 100);
     tennis.texture = new Image("tennis.png");
     //tennis.texture->convertToLinear();
-    Material weirdbluesphere(ambiant, Color(1, 1, 1), specular, 100);
+    Material weirdbluesphere(ambient, Color(1, 1, 1), specular, 100);
     weirdbluesphere.texture = new Image("weirdbluesphere.jpg");
     //weirdbluesphere.texture->convertToLinear();
 
-    Material carpet(ambiant, Color(1, 1, 1), specular, 1);
+    Material carpet(ambient, Color(1, 1, 1), specular, 1);
     carpet.texture = new Image("carpet.jpg");
     //carpet.texture->convertToLinear();
 
-    Material wood(ambiant, Color(1, 1, 1), specular, 1);
+    Material wood(ambient, Color(1, 1, 1), specular, 1);
     wood.texture = new Image("wood.jpg");
     //wood.texture->convertToLinear();
 
-    Material brick(ambiant, Color(1, 1, 1), specular, 100);
+    Material brick(ambient, Color(1, 1, 1), specular, 100);
     brick.texture = new Image("brick.jpg");
     //brick.texture->convertToLinear();
 
-    Material window(ambiant, Color(1, 1, 1), specular, 100);
+    Material window(ambient, Color(1, 1, 1), specular, 100);
     window.texture = new Image("theWindow2.png");
     //window.texture->convertToLinear();
 
-    Material portal(ambiant, Color(1, 1, 1), specular, 1);
+    Material portal(ambient, Color(1, 1, 1), specular, 1);
     portal.texture = new Image("portal.png");
     //portal.texture->convertToLinear();
 
@@ -137,15 +133,16 @@ int main(int argc, char** argv) {
     //scene->addLight(new DirectionalLight(Vector(0,1,-1.5),Vector(0,130,70),1, Color(0.1,0.1,0.1), Color(1,1,1), Color(1,1,1)));
 
     //spotlights
-    scene->addLight(new PointLight(Vector(2,2,-3.5),Vector(0,130,70),1, Color(0.2,.3,1), Color(0.2,.3,1), Color(1,1,1),0.1,0.3,0.1,2));
+     */
+    /*scene->addLight(new PointLight(Vector(2,2,-3.5),Vector(0,130,70),1, Color(0.2,.3,1), Color(0.2,.3,1), Color(1,1,1),0.1,0.3,0.1,2));
     scene->addLight(new PointLight(Vector(-3,1,-2.5),Vector(0,130,70),1, Color(1,.5,.5), Color(1,.5,.5), Color(1,1,1),0.1,0.3,0.1,2));
     scene->addLight(new PointLight(Vector(-1,3,2.5),Vector(0,130,70),1, Color(1,0.95,0.9), Color(1,0.95,0.9), Color(1,1,1),0.05,0.3,0.1,1));
-    scene->addLight(new PointLight(Vector(0,-2,-4),Vector(0,130,70),1, Color(1,0.95,0.9), Color(1,0.95,0.9), Color(1,1,1),0.3,0.05,0.2,0.5));
+    scene->addLight(new PointLight(Vector(0,-2,-4),Vector(0,130,70),1, Color(1,0.95,0.9), Color(1,0.95,0.9), Color(1,1,1),0.3,0.05,0.2,0.5));*/
 
-    Vector camPos(0,0.5,-7);
+    /*Vector camPos(0,0.5,-7);
     Vector rotation(5,0,0);
-    Camera cam(camPos,rotation,24,5000,5.9);
-    cam.setSensorSize(36,24);
+    scene->camera = new Camera(camPos,rotation,24,5000,5.9);
+    scene->camera->setSensorSize(36,24);*/
 
     int height = 600;
     int width = height / 2.0f * 3.f;
@@ -153,8 +150,6 @@ int main(int argc, char** argv) {
     auto renderImage = std::make_shared<Image>(width,height, Color(1,0,1));
 
     Raytracer raytracer;
-    raytracer.setCamera(cam);
-    raytracer.setBackgroundColor(Color(0,0,0));
     raytracer.setSampleCount(1);
 
     std::cout << "\nStarting to render image !\n";
