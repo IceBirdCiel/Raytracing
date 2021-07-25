@@ -1,4 +1,4 @@
-#include <iostream>
+
 #include "Math/Vector.h"
 #include "Math/Matrix.h"
 #include "Rendering/Image.h"
@@ -18,13 +18,15 @@
 #include "Serialization/FileLoader.h"
 #include <algorithm>
 #include <chrono>
-#include <memory>
-
+#include "Setup.h"
 
 int main(int argc, char** argv) {
     //                   THE REAL SHIT
 
-    auto scene = FileLoader::loadScene("resources/serialized/Scene1.scene");
+    Setup::setupRenderer();
+
+
+    //auto scene = FileLoader::loadScene("resources/serialized/Scene1.scene");
     //SkySphere * skybox = new SkySphere("phalzer_forest_01.png");
     //scene->setSkybox(skybox);
 
@@ -144,6 +146,8 @@ int main(int argc, char** argv) {
     scene->camera = new Camera(camPos,rotation,24,5000,5.9);
     scene->camera->setSensorSize(36,24);*/
 
+
+/*
     int height = 600;
     int width = height / 2.0f * 3.f;
 
@@ -160,6 +164,6 @@ int main(int argc, char** argv) {
     std::cout << "Image finished rendering!\nRender duration : " << elapsed.count() << " s\n";
     //renderImage->convertToLinear();
     //renderImage->revertLinear();
-    renderImage->save("render");
+    renderImage->save("render");*/
 
 }
