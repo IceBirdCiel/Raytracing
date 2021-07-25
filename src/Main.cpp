@@ -10,6 +10,9 @@ int main(int argc, char** argv) {
     Setup setup;
     bool setupDone = setup.setupRenderer();
     if(setupDone){
+        Material bg(Color(1, 1, 1), Color(1, 1, 1), Color(1, 1, 1), 0);
+        bg.texture = new Image("spacePanoramic.png");
+        setup.scene->setSkybox(new SkySphere(10000, bg, *setup.scene->camera));
         auto renderImage = std::make_shared<Image>(setup.renderWidth,setup.renderHeight, Color(1,0,1));
         Raytracer raytracer;
         std::cout << "\nStarting to render image !\n";

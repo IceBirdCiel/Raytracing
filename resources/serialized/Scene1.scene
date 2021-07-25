@@ -288,6 +288,18 @@
             "material": "red"
         },
         {
+            "type": "triangle",
+            "position": [-1, -2, -1.5],
+            "rotation": [90, 30, 0],
+            "scale": [1, 1, 1],
+            "points": [
+                [0, 0, 0],
+                [1, 0, 0],
+                [0, 1, 0]
+            ],
+            "material": "red"
+        },
+        {
             "type": "pointLight",
             "position": [2, 2, -3.5],
             "rotation": [0, 130, 70],

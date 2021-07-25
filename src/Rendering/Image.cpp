@@ -49,8 +49,8 @@ void Image::fillImage(const Color& c) {
 }
 
 void Image::save(const std::string& name) const {
-    std::cout << "Image saved as '" + name + ".png'\n";
-    stbi_write_png((name + ".png").c_str(), m_width, m_height, m_nbChannels, m_rgb_image, m_width * m_nbChannels);
+    stbi_write_jpg((name + ".jpg").c_str(), m_width, m_height, m_nbChannels, m_rgb_image, 100);
+    std::cout << "Image saved as '" + name + ".jpg'\n";
 }
 
 Color Image::getColor(int x, int y) const {

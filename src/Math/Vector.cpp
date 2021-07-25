@@ -71,8 +71,11 @@ Vector Vector::operator*(float value) const
     return Vector(m_x * value, m_y * value, m_z * value);
 }
 
-Vector Vector::operator=(Point p)const {
-    return Vector(p[0], p[1], p[2]);
+Vector& Vector::operator=(const Point& p) {
+    m_x = p[0];
+    m_y = p[1];
+    m_z = p[2];
+    return (*this);
 }
 
 Vector::Vector(const nlohmann::json &vecData) {
@@ -84,4 +87,9 @@ Vector::Vector(const nlohmann::json &vecData) {
 std::ostream& operator<<(std::ostream& os, const Vector& v)
 {
     return os << "(" << v[0] << ", " << v[1] << ", " << v[2] << ")";
+}
+
+Point operator+(Point p, Vector v) {
+
+    return Point(p[0] + v[0], p[1] + v[1], p[2] + v[2]);
 }

@@ -11,6 +11,9 @@ public:
     }
     explicit Vector(const nlohmann::json& vecData);
     Vector() : m_x(0), m_y(0), m_z(0) {}
+    Vector(const Point& p) : m_x(p[0]), m_y(p[1]), m_z(p[2]){
+
+    }
 
     float norm() const;
     Vector normalized() const;
@@ -25,7 +28,7 @@ public:
     Vector operator -() const;           // value = -vector
     Vector operator /(float value) const;// value = vector/float
     Vector operator *(float value) const;// value = vector*float
-    Vector operator =(Point p) const;
+    Vector& operator =(const Point& p);
 
 private:
     float m_x;
@@ -33,5 +36,5 @@ private:
     float m_z;
 };
 std::ostream& operator<<(std::ostream& os, const Vector& v);
-
+Point operator+(Point p, Vector v);
 

@@ -12,8 +12,16 @@ void Scene::setAmbiant(Color color)
 
 Color Scene::getBackground(const Ray& ray) const
 {
-    if(_skybox != nullptr){
-        return _skybox->getColor(ray);
+    if(_skySphere != nullptr){
+        Point impact;
+        if(_skySphere->intersect(ray, impact)){
+            Ray normal = _skySphere->getNormals(impact, ray.origin);
+            Point texCoords = _skySphere->getTextureCoordinates(normal.origin);
+            Material material = _skySphere->getMaterial(impact);
+            int x = texCoords[0] * (material.texture->getWidth() - 1);
+            int y = texCoords[1] * (material.texture->getHeight() - 1);
+            return material.texture->getColor(x, y);
+        }
     }
     return _background;
 }
@@ -68,11 +76,10 @@ Object* Scene::closestObjectIntersected(Ray ray, Point& closestImpact) const {
 }
 
 void Scene::setSkybox(SkySphere *skybox) {
-    _skybox = skybox;
+    _skySphere = skybox;
 }
 
 Scene::~Scene() {
     delete camera;
-    if(_skybox != nullptr)
-        delete _skybox;
+    delete _skySphere;
 }

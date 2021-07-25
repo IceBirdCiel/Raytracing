@@ -12,7 +12,7 @@ class Scene
 {
 public:
     Scene(){
-        _skybox = nullptr;
+        _skySphere = nullptr;
     };
     ~Scene();
     Color getBackground(const Ray& ray) const;
@@ -33,6 +33,6 @@ private:
     std::vector<Object*> _objects;
     Color _background;
     Color _ambient;
-    SkySphere* _skybox;
+    SkySphere* _skySphere;
 };
 

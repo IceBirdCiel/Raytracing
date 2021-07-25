@@ -7,6 +7,7 @@
 #include "../Objects/Square.h"
 #include "../Objects/Cylinder.h"
 #include "../Objects/Cube.h"
+#include "../Objects/Triangle.h"
 
 std::shared_ptr<Scene> FileLoader::loadScene(const std::string &fileName) {
     std::ifstream file;
@@ -62,6 +63,12 @@ std::shared_ptr<Scene> FileLoader::loadScene(const std::string &fileName) {
                 scene->addObject(new Plane(position, rotation, scale, *objMat));
             } else if(type == "square") {
                 scene->addObject(new Square(position, rotation, scale, *objMat));
+            } else if(type == "triangle") {
+                auto triangle = new Triangle(position, rotation, scale, *objMat,
+                          (Point) objData["points"][0],
+                          (Point) objData["points"][1],
+                          (Point) objData["points"][2]);
+                scene->addObject(triangle);
             } else if(type == "sphere") {
                 Material* objMat2 = nullptr;
                 auto matId2 = objData.find("material2");
