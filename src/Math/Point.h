@@ -1,11 +1,13 @@
 #pragma once
 #include <iostream>
+#include <json.hpp>
 
 class Point
 {
 public:
     Point(float x, float y, float z);
     Point();
+    explicit Point(const nlohmann::json& vecData);
     float dot(Point q);
 
     float operator[](int index)const;

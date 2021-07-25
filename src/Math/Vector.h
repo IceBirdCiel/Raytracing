@@ -25,7 +25,7 @@ public:
     Vector operator -() const;           // value = -vector
     Vector operator /(float value) const;// value = vector/float
     Vector operator *(float value) const;// value = vector*float
-    Vector operator =(Point p) const;
+    Vector& operator =(const Point& p);
 
 private:
     float m_x;
@@ -33,5 +33,5 @@ private:
     float m_z;
 };
 std::ostream& operator<<(std::ostream& os, const Vector& v);
-
+Point operator+(Point p, Vector v);
 

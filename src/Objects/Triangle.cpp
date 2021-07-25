@@ -33,23 +33,44 @@ Ray Triangle::getNormals(const Point &p, const Point &o) const {
     return ray;
 }
 
+//moller-trumbore algorithm
 bool Triangle::intersect(const Ray &ray, Point &impact) const {
-    Ray r = globalToLocal(ray);
-    float oz = r.origin[2];
-    float vz = r.vector[2];
+    const float EPSILON = 0.0000001;
+    Vector edge1, edge2, s, q;
+    Point p0, p1, p2;
 
-    float t = -1 * (oz / vz);
-    float px = r.origin[0] + r.vector[0] * t;
-    float py = r.origin[1] + r.vector[1] * t;
+    p0 = localToGlobal(_points[0]);
+    p1 = localToGlobal(_points[1]);
+    p2 = localToGlobal(_points[2]);
+    edge1 = p1 - p0;
+    edge2 = p2 - p0;
+    Vector h = ray.vector.cross(edge2);
+    float a = edge1.dot(h);
+    if(a > -EPSILON && a < EPSILON) {
+        return false;   // ray parallel to triangle
+    }
 
-    if (t > 0 && px < 1 && px >= -1 && py < 1 && py >= -1) {
-        impact[0] = px;
-        impact[1] = py;
-        impact[2] = 0;
-        impact = localToGlobal(impact);
+    float f = 1.0f / a;
+    s = ray.origin - p0;
+    float u = f * s.dot(h);
+    if(u < 0.0 || u > 1.0) {
+        return false;
+    }
+    q = s.cross(edge1);
+    float v = f * ray.vector.dot(q);
+    if(v < 0.0 || u + v > 1.0){
+        return false;
+    }
+
+    // compute t to know if point intersects on line or not
+    float t = f * edge2.dot(q);
+    if(t > EPSILON){
+        impact = ray.origin + ray.vector * t;
         return true;
     }
-    return false;
+    else {
+        return false;
+    }
 }
 
 Point Triangle::getTextureCoordinates(const Point &p) const {

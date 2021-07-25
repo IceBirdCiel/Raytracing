@@ -6,10 +6,10 @@ class Triangle : public Object {
 public:
     Triangle(const Vector& pos, const Vector& rot, const Vector& scale, const Material& mat, const Point& p1, const Point& p2, const Point& p3);
     Triangle();
-    ~Triangle();
-    Ray getNormals(const Point& p, const Point& o)const;
-    bool intersect(const Ray& ray, Point& impact)const;
-    virtual Point getTextureCoordinates(const Point& p) const;
+    ~Triangle() override;
+    Ray getNormals(const Point& p, const Point& o) const override;
+    bool intersect(const Ray& ray, Point& impact) const override;
+    Point getTextureCoordinates(const Point& p) const override;
 
 private:
     Point* _points;
