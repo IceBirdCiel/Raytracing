@@ -11,8 +11,8 @@
 
 Image::Image(const std::string& name) {
     m_rgb_image = stbi_load(("resources/"+name).c_str(), &m_width, &m_height, &m_nbChannels, 0);
-    std::cout << "Image loaded. Width : " << m_width << ", height : " << m_height << ", pixel data size : " << m_nbChannels << std::endl;
-    std::cout << "Image data size : " << sizeof(m_rgb_image)/sizeof(*m_rgb_image) << std::endl;
+    //std::cout << "Image loaded. Width : " << m_width << ", height : " << m_height << ", pixel data size : " << m_nbChannels << std::endl;
+    //std::cout << "Image data size : " << sizeof(m_rgb_image)/sizeof(*m_rgb_image) << std::endl;
 }
 
 Image::Image(const Image& img) {
@@ -69,7 +69,7 @@ void Image::setColor(int x, int y, const Color& color) {
     m_rgb_image[dataPos+2] = (uint8_t)(color.b*255.999f);
 }
 
-void Image::convertToLinear() {
+void Image::toLinear() {
     for (int y = 0; y < m_height; y++) {
         for (int x = 0; x < m_width; x++) {
             int dataPos = (y * m_width + x) * m_nbChannels;
@@ -84,7 +84,7 @@ void Image::convertToLinear() {
     }
 }
 
-void Image::revertLinear() {
+void Image::tosRGB() {
     for (int y = 0; y < m_height; y++) {
         for (int x = 0; x < m_width; x++) {
             Color c = getColor(x, y);

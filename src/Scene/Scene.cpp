@@ -43,7 +43,7 @@ void Scene::addObject(Object* object) {
 
 Object* Scene::closestObjectIntersected(Ray ray, Point& closestImpact) const {
     float distance = FLT_MAX;
-    Object* Lior = nullptr;
+    Object* obj = nullptr;
     Point impact;
     bool collisionDetected = false;
     for (int i = 0; i < _objects.size(); ++i) {
@@ -52,7 +52,7 @@ Object* Scene::closestObjectIntersected(Ray ray, Point& closestImpact) const {
             Vector diff(ray.origin[0] - impact[0], ray.origin[1] - impact[1], ray.origin[2] - impact[2]);
             float dist = diff.norm();
             if(dist < distance){
-                Lior = objectToIntersect;
+                obj = objectToIntersect;
                 closestImpact = impact;
 
                 distance = dist;
@@ -61,7 +61,7 @@ Object* Scene::closestObjectIntersected(Ray ray, Point& closestImpact) const {
         }
     }
     if(collisionDetected){
-        return Lior;
+        return obj;
     }else{
         return nullptr;
     }

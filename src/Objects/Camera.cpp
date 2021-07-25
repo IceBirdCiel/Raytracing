@@ -71,8 +71,14 @@ Vector Camera::VogelDiskSample(int sampleIndex, int samples, float phi) const {
     return Vector(r * cosine, r * sine,0);
 }
 
-float Camera::InterleavedGradientNoise(Vector pos) const {
-    Vector magic = Vector(0.06711056, 0.00583715, 52.9829189);
-    double integralPart = 0;
-    return modf(magic[0] * modf(pos.dot(Vector(magic[0],magic[1],magic[2])), &integralPart), &integralPart);
+void Camera::setAperture(float aperture) {
+    m_aperture = aperture;
+}
+
+void Camera::setSampleCount(int samples) {
+    _sampleCount = samples;
+}
+
+int Camera::getSampleCount() const {
+    return _sampleCount;
 }

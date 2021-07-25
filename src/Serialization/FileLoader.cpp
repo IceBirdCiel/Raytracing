@@ -26,12 +26,14 @@ std::shared_ptr<Scene> FileLoader::loadScene(const std::string &fileName) {
         auto scene = std::make_shared<Scene>();
         scene->setBackground(Color(data["background"]["color"][0],data["background"]["color"][1], data["background"]["color"][2]));
 
+        std::cout << "Loading textures...\n";
         json texturesData = data["textures"];
         for(json& textureData : texturesData) {
             std::string texFileName = textureData["src"];
             auto texture = new Image(texFileName);
             _textures[textureData["id"]] = texture;
         }
+        std::cout << "Loading materials...\n";
         json materialsData = data["materials"];
         for(json& matData : materialsData){
             auto material = new Material((Color) matData["ambient"], (Color) matData["diffuse"],
@@ -43,6 +45,7 @@ std::shared_ptr<Scene> FileLoader::loadScene(const std::string &fileName) {
                 material->texture = _textures[matTexId.value()];
             }
         }
+        std::cout << "Loading scene objects...\n";
         json objectsData = data["objects"];
         for(json& objData : objectsData){
             std::string type = objData["type"];
@@ -85,7 +88,6 @@ std::shared_ptr<Scene> FileLoader::loadScene(const std::string &fileName) {
                 std::cerr << "Unrecognized object type : " << type << std::endl;
             }
         }
-
         return scene;
     } else {
         std::cerr << "File not found" << std::endl;

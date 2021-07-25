@@ -3,9 +3,9 @@
 #include <utility>
 #include <omp.h>
 
-Raytracer::Raytracer(): _sampleCount(1) {}
+Raytracer::Raytracer(){}
 
-void Raytracer::render(std::shared_ptr<Scene> scene, std::shared_ptr<Image>& image, int ssaa){
+void Raytracer::render(std::shared_ptr<Scene> scene, std::shared_ptr<Image>& image, int ssaa, bool enableShadows){
 
     /*int pixelsAmount = height*width;
     int pixelsProcessed = 0;
@@ -15,7 +15,7 @@ void Raytracer::render(std::shared_ptr<Scene> scene, std::shared_ptr<Image>& ima
     _renderImage = image;
     int width = image->getWidth();
     int height = image->getHeight();
-
+    int sampleCount = _scene->camera->getSampleCount();
     #pragma omp parallel for
     for(int y = 0; y < height; ++y){
         for(int x = 0; x < width; ++x){
@@ -36,18 +36,18 @@ void Raytracer::render(std::shared_ptr<Scene> scene, std::shared_ptr<Image>& ima
                     float b = 0;
 
                     float random = InterleavedGradientNoise(x,y);
-                    _scene->camera->setupForRay(_sampleCount,random);
+                    _scene->camera->setupForRay(sampleCount,random);
                     //multisampling
-                    for (int i = 0; i < _sampleCount; ++i) {
+                    for (int i = 0; i < sampleCount; ++i) {
                         Ray ray = _scene->camera->getRay(viewportX,viewportY, i);
-                        Color c = getColorForRay(ray,_scene);
+                        Color c = getColorForRay(ray,_scene,enableShadows);
                         r += c.r;
                         g += c.g;
                         b += c.b;
                     }
-                    pixelR += r/_sampleCount;
-                    pixelG += g/_sampleCount;
-                    pixelB += b/_sampleCount;
+                    pixelR += r/sampleCount;
+                    pixelG += g/sampleCount;
+                    pixelB += b/sampleCount;
                 }
             }
 
@@ -88,7 +88,7 @@ void Raytracer::render(std::shared_ptr<Scene> scene, std::shared_ptr<Image>& ima
     th4.join();*/
 }
 
-Color Raytracer::getColorForRay(Ray ray, const std::shared_ptr<Scene>& scene) const {
+Color Raytracer::getColorForRay(Ray ray, const std::shared_ptr<Scene>& scene, bool enableShadows) const {
     Color finalColor(0,0,0);
     float r = 0;
     float g = 0;
@@ -106,7 +106,9 @@ Color Raytracer::getColorForRay(Ray ray, const std::shared_ptr<Scene>& scene) co
             Point temp = impact - light->getPosition();
             Ray lightRay = Ray(light->getPosition(), Vector(temp[0],temp[1],temp[2]).normalized());
             Point tempImpact;
-            bool shadow = obj != scene->closestObjectIntersected(lightRay,tempImpact);
+            bool shadow = false;
+            if(enableShadows) shadow = obj != scene->closestObjectIntersected(lightRay,tempImpact);
+
             Color phongColor = getPhong(light, shadow, normal.normalized(),_scene->camera->forward(), material, *obj);
             r += phongColor.r;
             g += phongColor.g;
@@ -117,10 +119,6 @@ Color Raytracer::getColorForRay(Ray ray, const std::shared_ptr<Scene>& scene) co
         finalColor = scene->getBackground(ray);
     }
     return finalColor;
-}
-
-void Raytracer::setSampleCount(int samples) {
-    _sampleCount = samples;
 }
 
 float Raytracer::InterleavedGradientNoise(float x, float y) const {

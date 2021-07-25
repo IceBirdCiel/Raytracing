@@ -19,8 +19,8 @@ public:
 
     Color getColor(int x, int y) const;
     void setColor(int x, int y, const Color& color);
-    void convertToLinear();
-    void revertLinear();
+    void toLinear();
+    void tosRGB();
 
     int getWidth() const;
     int getHeight() const;

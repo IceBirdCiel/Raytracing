@@ -287,8 +287,6 @@
             "scale": [0.2, 0.2, 0.2],
             "material": "red"
         },
-
-
         {
             "type": "pointLight",
             "position": [2, 2, -3.5],

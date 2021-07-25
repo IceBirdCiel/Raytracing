@@ -10,10 +10,12 @@ public:
     void setSensorSize(float sizeX, float sizeY);
     Ray getRay(float x, float y, int sampleIndex) const;
     void setupForRay(int samplecount, float random);
+    void setAperture(float aperture);
+    void setSampleCount(int samples);
+    int getSampleCount() const;
 
 private:
     Vector VogelDiskSample(int sampleIndex, int sampleCount, float phi) const;
-    float InterleavedGradientNoise(Vector pos) const;
     float m_focalLength = 24;//the distance between the camera origin and the sensor in millimeters
     float m_aperture = 5.6;//the ratio of the focal length over the diaphragm's diameter
     float m_focalPlaneDist = 10;//the distance between the focal plane and the camera origin in meters
