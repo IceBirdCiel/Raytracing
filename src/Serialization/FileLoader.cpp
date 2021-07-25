@@ -81,9 +81,7 @@ std::shared_ptr<Scene> FileLoader::loadScene(const std::string &fileName) {
                            objData["lightLinear"], objData["lightQuadratic"], objData["intensity"]));
             } else if(type == "camera"){
                 scene->camera = new Camera(position, rotation, objData["focalLength"],
-                           objData["aperture"], objData["focalPoint"]);
-                std::vector<float> sensorSize = objData["sensorSize"];
-                scene->camera->setSensorSize(sensorSize[0], sensorSize[1]);
+                           50000, objData["focalPoint"]);
             } else {
                 std::cerr << "Unrecognized object type : " << type << std::endl;
             }

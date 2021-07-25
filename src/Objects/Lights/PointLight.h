@@ -9,7 +9,4 @@ private:
     float lightConstant = 0.5f;
     float lightLinear = 0.5f;
     float lightQuadratic = 0.1f;
-
-    //[[nodiscard]] Color getLambert(const Ray& normal,Vector cameraForward, const Material& material, const Object& obj) const override;
-    //[[nodiscard]] Color getPhong(const Ray& normal,Vector cameraForward, const Material& material, const Object& obj) const override;
 };
