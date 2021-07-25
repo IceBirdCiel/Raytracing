@@ -11,6 +11,9 @@ public:
     }
     explicit Vector(const nlohmann::json& vecData);
     Vector() : m_x(0), m_y(0), m_z(0) {}
+    Vector(const Point& p) : m_x(p[0]), m_y(p[1]), m_z(p[2]){
+
+    }
 
     float norm() const;
     Vector normalized() const;

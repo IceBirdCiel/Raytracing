@@ -4,15 +4,10 @@
 #include "Image.h"
 #include "../Math/Ray.h"
 #include "../Objects/Sphere.h"
+#include "../Objects/Camera.h"
 
-class SkySphere : Sphere {
+class SkySphere : public Sphere {
 public:
-    SkySphere(const std::string& image);
-    Color getColor(Ray ray);
-    virtual Point getTextureCoordinates(const Point& p) const;
-
-private:
-    // todo to move to material
-    Image m_image;
+    SkySphere(float scale, Material material, const Camera& camera);
 };
 

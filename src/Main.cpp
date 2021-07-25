@@ -24,9 +24,10 @@
 int main(int argc, char** argv) {
     //                   THE REAL SHIT
 
-    auto scene = FileLoader::loadScene("resources/serialized/Scene1.scene");
-    //SkySphere * skybox = new SkySphere("phalzer_forest_01.png");
-    //scene->setSkybox(skybox);
+    auto scene = FileLoader::loadScene("resources/serialized/Scene2.scene");
+    Material bg(Color(1, 1, 1), Color(1, 1, 1), Color(1, 1, 1), 0);
+    bg.texture = new Image("spacePanoramic.png");
+    scene->setSkybox(new SkySphere(10000, bg, *scene->camera));
 
     int height = 600;
     int width = height / 2.0f * 3.f;
