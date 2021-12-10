@@ -48,7 +48,6 @@ bool Sphere::intersect(const Ray & ray, Point& impact)const {
     __m128 tmp = _mm_mul_ps(rVector,rVector);
     __m128 a = _mm_hadd_ps(tmp);// vec[0]² + vec[1]² + vec[2]²
 
-
     tmp = _mm_mul_ps(rOrigin,rVector);
     tmp = _mm_mul_ps(two,tmp);// 2*(or[0]*vec[0] + or[1]*vec[1] + or[2]*vec[2])
     __m128 b = _mm_hadd_ps(tmp);
@@ -57,22 +56,21 @@ bool Sphere::intersect(const Ray & ray, Point& impact)const {
     tmp = _mm_hadd_ps(tmp);//(or[0]² + or[1]² + or[2]²) -1
     __m128 c = _mm_sub_ss(tmp,one);
 
-
     __m128 tmp2 = _mm_mul_ss(b,b); //b²
     tmp = _mm_mul_ss(four,a); //4a
     tmp = _mm_mul_ss(tmp,c);//4ac
     __m128 del = _mm_sub_ss(tmp2,tmp); //b² - 4ac
 
     __m128 condition = _mm_cmplt_ss(del,zero);
-    if(((float*)(&condition))[0]  != 0 ) return false; //DELTA < 0
+    if(_mm_cvtss_f32(condition) != 0 ) return false; //DELTA < 0
     else{
         condition = _mm_cmpeq_ss(del,zero);
-        if(((float*)(&condition))[0] != 0){ // DELTA  == 0
+        if(_mm_cvtss_f32(condition) != 0){ // DELTA  == 0
             tmp = _mm_mul_ss(two,a);
             tmp2 = _mm_mul_ss(minusOne, b);
             __m128 t = _mm_div_ss(tmp2,tmp);
             condition = _mm_cmpgt_ss(t,zero);
-            if(((float*)(&condition))[0]  != 0 ){
+            if(_mm_cvtss_f32(condition) != 0 ){
                 tmp = _mm_shuffle_ps(t,t, _MM_SHUFFLE(0,0,0,0));
                 __m128 imp = _mm_mul_ss(tmp,rVector);
                 imp = _mm_add_ss(imp,rOrigin);
@@ -90,7 +88,6 @@ bool Sphere::intersect(const Ray & ray, Point& impact)const {
             tmp = _mm_sub_ss(tmp,tmp3);// -b - sqrt(delta)
             tmp2 = _mm_add_ss(tmp2,tmp3);// -b + sqrt(delta)
             tmp3 = _mm_mul_ss(two,a);//2*a
-
             tmp = _mm_div_ss(tmp,tmp3);// (-b - sqrt(delta))/2*a
             tmp2 = _mm_div_ss(tmp2,tmp3);// (-b + sqrt(delta))/2*a
 
@@ -109,20 +106,17 @@ bool Sphere::intersect(const Ray & ray, Point& impact)const {
             // if(t1 > 0 && t2 > 0)
             //en multipliant les deux conditions, condition ne peur etre à 1 1 1 1 que si les deux sont a 1 1 1 1
             condition = _mm_mul_ps(_mm_cmpgt_ss(tmp,zero),_mm_cmpgt_ss(tmp,zero));
-            if(((float*)(&condition))[0]  != 0 ) {// if(t1 < 0)
-
+            if(_mm_cvtss_f32(condition) != 0 ) {// if(t1 < 0)
                 //miam la condition ternaire qui devient dégueu
                 condition = _mm_cmplt_ss(tmp,tmp2);
-                if(((float*)(&condition))[0]  != 0 ) {//if(t1 < t2)
+                if(_mm_cvtss_f32(condition) != 0 ) {//if(t1 < t2)
                     res = tmp;
                 }else{
                     res = tmp2;
                 }
             }
-
             condition = _mm_cmpgt_ss(res,zero);
-            if(((float*)(&condition))[0]  != 0 ) {// if(res > 0)
-
+            if(_mm_cvtss_f32(condition) != 0 ) {// if(res > 0)
                 tmp = _mm_shuffle_ps(res,res, _MM_SHUFFLE(0,0,0,0));
                 __m128 imp = _mm_mul_ps(tmp,rVector);
                 imp = _mm_add_ps(rOrigin,imp);
