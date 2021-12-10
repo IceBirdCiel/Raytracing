@@ -74,7 +74,8 @@ bool Sphere::intersect(const Ray & ray, Point& impact)const {
                 tmp = _mm_shuffle_ps(t,t, _MM_SHUFFLE(0,0,0,0));
                 __m128 imp = _mm_mul_ss(tmp,rVector);
                 imp = _mm_add_ss(imp,rOrigin);
-                float* floatImp = ((float*)(&imp));
+                float* floatImp = new float[4];
+                _mm_store_ps(floatImp,imp);
                 impact = {floatImp[0],floatImp[1], floatImp[2]};
                 return true;
             }else{
@@ -120,7 +121,8 @@ bool Sphere::intersect(const Ray & ray, Point& impact)const {
                 tmp = _mm_shuffle_ps(res,res, _MM_SHUFFLE(0,0,0,0));
                 __m128 imp = _mm_mul_ps(tmp,rVector);
                 imp = _mm_add_ps(rOrigin,imp);
-                float* floatImp = ((float*)(&imp));
+                float* floatImp = new float[4];
+                _mm_store_ps(floatImp,imp);
                 impact = {floatImp[0],floatImp[1], floatImp[2]};
                 impact = localToGlobal(impact);
                 return true;
