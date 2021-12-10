@@ -55,26 +55,27 @@ bool Sphere::intersect(const Ray & ray, Point& impact)const {
 
     tmp = _mm_mul_ps(rOrigin,rOrigin);
     tmp = _mm_hadd_ps(tmp);//(or[0]² + or[1]² + or[2]²) -1
-    __m128 c = _mm_sub_ps(tmp,one);
+    __m128 c = _mm_sub_ss(tmp,one);
 
 
-    __m128 tmp2 = _mm_mul_ps(b,b); //b²
-    tmp = _mm_mul_ps(four,a); //4a
-    tmp = _mm_mul_ps(tmp,c);//4ac
-    __m128 del = _mm_sub_ps(tmp2,tmp); //b² - 4ac
+    __m128 tmp2 = _mm_mul_ss(b,b); //b²
+    tmp = _mm_mul_ss(four,a); //4a
+    tmp = _mm_mul_ss(tmp,c);//4ac
+    __m128 del = _mm_sub_ss(tmp2,tmp); //b² - 4ac
 
     __m128 condition = _mm_cmplt_ss(del,zero);
     if(((float*)(&condition))[0]  != 0 ) return false; //DELTA < 0
     else{
         condition = _mm_cmpeq_ss(del,zero);
         if(((float*)(&condition))[0] != 0){ // DELTA  == 0
-            tmp = _mm_mul_ps(two,a);
-            tmp2 = _mm_mul_ps(minusOne, b);
-            __m128 t = _mm_div_ps(tmp2,tmp);
+            tmp = _mm_mul_ss(two,a);
+            tmp2 = _mm_mul_ss(minusOne, b);
+            __m128 t = _mm_div_ss(tmp2,tmp);
             condition = _mm_cmpgt_ss(t,zero);
             if(((float*)(&condition))[0]  != 0 ){
-                __m128 imp = _mm_mul_ps(t,rVector);
-                imp = _mm_add_ps(imp,rOrigin);
+                tmp = _mm_shuffle_ps(t,t, _MM_SHUFFLE(0,0,0,0));
+                __m128 imp = _mm_mul_ss(tmp,rVector);
+                imp = _mm_add_ss(imp,rOrigin);
                 float* floatImp = ((float*)(&imp));
                 impact = {floatImp[0],floatImp[1], floatImp[2]};
                 return true;
@@ -83,15 +84,15 @@ bool Sphere::intersect(const Ray & ray, Point& impact)const {
             }
         }else{ // DELTA > 0
             __m128 res = zero;
-            tmp = _mm_mul_ps(minusOne, b);// -b
+            tmp = _mm_mul_ss(minusOne, b);// -b
             tmp2 = tmp;// -b
-            __m128 tmp3 = _mm_sqrt_ps(del);//sqrt(delta)
-            tmp = _mm_sub_ps(tmp,tmp3);// -b - sqrt(delta)
-            tmp2 = _mm_add_ps(tmp2,tmp3);// -b + sqrt(delta)
-            tmp3 = _mm_mul_ps(two,a);//2*a
+            __m128 tmp3 = _mm_sqrt_ss(del);//sqrt(delta)
+            tmp = _mm_sub_ss(tmp,tmp3);// -b - sqrt(delta)
+            tmp2 = _mm_add_ss(tmp2,tmp3);// -b + sqrt(delta)
+            tmp3 = _mm_mul_ss(two,a);//2*a
 
-            tmp = _mm_div_ps(tmp,tmp3);// (-b - sqrt(delta))/2*a
-            tmp2 = _mm_div_ps(tmp2,tmp3);// (-b + sqrt(delta))/2*a
+            tmp = _mm_div_ss(tmp,tmp3);// (-b - sqrt(delta))/2*a
+            tmp2 = _mm_div_ss(tmp2,tmp3);// (-b + sqrt(delta))/2*a
 
             condition = _mm_cmplt_ss(tmp,zero);
             if(((float*)(&condition))[0]  != 0 ) {// if(t1 < 0)
@@ -119,10 +120,11 @@ bool Sphere::intersect(const Ray & ray, Point& impact)const {
                 }
             }
 
-            condition = _mm_cmpgt_ps(res,zero);
+            condition = _mm_cmpgt_ss(res,zero);
             if(((float*)(&condition))[0]  != 0 ) {// if(res > 0)
 
-                __m128 imp = _mm_mul_ps(res,rVector);
+                tmp = _mm_shuffle_ps(res,res, _MM_SHUFFLE(0,0,0,0));
+                __m128 imp = _mm_mul_ps(tmp,rVector);
                 imp = _mm_add_ps(rOrigin,imp);
                 float* floatImp = ((float*)(&imp));
                 impact = {floatImp[0],floatImp[1], floatImp[2]};
