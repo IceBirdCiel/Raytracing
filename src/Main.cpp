@@ -5,8 +5,12 @@
 #include "Rendering/Raytracer.h"
 #include <chrono>
 #include "Setup.h"
+#include <xmmintrin.h>
+
+
 
 int main(int argc, char** argv) {
+
     Setup setup;
     bool setupDone = setup.setupRenderer();
     if(setupDone){
