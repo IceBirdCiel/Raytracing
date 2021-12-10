@@ -48,11 +48,15 @@ bool Sphere::intersect(const Ray & ray, Point& impact)const {
     __m128 tmp = _mm_mul_ps(rVector,rVector);
     __m128 a = _mm_hadd_ps(tmp);// vec[0]² + vec[1]² + vec[2]²
 
+
     tmp = _mm_mul_ps(rOrigin,rVector);
-    __m128 b = _mm_mul_ps(two,tmp);// 2*(or[0]*vec[0] + or[1]*vec[1] + or[2]*vec[2])
+    tmp = _mm_mul_ps(two,tmp);// 2*(or[0]*vec[0] + or[1]*vec[1] + or[2]*vec[2])
+    __m128 b = _mm_hadd_ps(tmp);
 
     tmp = _mm_mul_ps(rOrigin,rOrigin);
-    __m128 c = _mm_sub_ps(tmp,one);//(or[0]² + or[1]² + or[2]²) -1
+    tmp = _mm_hadd_ps(tmp);//(or[0]² + or[1]² + or[2]²) -1
+    __m128 c = _mm_sub_ps(tmp,one);
+
 
     __m128 tmp2 = _mm_mul_ps(b,b); //b²
     tmp = _mm_mul_ps(four,a); //4a
@@ -119,7 +123,7 @@ bool Sphere::intersect(const Ray & ray, Point& impact)const {
             if(((float*)(&condition))[0]  != 0 ) {// if(res > 0)
 
                 __m128 imp = _mm_mul_ps(res,rVector);
-                imp = _mm_add_ps(rOrigin,rVector);
+                imp = _mm_add_ps(rOrigin,imp);
                 float* floatImp = ((float*)(&imp));
                 impact = {floatImp[0],floatImp[1], floatImp[2]};
                 impact = localToGlobal(impact);
