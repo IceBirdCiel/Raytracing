@@ -76,15 +76,12 @@ bool Sphere::intersect(const Ray & ray, Point& impact)const {
 
             delete [] pVec;
 			return true;
-		}
-		else return false;
-	}
-
-	else{
+		} else return false;
+	} else {
         //float t1 = (-b - sqrt(delta))/(2*a);
-        __m128 t1 = _mm_sub_ss(_mm_sub_ss(zero, b), _mm_div_ss(_mm_sqrt_ss(delta), _mm_mul_ps(two, a)));
+        __m128 t1 = _mm_div_ss(_mm_sub_ss(_mm_sub_ss(zero, b), _mm_sqrt_ss(delta)), _mm_mul_ps(two, a));
         //float t2 = (-b + sqrt(delta))/(2*a);
-        __m128 t2 = _mm_add_ss(_mm_sub_ss(zero, b), _mm_div_ss(_mm_sqrt_ss(delta), _mm_mul_ps(two, a)));
+        __m128 t2 = _mm_div_ss(_mm_add_ss(_mm_sub_ss(zero, b), _mm_sqrt_ss(delta)), _mm_mul_ps(two, a));
 
         float t1GeZero = _mm_cvtss_f32(_mm_cmpge_ss(t1, zero));
         float t2GeZero = _mm_cvtss_f32(_mm_cmpge_ss(t2, zero));
