@@ -28,24 +28,24 @@ __m128 _mm_hadd_ps(__m128 val){
 bool Sphere::intersect(const Ray & ray, Point& impact)const {
     Ray r = globalToLocal(ray);
 
-    __m128 origin = _mm_set_ps(r.origin[0],r.origin[1],r.origin[2],0);
-    __m128 vec = _mm_set_ps(r.vector[0], r.vector[1], r.vector[2], 0);
+    __m128 origin = {r.origin[0],r.origin[1],r.origin[2],0};
+    __m128 vec = {r.vector[0], r.vector[1], r.vector[2], 0};
 
     __m128 tmpA = _mm_mul_ps(vec,vec);
     tmpA = _mm_hadd_ps(tmpA);
 
     __m128 tmpB = _mm_mul_ps(vec,origin);
     tmpB = _mm_hadd_ps(tmpB);
-    tmpB = _mm_mul_ss(_mm_set_ss(2), tmpB);
+    tmpB = _mm_mul_ps(_mm_set_ss(2), tmpB);
 
     __m128 tmpC = _mm_mul_ps(origin, origin);
     tmpC = _mm_hadd_ps(tmpC);
-    tmpC = _mm_sub_ss(tmpC, _mm_set_ss(1));
+    tmpC = _mm_sub_ps(tmpC, _mm_set_ss(1));
 
     __m128 tmpDelta = _mm_mul_ss(tmpB, tmpB);
     __m128 ac = _mm_mul_ss(tmpA,tmpC);
-    ac = _mm_mul_ss(ac, _mm_set_ss(4));
-    tmpDelta = _mm_sub_ss(tmpDelta, ac);
+    ac = _mm_mul_ps(ac, _mm_set_ss(4));
+    tmpDelta = _mm_sub_ps(tmpDelta, ac);
 
     __m128 inferior = _mm_cmplt_ss(tmpDelta, _mm_set_ss(0));
     float inf = _mm_cvtss_f32(inferior);
