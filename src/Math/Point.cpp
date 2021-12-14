@@ -71,6 +71,12 @@ Point Point::operator-()const
     return Point(-m_x,-m_y,-m_z);
 }
 
+Point::Point(const nlohmann::json &vecData) {
+    m_x = vecData[0];
+    m_y = vecData[1];
+    m_z = vecData[2];
+}
+
 std::ostream& operator<<(std::ostream& os, const Point& p)
 {
     return os << "(" << p[0] << ", " << p[1] << ", " << p[2] << ")";

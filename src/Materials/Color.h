@@ -1,9 +1,12 @@
 #ifndef __COLOR_CPP__
 #define __COLOR_CPP__
 
+#include "json.hpp"
+
 struct Color
 {
     Color(float r, float g, float b);
+    explicit Color(const nlohmann::json& colorData);
     Color() =default;
 
     float r = 0;

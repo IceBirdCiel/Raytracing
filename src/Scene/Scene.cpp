@@ -7,20 +7,28 @@ void Scene::setBackground(Color color)
 
 void Scene::setAmbiant(Color color)
 {
-    _ambiant = color;
+    _ambient = color;
 }
 
 Color Scene::getBackground(const Ray& ray) const
 {
-    if(_skybox != nullptr){
-        return _skybox->getColor(ray);
+    if(_skySphere != nullptr){
+        Point impact;
+        if(_skySphere->intersect(ray, impact)){
+            Ray normal = _skySphere->getNormals(impact, ray.origin);
+            Point texCoords = _skySphere->getTextureCoordinates(normal.origin);
+            Material material = _skySphere->getMaterial(impact);
+            int x = texCoords[0] * (material.texture->getWidth() - 1);
+            int y = texCoords[1] * (material.texture->getHeight() - 1);
+            return material.texture->getColor(x, y);
+        }
     }
     return _background;
 }
 
 Color Scene::getAmbiant() const
 {
-    return _ambiant;
+    return _ambient;
 }
 
 int Scene::nbLights() const
@@ -43,7 +51,7 @@ void Scene::addObject(Object* object) {
 
 Object* Scene::closestObjectIntersected(Ray ray, Point& closestImpact) const {
     float distance = FLT_MAX;
-    Object* Lior = nullptr;
+    Object* obj = nullptr;
     Point impact;
     bool collisionDetected = false;
     for (int i = 0; i < _objects.size(); ++i) {
@@ -52,7 +60,7 @@ Object* Scene::closestObjectIntersected(Ray ray, Point& closestImpact) const {
             Vector diff(ray.origin[0] - impact[0], ray.origin[1] - impact[1], ray.origin[2] - impact[2]);
             float dist = diff.norm();
             if(dist < distance){
-                Lior = objectToIntersect;
+                obj = objectToIntersect;
                 closestImpact = impact;
 
                 distance = dist;
@@ -61,12 +69,17 @@ Object* Scene::closestObjectIntersected(Ray ray, Point& closestImpact) const {
         }
     }
     if(collisionDetected){
-        return Lior;
+        return obj;
     }else{
         return nullptr;
     }
 }
 
 void Scene::setSkybox(SkySphere *skybox) {
-    _skybox = skybox;
+    _skySphere = skybox;
+}
+
+Scene::~Scene() {
+    delete camera;
+    delete _skySphere;
 }
