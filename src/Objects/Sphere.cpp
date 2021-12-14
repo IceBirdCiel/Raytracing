@@ -1,4 +1,5 @@
 #define _USE_MATH_DEFINES
+#include <xmmintrin.h>
 #include <cmath>
 #include "Sphere.h"
 
@@ -17,51 +18,99 @@ Ray Sphere::getNormals(const Point& impact, const Point& observer) const {
 	return r;
 }
 
+__m128 _mm_hadd_ps(__m128 val){
+    __m128 tmp = _mm_shuffle_ps(val, val, _MM_SHUFFLE(1, 0, 3, 2));
+    __m128 tmp2 = _mm_add_ps(val, tmp);
+    tmp = _mm_shuffle_ps(tmp2, tmp2, _MM_SHUFFLE(0, 1, 0, 1));
+    return _mm_add_ps(tmp, tmp2);
+}
+
 bool Sphere::intersect(const Ray & ray, Point& impact)const {
-	Ray r = globalToLocal(ray);
+    Ray r = globalToLocal(ray);
 
-	float a = r.vector[0] * r.vector[0] + r.vector[1] * r.vector[1] + r.vector[2] * r.vector[2];
-	float b = 2 * (r.origin[0] * r.vector[0] + r.origin[1] * r.vector[1] + r.origin[2] * r.vector[2]);
-	float c = r.origin[0] * r.origin[0] + r.origin[1] * r.origin[1] + r.origin[2] * r.origin[2] - 1;
+    __m128 origin = _mm_set_ps(r.origin[0],r.origin[1],r.origin[2],0);
+    __m128 vec = _mm_set_ps(r.vector[0], r.vector[1], r.vector[2], 0);
 
-	float delta = (b * b) - (4 * a * c);
+    __m128 tmpA = _mm_mul_ps(vec,vec);
+    tmpA = _mm_hadd_ps(tmpA);
 
-	if (delta < 0) return false;
-	else if (delta == 0) {
-		float t = -b / (2 * a);
-		if (t > 0) {
-			float px = r.origin[0] + r.vector[0] * t;
-			float py = r.origin[1] + r.vector[1] * t;
-			float pz = r.origin[2] + r.vector[2] * t;
-			impact[0] = px;
-			impact[1] = py;
-			impact[2] = pz;
+    __m128 tmpB = _mm_mul_ps(vec,origin);
+    tmpB = _mm_hadd_ps(tmpB);
+    tmpB = _mm_mul_ss(_mm_set_ss(2), tmpB);
+
+    __m128 tmpC = _mm_mul_ps(origin, origin);
+    tmpC = _mm_hadd_ps(tmpC);
+    tmpC = _mm_sub_ss(tmpC, _mm_set_ss(1));
+
+    __m128 tmpDelta = _mm_mul_ss(tmpB, tmpB);
+    __m128 ac = _mm_mul_ss(tmpA,tmpC);
+    ac = _mm_mul_ss(ac, _mm_set_ss(4));
+    tmpDelta = _mm_sub_ss(tmpDelta, ac);
+
+    __m128 inferior = _mm_cmplt_ss(tmpDelta, _mm_set_ss(0));
+    float inf = _mm_cvtss_f32(inferior);
+    __m128 equalTo = _mm_cmpeq_ss(tmpDelta, _mm_set_ss(0));
+    float equal = _mm_cvtss_f32(equalTo);
+
+	if (inf != 0) return false;
+	else if (equal != 0) {
+        __m128 t0 = _mm_div_ss(_mm_mul_ss(_mm_set_ss(-1), tmpB), _mm_mul_ss(_mm_set_ss(2), tmpA)); // bonne chance
+		__m128 tsuperieur = _mm_cmpgt_ss(t0, _mm_set_ss(0));
+        float tsup = _mm_cvtss_f32(tsuperieur);
+        if (tsup != 0) {
+            __m128 p = _mm_mul_ps(vec, t0);
+            p = _mm_add_ps(origin, p);
+            float* pres = new float(4);
+            _mm_store_ps(pres, p);
+            impact[0] = pres[0];
+			impact[1] = pres[1];
+			impact[2] = pres[2];
 			return true;
 		}
-		else return false;
+        return false;
 	}
 
 	else{
-        float t1 = (-b - sqrt(delta))/(2*a);
-        float t2 = (-b + sqrt(delta))/(2*a);
-        float res = 0;
-        if(t1 < 0){
-            res = t2;
+        __m128 tmpT1 =  _mm_div_ss(_mm_sub_ss(_mm_sub_ss(_mm_set_ss(0), tmpB), _mm_sqrt_ss(tmpDelta)), _mm_mul_ss(_mm_set_ss(2), tmpA));
+        __m128 tmpT2 =  _mm_div_ss(_mm_add_ss(_mm_sub_ss(_mm_set_ss(0), tmpB), _mm_sqrt_ss(tmpDelta)), _mm_mul_ss(_mm_set_ss(2), tmpA));
+
+        __m128 tmpRes = _mm_set_ss(0);
+
+        __m128 t1inf = _mm_cmpge_ss(tmpT1, _mm_set_ss(0));
+        __m128 t2inf = _mm_cmpge_ss(tmpT2, _mm_set_ss(0));
+        float t1f = _mm_cvtss_f32(t1inf);
+        float t2f = _mm_cvtss_f32(t2inf);
+
+        if(t1f  == 0){
+            tmpRes = tmpT2;
         }
-        if(t2 < 0){
-            res = t1;
+        if(t2f == 0){
+            tmpRes = tmpT1;
         }
-        if(t1 > 0 && t2 > 0)
+        if(t1f != 0 && t2f != 0)
         {
-            res = (t1 < t2)? t1:t2;
+            __m128 compareT1T2 = _mm_cmplt_ss(tmpT1 , tmpT2);
+            float t1t2 = _mm_cvtss_f32(compareT1T2);
+            if(t1t2 != 0){
+                tmpRes = tmpT1;
+            }
+            else{
+                tmpRes = tmpT2;
+            }
         }
-        if(res > 0){
-            float px = r.origin[0] + r.vector[0]*res;
-            float py = r.origin[1] + r.vector[1]*res;
-            float pz = r.origin[2] + r.vector[2]*res;
-            impact[0] = px;
-            impact[1] = py;
-            impact[2] = pz;
+        __m128 tres = _mm_cmpgt_ss(tmpRes, _mm_set_ss(0));
+        float result = _mm_cvtss_f32(tres);
+        if(result != 0){
+            float res = _mm_cvtss_f32(tmpRes);
+            __m128 resVec = {res, res, res,res};
+            __m128 p = _mm_mul_ps( vec, resVec);
+            p = _mm_add_ps(origin, p);
+
+            float* pres = new float[4];
+            _mm_store_ps(pres, p);
+            impact[0] = pres[0];
+            impact[1] = pres[1];
+            impact[2] = pres[2];
             impact = localToGlobal(impact);
             return true;
         }  		 		   		  	 		 
